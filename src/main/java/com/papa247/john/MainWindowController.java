@@ -29,9 +29,8 @@ public class MainWindowController implements Initializable {
         try {
             VBox box = FXMLLoader.load(getClass().getResource("SideMenu.fxml"));
             drawer.setSidePane(box);
-            lblMain.setText("LOAD");
             hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-                System.out.println("clicked");
+                System.out.println("Menu clicked");
                 if (drawer.isOpened())
                     drawer.close();
                 else

@@ -3,7 +3,10 @@
 
 JSON in Java: https://www.baeldung.com/java-org-json
 
-Besure to download the latest JDK: https://www.oracle.com/java/technologies/javase/javase-jdk8-downloads.html (use the latest version of JDK8)
-https://stackoverflow.com/questions/30393751/the-import-javafx-scene-control-alert-cannot-be-resolved
+JDK15: https://www.oracle.com/java/technologies/javase-jdk15-downloads.html
 
 JavaFX Scene Builder: https://www.youtube.com/watch?v=2PxU7q9xl38
+
+
+Main site: https://teampapa.cnewb.co
+[Eclipse How-To](/Eclipse%20How-To.md) 
