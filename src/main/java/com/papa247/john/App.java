@@ -7,7 +7,6 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import com.papa247.john.TestCode.CheckExampleDB;
 
 /**
  * JavaFX App
@@ -18,8 +17,9 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
+        System.out.println("Loading main window...")
         scene = new Scene(loadFXML("MainWindow"), 640, 480);
-        stage.setTitle("PAPA-247: John");
+        stage.setTitle("TeamPAPA: Project John");
         stage.setScene(scene);
         stage.show();
         
@@ -35,9 +35,8 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("PAPA John! Get it?");
+        System.out.println("Papa is in the house!");
         
-        //CheckExampleDB.run();
         launch();
     }
 
