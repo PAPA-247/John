@@ -17,7 +17,7 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println("Loading main window...")
+        System.out.println("Loading main window...");
         scene = new Scene(loadFXML("MainWindow"), 640, 480);
         stage.setTitle("TeamPAPA: Project John");
         stage.setScene(scene);
