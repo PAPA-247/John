@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXDrawer?>
+<?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.MainWindowController">
+   <children>
+      <Label fx:id="lblMain" alignment="CENTER" layoutX="176.0" layoutY="148.0" prefHeight="105.0" prefWidth="249.0" text="Welcome home">
+         <font>
+            <Font name="Century Gothic" size="20.0" />
+         </font>
+      </Label>
+      <JFXDrawer fx:id="drawer" alignment="BASELINE_LEFT" prefHeight="400.0" prefWidth="135.0" />
+      <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="14.0" />
+   </children>
+</AnchorPane>

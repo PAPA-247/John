@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="192.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <JFXButton accessibleText="DebugWindow" prefHeight="56.0" prefWidth="194.0" text="Open debug window" />
+      <JFXButton accessibleText="Console" prefHeight="56.0" prefWidth="194.0" text="View console" />
+      <JFXButton accessibleText="Action" prefHeight="56.0" prefWidth="194.0" text="Run Action" />
+   </children>
+</VBox>
