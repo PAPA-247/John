@@ -14,10 +14,9 @@
 
 4) Type in "PAPA-247" and select "PAPA-247/john"
 ![4](https://resources.cnewb.co/CSCE247/4.png)
-**DO NOT CLONE YET** To work with Eclipse, you need to change the local path
 
 
-
+(To change the save location: )
 5) Click "Choose.." in the bottom right of the "Clone a repository" menu
 ![5](https://resources.cnewb.co/CSCE247/5.png)
 
@@ -27,6 +26,14 @@
 ![6](https://resources.cnewb.co/CSCE247/6.png)
 
 
-
 6) Click clone
-That's it!
+
+7) In Eclipse, click File > Import > Maven > Existing Maven Projects > Next
+![import-1](https://resources.cnewb.co/CSCE247/import-1.png)
+
+8) Point "Root Directory" to where ever you cloned the project (For example: `C:\Users\%username%\eclipse-workspace\John`)
+
+9) Click "Finish"
+
+That's it
+(It may take a few seconds to build, however)
