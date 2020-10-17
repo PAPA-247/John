@@ -8,4 +8,7 @@ module com.papa247.john {
 
     opens com.papa247.john to javafx.fxml;
     exports com.papa247.john;
+    
+    opens com.papa247.john.UIComponents to javafx.fxml;
+    exports com.papa247.john.UIComponents;
 }

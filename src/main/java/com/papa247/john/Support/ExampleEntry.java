@@ -24,6 +24,8 @@ public class ExampleEntry {
 	}
 
 	public boolean equals(ExampleEntry entry) {
+	    if (entry == null)
+	        return false;
 		if (entry.name.equals(this.name) && entry.description.equals(this.description))
 			return true;
 		return false;

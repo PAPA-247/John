@@ -8,7 +8,7 @@
 package com.papa247.john.UIComponents;
 
 
-import com.papa247.john.TestCode.CheckExampleDB;
+import com.papa247.john.TestCode;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -22,7 +22,7 @@ public class DebugWindowController {
     @FXML
     void checkExample(ActionEvent event) {
         System.out.println("'Check ExampleDB' clicked... running code...");
-        CheckExampleDB.run();
+        TestCode.testExampleDB();
     }
 }
 

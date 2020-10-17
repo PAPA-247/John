@@ -29,9 +29,9 @@ import org.json.JSONArray;
 import com.papa247.john.Support.ExampleEntry;
 
 public class ExampleDB {
-	private ExampleEntry[] entries;
+	private ExampleEntry[] entries = new ExampleEntry[0];
 	
-	private static Path file = Paths.get("../../examples.json");
+	private static Path file = Paths.get("./data/examples.json"); // Stores: John/data/examples.json
 	
 	public ExampleDB() {}
 	
@@ -58,8 +58,9 @@ public class ExampleDB {
 	 */
 	public ExampleEntry getEntry(String name) {
 		for (ExampleEntry entry : entries) {
-			if (entry.name == name)
-				return entry;
+		    if (entry != null)
+		        if (entry.name.equals(name))
+		            return entry;
 		}
 		return null;
 	}
@@ -69,15 +70,19 @@ public class ExampleDB {
 	 * @param entry
 	 */
 	public boolean removeEntry(ExampleEntry entry) {
-		boolean shift = false; // Move keys/values over?
+	    if (entries.length==0)
+	        return true;
+	    
+	    ExampleEntry[] newEntries = new ExampleEntry[entries.length-1];
+		int shift = 0; // Move keys/values over?
 		for (int i=0; i<entries.length; i++) {
 			if (entries[i].equals(entry)) {
-				shift = true; // Start shifting
-				entries[i] = null; // Remove
+				shift = 1;
+			} else {
+			    newEntries[i-shift] = entries[i];
 			}
-			if (shift && i<entries.length-1)
-				entries[i] = entries[i+1]; // Shift everything left
 		}
+		entries = newEntries;
 		return true;
 	}
 	
@@ -101,7 +106,7 @@ public class ExampleDB {
 				
 				return true; // Done
 				
-			} catch (IOException e) {
+			} catch (Exception e) {
 		        Alert alert = new Alert(AlertType.ERROR);
 		        alert.setTitle("Example.JSON");
 		        alert.setHeaderText("Error loading example.json");
@@ -149,7 +154,7 @@ public class ExampleDB {
 		        Optional<ButtonType> result = alert.showAndWait();
 		        if (result.get() == ButtonType.YES){
 		        	try {
-						Files.write(file, "{[]}".getBytes());
+						Files.write(file, "[]".getBytes());
 						load(true); // Go again
 					} catch (IOException e) {
 						Alert alert2 = new Alert(AlertType.INFORMATION);
@@ -158,7 +163,6 @@ public class ExampleDB {
 				        alert2.setContentText(e.toString());
 				        alert2.showAndWait();
 	
-						e.printStackTrace();
 						System.exit(1);
 					}
 		        } else {
@@ -175,19 +179,19 @@ public class ExampleDB {
 	public boolean save() {
 		JSONArray ja = new JSONArray();
 		for (int i=0; i<entries.length; i++) {
-			ja.put(entries[i].toJSON());
+		    if (entries[i]!=null)
+		        ja.put(entries[i].toJSON());
 		}
 		try {
 			Files.write(file, ja.toString().getBytes());
 			return true;
-		} catch (IOException e) {
+		} catch (Exception e) {
 			Alert alert = new Alert(AlertType.INFORMATION);
 	        alert.setTitle("Examples.JSON");
 	        alert.setHeaderText("Failed to save the 'examples.json' file!");
 	        alert.setContentText(e.toString());
 	        alert.showAndWait();
 
-			e.printStackTrace();
 			System.exit(1);
 		}
 		return false;
@@ -196,7 +200,7 @@ public class ExampleDB {
 	public String toString() {
 		String a = "";
 		for (int i=0; i<entries.length; i++)
-			a = a + entries[i] + "\n";
+			a = a + "Name: " + entries[i].name + "\n";
 		return a;
 	}
 	

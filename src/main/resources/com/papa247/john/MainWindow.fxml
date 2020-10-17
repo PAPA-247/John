@@ -6,14 +6,30 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.MainWindowController">
+
+<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.MainWindowController">
    <children>
-      <Label fx:id="lblMain" alignment="CENTER" layoutX="176.0" layoutY="148.0" prefHeight="105.0" prefWidth="249.0" text="Welcome home">
-         <font>
-            <Font name="Century Gothic" size="20.0" />
-         </font>
-      </Label>
-      <JFXDrawer fx:id="drawer" alignment="BASELINE_LEFT" prefHeight="400.0" prefWidth="135.0" />
-      <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="14.0" />
+      
+      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="356.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+         <children>
+            <Label fx:id="lblMain" alignment="CENTER" layoutX="176.0" layoutY="126.0" prefHeight="105.0" prefWidth="249.0" text="Welcome home">
+               <font>
+                  <Font name="Century Gothic" size="20.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      
+      
+      
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0" />
+      
+      
+      
+      <AnchorPane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: lightBlue;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="13.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
