@@ -21,7 +21,7 @@ import javafx.stage.Stage;
 public class MainWindowController implements Initializable {
 
     @FXML
-    private Pane rootPane;
+    private Pane mainContent;
     
     @FXML
     private JFXHamburger hamburger;

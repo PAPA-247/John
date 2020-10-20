@@ -11,6 +11,11 @@ import org.json.JSONObject;
 
 public class User {
     
+    public String emailAddress;
+    public String username;
+    public String phoneNumber;
+    public String studentID;
+    
     public User(JSONObject jo) {
         
     }

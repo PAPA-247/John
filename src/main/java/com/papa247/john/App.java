@@ -39,7 +39,15 @@ public class App extends Application {
     public static void main(String[] args) {
         System.out.println("Papa is in the house!");
         
-        launch();
+        try {
+            launch();
+        } catch(Exception e) {
+            System.out.println("We crashed.");
+            com.papa247.john.UIComponents.AlertWindows.showException("Program crash", "It appears we have crashed.", "The John program has closed unsuccessfully.", e);
+            System.exit(1);
+        }
+        
+        System.exit(0);
     }
 
 }

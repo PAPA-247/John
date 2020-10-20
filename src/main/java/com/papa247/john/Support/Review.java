@@ -9,8 +9,7 @@
 package com.papa247.john.Support;
 
 import org.json.JSONObject;
-import com.papa247.john.DataBases.AddressDB;
-import com.papa247.john.DataBases.UserDB;
+import com.papa247.john.DataBases;
 import com.papa247.john.Enumerators.TargetType;
 import com.papa247.john.Listing.Address;
 import com.papa247.john.User.User;
@@ -63,15 +62,15 @@ public class Review {
      * "Create" a review (object) from a JSONObject
      */
     public Review(JSONObject reviewObj) {
-        author = UserDB.getUser(reviewObj.getString("author"));
+        author = DataBases.getUser(reviewObj.getString("author"), DataBases.UsernameLookupType.username);
         rating = reviewObj.getDouble("rating");
         title = reviewObj.getString("title");
         contents = reviewObj.getString("contents");
         
         Target t = new Target();
         JSONObject jo = reviewObj.getJSONObject("target");
-        t.user = UserDB.getUser(jo.getString("user"));
-        t.address = AddressDB.getAddress(jo.getString("address"));
+        t.user = DataBases.getUser(jo.getString("user"), DataBases.UsernameLookupType.username);
+        t.address = DataBases.getAddress(jo.getString("street_address"), jo.getString("city"));
         targetType = (t.user==null)? TargetType.User : TargetType.Address;
     }
     
