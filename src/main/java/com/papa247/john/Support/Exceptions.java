@@ -58,4 +58,13 @@ public class Exceptions  {
             super(errorMessage);
         }
     }
+    
+    
+    public static class PasswordComplexityNotMet extends RuntimeException {
+        private static final long serialVersionUID = 1005;
+
+        public PasswordComplexityNotMet(String errorMessage) {
+            super(errorMessage);
+        }
+    }
 }

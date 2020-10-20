@@ -5,13 +5,13 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane fx:controller="com.papa247.john.UIComponents.DebugWindowController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
+<TabPane fx:controller="com.papa247.john.UIComponents.DebugWindowController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/11.0.1">
   <tabs>
     <Tab text="Test functions">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnCheckExample" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkExample" text="Check ExampleDB" />
+                  <Button fx:id="btnCheckUser" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkUser" text="Check UserDB / User" />
                </children></AnchorPane>
       </content>
     </Tab>

@@ -18,7 +18,7 @@ public class Review {
     /*
      * Since we can't have two types for one property, set the property to a class that has two more properties for each type :)
      */
-    private class Target {
+    public class Target {
         public User user;
         public Address address;
         
@@ -31,30 +31,11 @@ public class Review {
         public Target() {}
     }
     
-    /*
-     * The creator of the review
-     */
     public User author;
-    
-    /*
-     * Who/What the review is on
-     */
     public Target target;
     public TargetType targetType;
-    
-    /*
-     * A simple rating/5
-     */
     public double rating;
-    
-    /*
-     * The title of the review
-     */
     public String title;
-    
-    /*
-     * The review itself (..?) (Like their description of the place.. etc)
-     */
     public String contents;
     
     
@@ -67,11 +48,12 @@ public class Review {
         title = reviewObj.getString("title");
         contents = reviewObj.getString("contents");
         
-        Target t = new Target();
-        JSONObject jo = reviewObj.getJSONObject("target");
-        t.user = DataBases.getUser(jo.getString("user"), DataBases.UsernameLookupType.username);
-        t.address = DataBases.getAddress(jo.getString("street_address"), jo.getString("city"));
-        targetType = (t.user==null)? TargetType.User : TargetType.Address;
+        targetType = TargetType.fromNum(reviewObj.getInt("targetType"));
+        
+        if (targetType == TargetType.User)
+            target = new Target(DataBases.getUser(reviewObj.getString("target"), DataBases.UsernameLookupType.username));
+        else
+            target = new Target(DataBases.getAddress(reviewObj.getInt("target")));
     }
     
     /*
@@ -82,6 +64,7 @@ public class Review {
         this.title = title;
         this.contents = contents;
         this.target = new Target(target);
+        this.targetType = TargetType.User;
         this.rating = rating;
     }
     /*
@@ -92,6 +75,29 @@ public class Review {
         this.title = title;
         this.contents = contents;
         this.target = new Target(target);
+        this.targetType = TargetType.Address;
         this.rating = rating;
+    }
+
+    public Review() { // Generate blank target
+    }
+
+    public JSONObject toJSON() {
+        if (author == null)
+            return new JSONObject();
+        
+        JSONObject jo = new JSONObject();
+        jo.put("author", author.username);
+        if (targetType == TargetType.User)
+            jo.put("target", target.user.username);
+        else
+            jo.put("target", target.address.id);
+        
+        jo.put("targetType", targetType.toNum());
+        jo.put("rating", rating);
+        jo.put("title", title);
+        jo.put("contents", contents);
+        
+        return jo;
     }
 }

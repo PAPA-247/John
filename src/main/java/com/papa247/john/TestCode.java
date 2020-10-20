@@ -3,66 +3,79 @@
 *
 *   Store test methods here
 *
-* File created by cnewb on Oct 17, 2020
 */
 
 package com.papa247.john;
 
+import java.util.Scanner;
+import com.papa247.john.DataBases.UsernameLookupType;
+import com.papa247.john.Enumerators.AccountType;
 //import com.papa247.john.*;
-import com.papa247.john.OldDataBases.*;
 import com.papa247.john.Support.*;
+import com.papa247.john.User.User;
 
 public class TestCode {
     
-    public static void testExampleDB() {
-        /*
-         * Load DB,
-         * Add entry x2,
-         * Save DB,
-         * wait
-         * Load DB,
-         * Remove entry,
-         * Save DB
-         */
+    private static Scanner in = new Scanner(System.in);
+    
+//  System.out.print("...wait...");
+//  try {
+//      Thread.sleep(2000);
+//  } catch (InterruptedException e) {} // okay
+//  
+    
+    public static void userDB() {
+        System.out.println("Loading users data base...");
+        DataBases.loadUsers();
         
-        ExampleDB exampleDB = new ExampleDB();
+        System.out.println("Listing users...");
+        for (User usr : DataBases.getUsers()) {
+            System.out.println("Username: " + usr.username + " (email: " + usr.emailAddress + ")");
+        }
         
-        System.out.print("Loading data base (from file): ");
-        System.out.println(exampleDB.load());
+        System.out.println("Creating a user (usrname: billy)");
+        User user = new User();
+        user.username = "billy";
+        user.firstName = "Billy";
+        user.middleName = "";
+        user.lastName = "Thomas";
+        user.phoneNumber = "+15386661888";
+        user.emailAddress = "billyt@team.papa";
+        user.accountType = AccountType.STUDENT;
+        user.studentID = "W0080082";
         
-        System.out.print("Adding entry Bobby: ");
-        ExampleEntry entry = new ExampleEntry("Bobby","Bobby is a dude, I think.");
-        System.out.println(entry.equals(exampleDB.addEntry(entry))? "true" : "false");
-        System.out.print("Adding entry Tommy: ");
-        ExampleEntry entry2 = new ExampleEntry("Tommy","Bobby's brother, actually.");
-        System.out.println(entry2.equals(exampleDB.addEntry(entry2))? "true" : "false");
+        user.addReview(new Review(user, "Billy is amazing", "I absolutley love this guy! He's amazing!", user, 5));
         
-        System.out.println("Entries: \n" + exampleDB.toString());
-        
-        System.out.print("Saving data base (to file) ");
-        System.out.println(exampleDB.save());
-        
-        
-        
-        System.out.print("...wait...");
-        try {
-            Thread.sleep(2000);
-        } catch (InterruptedException e) {} // okay
+        DataBases.addUser(user);
         
         
+        System.out.println("User created, what should the password be?");
         
-        System.out.print("Loading data base (from file): ");
-        System.out.println(exampleDB.load());
+        user.setPassword(in.nextLine().toCharArray());
         
-        ExampleEntry e = exampleDB.getEntry("Bobby");
-        System.out.println("Bobby?: " + e.name);
         
-        System.out.print("Remove entry Bobby: ");
-        System.out.println(exampleDB.removeEntry(exampleDB.getEntry("Bobby"))? "true" : "false");
+        System.out.println("Password set (users should be saved...)");
         
-        System.out.println("Entries: \n" + exampleDB.toString());
+        System.out.println("Listing users...");
+        for (User usr : DataBases.getUsers()) {
+            System.out.println("Username: " + usr.username + " (email: " + usr.emailAddress + ")");
+        }
         
-        System.out.print("Saving data base (to file) ");
-        System.out.println(exampleDB.save());
+        User checkUser = DataBases.getUser("billy", UsernameLookupType.username);
+        
+        System.out.println("Checking password... Enter the password for Billy: ");
+        System.out.println("Password correct: " + checkUser.isPassword(in.nextLine().toCharArray()));
+        
+        
+        
+        System.out.println("Removing billy...");
+        DataBases.removeUser(DataBases.getUser(user.emailAddress, UsernameLookupType.email_address));
+        
+        System.out.println("Listing users...");
+        for (User usr : DataBases.getUsers()) {
+            System.out.println("Username: " + usr.username + " (email: " + usr.emailAddress + ")");
+        }
+        
+        System.out.println("User testing completed.");
     }
 }

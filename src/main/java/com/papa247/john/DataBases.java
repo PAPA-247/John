@@ -44,9 +44,12 @@ import javafx.scene.control.ButtonType;
 
 public class DataBases {
     
-    private static User[] users;
-    private static Address[] addresses;
-    private static Listing[] listings;
+    private static User[] users = new User[0];
+    private static Address[] addresses = new Address[0];
+    private static Listing[] listings = new Listing[0];
+    
+    private static int lastListingID;
+    private static int lastAddressID;
     
     // File paths
     private static class DataPaths {
@@ -67,6 +70,7 @@ public class DataBases {
      * @return          The JSONArray loaded from the file (blank if load failed)
      */
     private static JSONArray loadFile(String name, Path path, boolean noError, boolean roundTwo) {
+        System.out.println("[DataBases] Loading " + path.toString());
         String contents = "";
         if (path.toFile().isFile()) {
             try {
@@ -103,9 +107,6 @@ public class DataBases {
         
         return new JSONArray("[]"); // Wont reach
     }
-    private static JSONArray loadFile(String name, Path path, boolean noError) {
-        return loadFile(name, path, noError, false);
-    }
     private static JSONArray loadFile(String name, Path path) {
         return loadFile(name, path, false, false);
     }
@@ -118,6 +119,7 @@ public class DataBases {
      * @return      Whether the save was successful
      */
     private static boolean saveFile(JSONArray ja, Path path) {
+        System.out.println("[DataBases] Saving " + path.toString());
         try {
             Files.write(path, ja.toString().getBytes());
             return true;
@@ -147,6 +149,8 @@ public class DataBases {
         
         newUsers[users.length] = user;
         users = newUsers;
+        
+        saveUsers();
     }
     /**
      * Removes a user from the users array
@@ -166,6 +170,7 @@ public class DataBases {
             }
         }
         users = newUsers;
+        saveUsers();
     }
     
     /**
@@ -205,6 +210,10 @@ public class DataBases {
         throw new Exceptions.NoSuchUserFound("No user could be found");
     }
     
+    public static User[] getUsers() {
+        return users.clone();
+    }
+    
     /**
      * Load and populate the users array
      * @return load successful
@@ -220,7 +229,7 @@ public class DataBases {
     public static boolean saveUsers() {
         JSONArray ja = new JSONArray();
         for (int i=0; i<users.length; i++) {
-            
+            ja.put(users[i].toJSON().toString());
         }
         return saveFile(ja, DataPaths.users);
     }
@@ -294,12 +303,25 @@ public class DataBases {
     public static Address getAddress(Listing listing) {
         return listing.address;
     }
+    
+    public static Address getAddress(int lID) {
+        for (Address address : addresses) {
+            if (lID == address.id)
+                return address;
+        }
+        throw new Exceptions.NoListingFound("Listing ID invalid.");
+    }
+    
     /**
      * Load and populate the addresses array
      * @return load successful
      */
     public static boolean loadAddresses() {
-        loadFile("Addresses", DataPaths.addresses);
+        JSONArray ja = loadFile("Addresses", DataPaths.addresses);
+        int length = ja.length();
+        for (int i=0; i<length; i++) {
+            addAddress(new Address(ja.getJSONObject(i)));
+        }        
         renderListings();
         return true;
     }
@@ -312,7 +334,7 @@ public class DataBases {
         syncListings();        
         JSONArray ja = new JSONArray();
         for (int i=0; i<addresses.length; i++) {
-            
+            ja.put(addresses[i].toJSON().toString());
         }
         return saveFile(ja, DataPaths.addresses);
     }
@@ -324,9 +346,12 @@ public class DataBases {
      * Fills the listings array using the listing data in the addresses (addresses[i].listings => listings)
      */
     private static void renderListings() {
+        int lID = 0;
         for (Address address : addresses) {
-            for (Listing listing : address.listings)
+            for (Listing listing : address.listings) {
+                lID = Math.max(lID, listing.id); // Used when assigning listing IDs (just a counter that goes up)
                 addListing(listing);
+            }
         }
     }
     /**
@@ -344,6 +369,11 @@ public class DataBases {
     }
     
     
+    public static int assignNewListingID() {
+        lastListingID += 1;
+        return lastListingID++;
+    }
+    
     public static void addListing(Listing listing) {
         
     }
@@ -351,7 +381,14 @@ public class DataBases {
     public static void removeListing(Listing listing) {
         
     }
-        
+    
+    public static Listing getListing(int lID) {
+        for (Listing listing : listings) {
+            if (lID == listing.id)
+                return listing;
+        }
+        throw new Exceptions.NoListingFound("Listing ID invalid.");
+    }
     public static Listing getListing(String appartmentNumber) {
         for (Listing listing : listings) {
             if (listing.address.appartmentNumber.equals(appartmentNumber))

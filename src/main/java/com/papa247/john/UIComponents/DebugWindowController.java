@@ -18,9 +18,9 @@ public class DebugWindowController {
     private Button btnCheckExample;
 
     @FXML
-    void checkExample(ActionEvent event) {
-        System.out.println("'Check ExampleDB' clicked... running code...");
-        TestCode.testExampleDB();
+    void checkUser(ActionEvent event) {
+        System.out.println("'Check UserDB' clicked... running code...");
+        TestCode.userDB();
     }
 }
 

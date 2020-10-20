@@ -12,5 +12,13 @@ package com.papa247.john.Enumerators;
  */
 public enum TargetType {
     User,
-    Address
+    Address;
+    
+    public static TargetType fromNum(int num) {
+        return (num==0)? TargetType.User : TargetType.Address; 
+    }
+    
+    public int toNum() {
+        return (this == User)? 0 : 1;
+    }
 }
