@@ -91,9 +91,15 @@ public class MainWindowController implements Initializable {
                 
             });
             
+            // TODO: Open window AFTER loading main
+            // The Debug window opens before the MainWindow has a chance. Needs to be moved into a "isVisible" method (or something similar)
+            // (truthfully this is a test of the automatic TODO system)
+            
             // Auto open debug window
             if (App.debug)
                 openNewWindow("UIComponents/DebugWindow","Debug");
+            
+            
         } catch (IOException e1) {
             lblMain.setText("FAILED TO LOAD");
         }
