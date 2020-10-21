@@ -1,0 +1,34 @@
+/**
+* PAPA-247: Project JOHN
+*
+*/
+
+package com.papa247.john.Enumerators;
+
+public enum Amminities {
+    PET_FRIENDLY,
+    WASHERDRYER,
+    DISHWASHER,
+    POOL,
+    GOLF_COURSE,
+    GRILL,
+    CLUB_HOUSE,
+    PARK,
+    PLAYGROUND,
+    BACKYARD,
+    FRONTYARD,
+    GATED,
+    SECURITY_SYSTEM,
+    CAMERAS,
+    SECURITY_PERSONAL,
+    GAS_NATURAL,
+    GAS_PROPANE,
+    ELECTRIC,
+    GARBAGE_PICKUP,
+    PARKING,
+    PARKING_INCLUDED,
+    BIKE_RACKS,
+    ELECTRIC_CAR_CHARGER,
+    FURNISHED_PARTIALLY,
+    FURNISHED_FULLY
+}
