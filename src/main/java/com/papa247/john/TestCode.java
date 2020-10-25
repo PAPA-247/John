@@ -78,4 +78,12 @@ public class TestCode {
         
         System.out.println("User testing completed.");
     }
+    
+    public static void userList() {
+        System.out.println("Listing users...");
+        DataBases.loadUsers();
+        for (User usr : DataBases.getUsers()) {
+            System.out.println("Username: " + usr.username + " (email: " + usr.emailAddress + ")");
+        }
+    }
 }

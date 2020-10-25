@@ -6,6 +6,7 @@
 package com.papa247.john.Listing;
 
 import org.json.JSONObject;
+import com.papa247.john.Support.Coordinate;
 import com.papa247.john.User.User;
 
 public class Address {
@@ -13,9 +14,10 @@ public class Address {
     public Listing[] listings;
     public String appartmentNumber;
     public User owner;
-    public Object streetAddress;
-    public Object city;
+    public String streetAddress;
+    public String city;
     public int id;
+    public Coordinate cords;
 
     public Address(JSONObject jsonObject) {
         // TODO Auto-generated constructor stub

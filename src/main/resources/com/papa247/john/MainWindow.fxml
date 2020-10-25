@@ -2,32 +2,35 @@
 
 <?import com.jfoenix.controls.JFXDrawer?>
 <?import com.jfoenix.controls.JFXHamburger?>
+<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.shape.Circle?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.MainWindowController">
+<AnchorPane fx:id="main" prefHeight="514.0" prefWidth="856.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.MainWindowController">
    <children>
-      <Pane id="home" fx:id="mainContent" layoutY="45.0" prefHeight="349.0" prefWidth="600.0" stylesheets="@style.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0">
+      <AnchorPane fx:id="ContentHost" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+      
+                        
+      
+	  <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0" />
+      
+      <AnchorPane fx:id="apTopBar" prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: teal;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <Label fx:id="lblMain" alignment="CENTER" layoutX="176.0" layoutY="122.0" prefHeight="105.0" prefWidth="249.0" text="Welcome home" textFill="#FFFFFF">
-               <font>
-                  <Font name="Century Gothic" size="28.0" />
-               </font>
-            </Label>
-         </children>
-      </Pane>
-      
-            
-      
-            <JFXDrawer fx:id="drawer" defaultDrawerSize="200.0" layoutY="45.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="45.0" />
-      
-      
-      
-      <AnchorPane prefHeight="45.0" prefWidth="600.0" style="-fx-background-color: lightBlue;" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <children>
-            <JFXHamburger fx:id="hamburger" layoutX="14.0" layoutY="13.0" />
+            <JFXHamburger fx:id="hamburger" alignment="CENTER" layoutX="14.0" layoutY="13.0">
+               <cursor>
+                  <Cursor fx:constant="HAND" />
+               </cursor></JFXHamburger>
+            <HBox alignment="CENTER" layoutX="613.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <Label fx:id="lblUser" text="Welcome, &lt;username&gt;!" />
+                  <Region prefHeight="45.0" prefWidth="20.0" />
+                  <Circle fx:id="imgAvatar" fill="#ffffff00" radius="20.0" stroke="TRANSPARENT" strokeType="INSIDE" />
+                  <Region prefHeight="45.0" prefWidth="11.0" />
+               </children>
+            </HBox>
          </children>
       </AnchorPane>
    </children>

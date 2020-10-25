@@ -25,11 +25,17 @@ public class ArrayUtils {
             return newArray;
         }
         
+        if (array[0]==null)
+            array[0] = data;
+        
         for (T obj : array)
             if (obj.equals(data))
                 return array; // Already there.
-        for (int i = 0; i<array.length; i++)
-            newArray[i] = array[i];
+        
+        for (int i = 0; i<array.length; i++) {
+            if (array[i]!=null)
+                newArray[i] = array[i];
+        }
         
         newArray[array.length] = data;
         return newArray;
@@ -64,5 +70,14 @@ public class ArrayUtils {
         if (shift==0) // Wait a minute... we never found our data???
             return array;
         return newArray;
+    }
+    
+    public static <T> boolean contains(T[] array, T data) {
+        if (array.length == 0)
+            return false;
+        for (T obj : array)
+            if (obj.equals(data))
+                return true;
+        return false;
     }
 }

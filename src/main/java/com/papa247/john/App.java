@@ -19,12 +19,24 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        System.out.println("Loading main window...");
-        scene = new Scene(loadFXML("MainWindow"), 640, 480);
-        stage.setTitle("TeamPAPA: Project John");
-        stage.setScene(scene);
-        stage.show();
-        
+        try {
+            System.out.println("Papa is in the house!");
+            System.out.println("Loading main window...");
+            scene = new Scene(loadFXML("MainWindow"), 640, 480);
+            stage.setTitle("TeamPAPA: Project John");
+            stage.setScene(scene);
+            stage.show();
+            
+            // TODO: Loading screen
+            // It may take some time to load the database, so a welcome screen would be nice.
+            // Also, this needs to load in a FX thread because of the message boxes
+            DataBases.load();
+        } catch(Exception e) {
+            System.out.println("We crashed.");
+            com.papa247.john.UIComponents.AlertWindows.showException("Program crash", "It appears we have crashed.", "The John program has closed unsuccessfully.", e);
+            e.printStackTrace();
+            System.exit(1);
+        }       
     }
 
     static void setRoot(String fxml) throws IOException {
@@ -37,16 +49,9 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("Papa is in the house!");
-        
-        try {
-            launch();
-        } catch(Exception e) {
-            System.out.println("We crashed.");
-            com.papa247.john.UIComponents.AlertWindows.showException("Program crash", "It appears we have crashed.", "The John program has closed unsuccessfully.", e);
-            System.exit(1);
-        }
-        
+        launch();
+        DataBases.save();
+        System.out.println("Goodbye :(");
         System.exit(0);
     }
 

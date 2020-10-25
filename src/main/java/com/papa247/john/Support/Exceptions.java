@@ -61,9 +61,17 @@ public class Exceptions  {
     
     
     public static class PasswordComplexityNotMet extends RuntimeException {
-        private static final long serialVersionUID = 1005;
+        private static final long serialVersionUID = 1006;
 
         public PasswordComplexityNotMet(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+    
+    public static class InvalidUserJSON extends RuntimeException {
+        private static final long serialVersionUID = 1007;
+
+        public InvalidUserJSON(String errorMessage) {
             super(errorMessage);
         }
     }

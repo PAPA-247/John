@@ -11,5 +11,23 @@ public enum Extensions {
     CLOSET_UTILITY,
     CLOSET_WALKIN,
     CLOSET_LARGE,
-    CLOSET
+    CLOSET,
+    NONE;
+
+    public static Extensions fromString(String s) {
+    	switch(s) {
+    		case "CLOSET_COMMON":
+    			return Extensions.CLOSET_COMMON;
+			case "CLOSET_UTILITY":
+				return Extensions.CLOSET_UTILITY;
+			case "CLOSET_WALKIN":
+				return Extensions.CLOSET_WALKIN;
+			case "CLOSET_LARGE":
+				return Extensions.CLOSET_LARGE;
+			case "CLOSET":
+				return Extensions.CLOSET;
+			default:
+				return Extensions.NONE;
+    	}
+    }
 }

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXPasswordField?>
+<?import com.jfoenix.controls.JFXRadioButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="515.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.LoginWindowController">
+   <children>
+      <AnchorPane fx:id="apLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #404040;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="50.0" layoutY="220.0" prefHeight="85.0" prefWidth="300.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="210.0">
+               <children>
+                  <JFXTextField fx:id="txtUsername" layoutY="8.0" onAction="#txtUsernameNext" prefHeight="25.0" prefWidth="218.0" promptText="Username" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXPasswordField fx:id="txtPassword" onAction="#txtPasswordNext" promptText="Password" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+               </children>
+            </AnchorPane>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutX="150.0" layoutY="139.0" text="Welcome" textFill="WHITE" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="115.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="158.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="160.0" />
+            <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="174.0" layoutY="347.0" onAction="#loginUser" text="Login" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="345.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnRegister" buttonType="RAISED" layoutX="173.0" layoutY="375.0" onAction="#registerUser" text="Register" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="390.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <!-- <JFXSpinner fx:id="spinner" disable="true" layoutX="175.0" layoutY="360.0" visible="false" /> -->
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apRegister" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #404040;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="50.0" layoutY="115.0" prefHeight="315.0" prefWidth="310.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="115.0">
+               <children>
+                  <JFXTextField fx:id="txtUsernameR" layoutY="8.0" onAction="#txtUsernameRNext" promptText="Username" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXPasswordField fx:id="txtPasswordR" layoutY="45.0" onAction="#txtPasswordRNext" promptText="Password" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="45.0" />
+                  <JFXTextField fx:id="txtFirstName" layoutX="7.0" layoutY="94.0" onAction="#txtFirstNameNext" promptText="First name" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="100.0" />
+                  <JFXTextField fx:id="txtLastName" layoutX="175.0" layoutY="98.0" onAction="#txtLastNameNext" promptText="Last name" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="100.0" />
+                  <JFXTextField fx:id="txtEmail" layoutY="154.0" onAction="#txtEmailNext" prefHeight="25.0" prefWidth="310.0" promptText="Email" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="155.0" />
+                  <Label layoutX="138.0" layoutY="192.0" text="I am a:" textFill="WHITE" AnchorPane.leftAnchor="138.0" AnchorPane.rightAnchor="137.0" AnchorPane.topAnchor="205.0" />
+                  <Group />
+                  <JFXRadioButton fx:id="radStudent" layoutY="231.0" onAction="#radCheck" onKeyPressed="#radCheckKey" text="Student" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="230.0">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="accountType" />
+                     </toggleGroup>
+                  </JFXRadioButton>
+                  <JFXRadioButton fx:id="radOwner" layoutX="124.0" layoutY="231.0" onAction="#radCheck" onKeyPressed="#radCheckKey" text="Owner" textFill="WHITE" toggleGroup="$accountType" AnchorPane.topAnchor="230.0" />
+                  <JFXRadioButton fx:id="radRealtor" layoutX="239.0" layoutY="231.0" onAction="#radCheck" onKeyPressed="#radCheckKey" text="Realtor" textFill="WHITE" toggleGroup="$accountType" AnchorPane.topAnchor="230.0" />
+                  <JFXTextField fx:id="txtStudentID" disable="true" layoutY="270.0" onAction="#txtStudentIDNext" prefHeight="25.0" prefWidth="310.0" promptText="StudentID" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="275.0" />
+               </children>
+            </AnchorPane>
+            <Label alignment="CENTER" layoutX="141.0" layoutY="49.0" text="Hello there" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblError1" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="84.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="84.0" />
+            <JFXButton fx:id="btnRegisterFinal" buttonType="RAISED" layoutX="50.0" layoutY="434.0" onAction="#registerUserFinal" text="Register" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="434.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

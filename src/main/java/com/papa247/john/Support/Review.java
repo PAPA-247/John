@@ -43,7 +43,11 @@ public class Review {
      * "Create" a review (object) from a JSONObject
      */
     public Review(JSONObject reviewObj) {
-        author = DataBases.getUser(reviewObj.getString("author"), DataBases.UsernameLookupType.username);
+        this(reviewObj, DataBases.getUser(reviewObj.getString("author"), DataBases.UsernameLookupType.username));
+    }
+    
+    public Review(JSONObject reviewObj, User user) {
+        author = user;
         rating = reviewObj.getDouble("rating");
         title = reviewObj.getString("title");
         contents = reviewObj.getString("contents");
@@ -51,9 +55,17 @@ public class Review {
         targetType = TargetType.fromNum(reviewObj.getInt("targetType"));
         
         if (targetType == TargetType.User)
-            target = new Target(DataBases.getUser(reviewObj.getString("target"), DataBases.UsernameLookupType.username));
+            try {
+                target = new Target(DataBases.getUser(reviewObj.getString("target"), DataBases.UsernameLookupType.username));
+            } catch(Exceptions.NoSuchUserFound e) {
+                
+            }
         else
-            target = new Target(DataBases.getAddress(reviewObj.getInt("target")));
+            try {
+                target = new Target(DataBases.getAddress(reviewObj.getInt("target")));
+            } catch(Exceptions.NoSuchAddressFound e) {
+                
+            }
     }
     
     /*

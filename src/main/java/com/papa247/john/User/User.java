@@ -36,12 +36,15 @@ public class User {
 	public String phoneNumber;         // ...
 	public String emailAddress;        // ...
 	public String studentID;		   // ...
-	public AccountType accountType;     // Owner, Student, Admin, etc
+	public String profilePhotoURL;     // Profile photo (hosted on projects.cnewb.co/PAPA247/John/Avatars/ most likely)
+	public AccountType accountType;    // Owner, Student, Admin, etc
 	public Listing[] savedListings = new Listing[0];   // Favorites
 	private Review[] reviews = new Review[0];          // Saved with User data
 	public Address[] ownedAddresses = new Address[0];  // Owner
 	public Listing[] ownedListings = new Listing[0];   // Owner
 
+	private JSONArray _reviews;        // We have to renders these AFTER loading the other data
+	
 	// Password stuff (sensitive stuff)
 	/**
 	 * @see <a href="http://stackoverflow.com/a/2861125/3474">StackOverflow</a>
@@ -144,43 +147,63 @@ public class User {
 	 */
     public User(JSONObject jo) {
         this.random = new SecureRandom();
-        
-        username = jo.getString("username");
 
-        username = jo.getString("username");
-		firstName = jo.getString("firstName");
-		middleName = jo.getString("middleName");
-		lastName = jo.getString("lastName");
-		phoneNumber = jo.getString("phoneNumber");
-		emailAddress = jo.getString("emailAddress");
-		studentID = jo.getString("studentID");
-		accountType = AccountType.fromNum(jo.getInt("accountType"));
-		
+        if (!jo.has("username") || !jo.has("token"))
+        	throw new Exceptions.InvalidUserJSON("No a valid user JSONObject.");
+        	
+        if (jo.has("username"))
+        	username = jo.getString("username");
+
+        if (jo.has("firstName"))
+			firstName = jo.getString("firstName");
+		if (jo.has("middleName"))
+		    middleName = jo.getString("middleName");
+		if (jo.has("lastName"))
+			lastName = jo.getString("lastName");
+		if (jo.has("phoneNumber"))
+			phoneNumber = jo.getString("phoneNumber");
+		if (jo.has("emailAddress"))
+			emailAddress = jo.getString("emailAddress");
+		if (jo.has("studentID"))
+			studentID = jo.getString("studentID");
+		if (jo.has("accountType"))
+			accountType = AccountType.fromNum(jo.getInt("accountType"));
+
 		savedListings = new Listing[0];
-		jo.getJSONArray("saveListings").forEach(lID -> {
-		    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-		    savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
-		});
+//		JSONArray ja = new JSONArray(jo.getString("savedListings"));
+		if (jo.has("savedListings"))
+			jo.getJSONArray("savedListings").forEach(lID -> {
+			    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
+			    savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
+			});
 		
 		ownedListings = new Listing[0];
-        jo.getJSONArray("ownedListings").forEach(lID -> {
-            Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-            ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
-        });
+		if (jo.has("ownedListings"))
+        	jo.getJSONArray("ownedListings").forEach(lID -> {
+            	Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
+            	ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
+        	});
         
         ownedAddresses = new Address[0];
-        jo.getJSONArray("ownedAddresses").forEach(lID -> {
-            Address address = DataBases.getAddress(Integer.parseInt((String) lID));
-            ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
-        });
+        if (jo.has("ownedAddresses"))
+        	jo.getJSONArray("ownedAddresses").forEach(lID -> {
+            	Address address = DataBases.getAddress(Integer.parseInt((String) lID));
+            	ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
+        	});
     
         reviews = new Review[0];
-        jo.getJSONArray("reviews").forEach(lID -> {
-            reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], new Review((JSONObject) lID));
-        });
+        if (jo.has("reviews"))
+	        _reviews = jo.getJSONArray("reviews");
     
-        
-        token = jo.getString("token");
+        if (jo.has("token"))
+	        token = jo.getString("token");
+    }
+    
+    public void renderReviews() {
+        if (reviews.length==0)
+            _reviews.forEach(lID -> {
+                reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], new Review((JSONObject) lID)); // probably not a good idea to setup reviews now..?
+            });
     }
     
     /**
@@ -290,5 +313,13 @@ public class User {
 	public boolean delete() {
 		DataBases.removeUser(this);
 		return save();
+	}
+	
+	@Override
+	public boolean equals(Object user) {
+	    User usr = (User) user;
+	    if (usr.username.equalsIgnoreCase(this.username))
+	        return true;
+	    return false;
 	}
 }
