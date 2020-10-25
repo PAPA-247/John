@@ -27,7 +27,7 @@ public class App extends Application {
             stage.setScene(scene);
             stage.show();
             
-            // TODO: Loading screen
+            // TODO [#3]: Loading screen
             // It may take some time to load the database, so a welcome screen would be nice.
             // Also, this needs to load in a FX thread because of the message boxes
             DataBases.load();
