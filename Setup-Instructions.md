@@ -35,5 +35,8 @@
 
 9) Click "Finish"
 
+
+**IMPORTANT** You _need_ to (Setup JDK11!)[/Eclipse%20How-To.md#set-eclipse-to-run-jdk11] Besure you do that, otherwise you're going to see about several hundred errors.
+
 That's it
 (It may take a few seconds to build, however)
