@@ -112,7 +112,7 @@ public class MainWindowController implements Initializable {
                                 switch(node2.getId()) {
                                     case "btnDebug": // This 'node2' is the debug button 
                                         node2.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
-                                            openNewWindow("UIComponents/DebugWindow","Debug");
+                                            openNewWindow("Windows/DebugWindow","Debug");
                                         });
                                         break;
                                 }
@@ -149,7 +149,6 @@ public class MainWindowController implements Initializable {
                 imgAvatar.setFill(new ImagePattern(stockImage));
             }
             
-            
             // Account Menu
             setupAccountMenu(false);
             
@@ -173,7 +172,7 @@ public class MainWindowController implements Initializable {
             if (Session.user!=null) {
                 if (index == 0) { // My Account
                     System.out.println("[Account Menu] Opening account settings");
-                    // openNewWindow();
+                     Session.openMyAccount();
                     
                 } else if (index == 1) { // My Favorites
                     System.out.println("[Account Menu] Switching to favorites view");
@@ -196,10 +195,11 @@ public class MainWindowController implements Initializable {
                     System.out.println("[Account Menu] Logging in");
                     // Login
                     
-                    Stage stage = getNewWindow("UIComponents/LoginWindow", 450, 515);
-                    stage.setTitle("Login");
-                    stage.setResizable(false);
-                    stage.showAndWait();
+//                    Stage stage = getNewWindow("Windows/UserWindow", 450, 515);
+//                    stage.setTitle("Login");
+//                    stage.setResizable(false);
+//                    stage.showAndWait();
+                    Session.login();
                     
                     if (Session.user==null) {
                         System.out.println("[Account Menu] User not assigned in session. Did login get canceled?");

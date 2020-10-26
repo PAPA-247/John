@@ -13,7 +13,6 @@ import org.json.JSONObject;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXSpinner;
 import com.jfoenix.controls.JFXTextField;
 import com.papa247.john.App;
 import com.papa247.john.DataBases;
@@ -29,10 +28,11 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
-public class LoginWindowController {
+public class UserWindowController {
 
+    public boolean myAccountView = false;
+    
     @FXML
     private AnchorPane apLogin;
 
@@ -53,6 +53,9 @@ public class LoginWindowController {
 
     @FXML
     private AnchorPane apRegister;
+    
+    @FXML
+    private AnchorPane apMyAccount;
 
     @FXML
     private JFXTextField txtUsernameR;
@@ -89,6 +92,73 @@ public class LoginWindowController {
 
     @FXML
     private JFXButton btnRegisterFinal;
+    
+    @FXML
+    private JFXTextField txtMAFirstName;
+
+    @FXML
+    private JFXTextField txtMALastName;
+
+    @FXML
+    private JFXTextField txtMAEmail;
+
+    @FXML
+    private JFXTextField txtMAPhoneNumber;
+
+    @FXML
+    private Label lblMAStudentID;
+
+    @FXML
+    private JFXTextField txtMAStudentID;
+
+    @FXML
+    private Label lblMAStudentID1;
+
+    @FXML
+    private JFXPasswordField txtMAPasswordOld;
+
+    @FXML
+    private Label lblMAStudentID11;
+
+    @FXML
+    private JFXPasswordField txtMAPasswordNew;
+
+    @FXML
+    private Label lblMyAccountHeader;
+
+    @FXML
+    private Label lblMAError;
+
+    @FXML
+    private JFXButton btnApplyClose;
+
+    @FXML
+    private JFXButton btnMAApply;
+
+    
+    
+    
+    public void myAccount() {
+        if (Session.user==null) {
+            if (!Session.login())
+                return;
+        }
+        
+        System.out.println("[UserWindow] My Account View");
+        
+        apLogin.setVisible(false);
+        apLogin.setDisable(true);
+        apRegister.setVisible(false);
+        apRegister.setDisable(true);
+        
+        apMyAccount.setVisible(true);
+        apMyAccount.setDisable(false);
+        
+        lblMyAccountHeader.setText("Hello, " + Session.user.firstName);
+        loadAccount();
+    }
+    
+    
     
     /**
      * Called when the login button is clicked
@@ -254,6 +324,67 @@ public class LoginWindowController {
         registerUserFinal(null);
     }
 
+    
+    // My Account
+    public void loadAccount() {
+        User user = Session.user;
+        txtMAFirstName.setText(user.firstName);
+        txtMALastName.setText(user.lastName);
+        txtMAEmail.setText(user.emailAddress);
+        txtMAPhoneNumber.setText(user.phoneNumber);
+        if (user.accountType == AccountType.STUDENT) {
+            lblMAStudentID.setVisible(true);
+            lblMAStudentID.setDisable(false);
+            txtMAStudentID.setVisible(true);
+            txtMAStudentID.setDisable(false);
+            txtMAStudentID.setText(user.studentID);
+        } else {
+            lblMAStudentID.setVisible(false);
+            lblMAStudentID.setDisable(true);
+            txtMAStudentID.setVisible(false);
+            txtMAStudentID.setDisable(true);
+        }
+    }
+    
+    public void saveAccount() {
+        User user = Session.user;
+        user.firstName = txtMAFirstName.getText();
+        user.lastName = txtMALastName.getText();
+        user.emailAddress = txtMAEmail.getText();
+        user.phoneNumber = txtMAPhoneNumber.getText();
+        
+        if (user.accountType == AccountType.STUDENT)
+            user.studentID = txtMAStudentID.getText();
+        
+        // Password
+        if (!txtMAPasswordOld.getText().equals("") && !txtMAPasswordNew.getText().equals("")) {
+            if (txtMAPasswordNew.getText().length()<4) {
+                lblMAError.setText("Password too short!");
+            } else if (user.isPassword(txtMAPasswordOld.getText().toCharArray())) {
+                user.setPassword(txtMAPasswordNew.getText().toCharArray());
+            } else {
+                lblMAError.setText("Old password incorrect!");
+            }
+        }
+        
+        DataBases.save();
+        txtMAPasswordNew.setText("");
+        txtMAPasswordOld.setText("");
+    }
+    
+    @FXML
+    void myAccountApply(ActionEvent event) {
+        saveAccount();
+    }
+
+    @FXML
+    void myAccountApplyClose(ActionEvent event) {
+        saveAccount();
+        Stage stage = (Stage) btnLogin.getScene().getWindow();
+        stage.close();
+    }
+    
+    
     
 
 }

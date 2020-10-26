@@ -38,7 +38,7 @@ public class DebugWindowController {
     void loginWindow(ActionEvent event) {
         System.out.println("'Show login window' clicked");
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("LoginWindow.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UserWindow.fxml"));
             Parent root = (Parent)loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
@@ -48,9 +48,14 @@ public class DebugWindowController {
             stage.centerOnScreen();
             stage.show();
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+    
+    @FXML
+    void manageAccount(ActionEvent event) {
+        System.out.println("Showing My Account window");
+        
     }
 }
 

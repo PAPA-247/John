@@ -23,8 +23,9 @@ public class App extends Application {
         try {            
             System.out.println("Papa is in the house!");
             
+            // This doesn't really work (just black when loading), so we don't use it for now.
             System.out.println("[App] Loading splash screen");
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/SplashScreen" + ".fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Windows/SplashScreen" + ".fxml"));
             Parent root = (Parent) fxmlLoader.load();
             SplashScreenController splashScreenController = fxmlLoader.getController();
             Scene splashScene = new Scene(root, 640,320);
@@ -37,6 +38,10 @@ public class App extends Application {
             
             System.out.println("Loading main window...");
             scene = new Scene(loadFXML("MainWindow"), 640, 480);
+            stage.setOnCloseRequest(e -> {
+                System.out.println("[MainWindow] Closing...");
+                DataBases.save();
+            });
             stage.setTitle("TeamPAPA: Project John");
             stage.setScene(scene);
             stage.show();
@@ -59,7 +64,6 @@ public class App extends Application {
 
     public static void main(String[] args) {
         launch();
-        DataBases.save();
         System.out.println("Goodbye :(");
         System.exit(0);
     }

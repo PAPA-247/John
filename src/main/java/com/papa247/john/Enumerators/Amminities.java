@@ -31,6 +31,8 @@ public enum Amminities {
     ELECTRIC_CAR_CHARGER,
     FURNISHED_PARTIALLY,
     FURNISHED_FULLY,
+    GYM,
+    UTILITIES_INCLUDED,
     NONE;
 
     public static Amminities fromString(String s) {

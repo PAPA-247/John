@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="515.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.LoginWindowController">
+<AnchorPane prefHeight="560.0" prefWidth="410.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.UserWindowController">
    <children>
       <AnchorPane fx:id="apLogin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #404040;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -67,6 +67,44 @@
             </Label>
             <Label fx:id="lblError1" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="84.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="84.0" />
             <JFXButton fx:id="btnRegisterFinal" buttonType="RAISED" layoutX="50.0" layoutY="434.0" onAction="#registerUserFinal" text="Register" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="434.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="apMyAccount" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="410.0" style="-fx-background-color: #404040;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="50.0" layoutY="94.0" prefHeight="355.0" prefWidth="310.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="95.0">
+               <children>
+                  <Label layoutX="7.0" layoutY="6.0" text="First name" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <JFXTextField fx:id="txtMAFirstName" layoutX="1.0" layoutY="17.0" promptText="First name" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                  <Label layoutX="173.0" layoutY="6.0" text="Last name" textFill="WHITE" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="0.0" />
+                  <JFXTextField fx:id="txtMALastName" layoutX="172.0" layoutY="17.0" promptText="Last name" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="175.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0" />
+                  <Label layoutX="7.0" layoutY="57.0" text="Email" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="65.0" />
+                  <JFXTextField fx:id="txtMAEmail" layoutX="1.0" layoutY="82.0" prefHeight="25.0" prefWidth="310.0" promptText="Email" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0" />
+                  <Label layoutX="6.0" layoutY="125.0" text="Phone number" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="130.0" />
+                  <JFXTextField fx:id="txtMAPhoneNumber" layoutY="147.0" prefHeight="25.0" prefWidth="310.0" promptText="Phone number" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="150.0" />
+                  <Label fx:id="lblMAStudentID" disable="true" layoutY="196.0" text="StudentID" textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="196.0" />
+                  <JFXTextField fx:id="txtMAStudentID" disable="true" layoutY="216.0" prefHeight="25.0" prefWidth="310.0" promptText="StudentID" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="216.0" />
+                  <Label fx:id="lblMAStudentID1" layoutX="1.0" layoutY="261.0" text="Old password" textFill="WHITE" AnchorPane.topAnchor="261.0" />
+                  <JFXPasswordField fx:id="txtMAPasswordOld" layoutY="281.0" prefHeight="25.0" prefWidth="310.0" promptText="Password" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="281.0" />
+                  <Label fx:id="lblMAStudentID11" layoutX="1.0" layoutY="326.0" text="New password" textFill="WHITE" AnchorPane.topAnchor="326.0" />
+                  <JFXPasswordField fx:id="txtMAPasswordNew" layoutY="346.0" prefHeight="25.0" prefWidth="310.0" promptText="Password" style="-fx-text-inner-color: #FFFFFF; -fx-prompt-text-fill: #AAAAAA;" unFocusColor="#909090" AnchorPane.topAnchor="346.0" />
+               </children>
+            </AnchorPane>
+            <Label fx:id="lblMyAccountHeader" alignment="CENTER" layoutY="35.0" text="Hello, " textFill="WHITE" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="35.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblMAError" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="71.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="71.0" />
+            <JFXButton fx:id="btnMAApply" buttonType="RAISED" layoutX="50.0" layoutY="501.0" onAction="#myAccountApply" prefHeight="35.0" prefWidth="310.0" text="Apply" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="64.0" AnchorPane.topAnchor="501.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </JFXButton>
+            <JFXButton fx:id="btnApplyClose" buttonType="RAISED" layoutX="50.0" layoutY="545.0" onAction="#myAccountApplyClose" prefHeight="35.0" prefWidth="310.0" text="Apply and close" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="545.0">
                <font>
                   <Font size="14.0" />
                </font>
