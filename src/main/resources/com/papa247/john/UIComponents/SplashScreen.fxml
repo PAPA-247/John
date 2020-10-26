@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.LinearGradient?>
+<?import javafx.scene.paint.Stop?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="300.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(from 100% 0% to 0% 100%, #7DC5B7, #8AC383);;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.SplashScreenController">
+   <children>
+      <Label alignment="CENTER" layoutY="115.0" text="John" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="48.0" />
+         </font>
+         <textFill>
+            <LinearGradient endX="0.9857142857142858" endY="0.09047619047619047" startY="1.0">
+               <stops>
+                  <Stop color="WHITE" />
+                  <Stop color="WHITE" offset="0.6781609195402296" />
+                  <Stop color="#9a9a9a" offset="1.0" />
+               </stops>
+            </LinearGradient>
+         </textFill>
+      </Label>
+      <Label layoutX="446.0" layoutY="350.0" text="Team PAPA" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <ImageView fitHeight="400.0" fitWidth="600.0" pickOnBounds="true" preserveRatio="true" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <image>
+            <Image url="@../../../../../../../Cover.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="lblVersion" layoutX="31.0" layoutY="262.0" text="Version 1.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="20.0" />
+      <Label fx:id="lblStatus" alignment="CENTER" contentDisplay="CENTER" layoutX="286.0" layoutY="185.0" textFill="#e4e4e4" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

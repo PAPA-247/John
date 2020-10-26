@@ -75,4 +75,12 @@ public class Exceptions  {
             super(errorMessage);
         }
     }
+    
+    public static class InvalidJSON extends RuntimeException {
+        private static final long serialVersionUID = 1008;
+
+        public InvalidJSON(String errorMessage) {
+            super(errorMessage);
+        }
+    }
 }

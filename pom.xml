@@ -69,8 +69,13 @@ SimpleJSON: an improved version of https://github.com/fangyidong/json-simple. It
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.8.0</version>
                 <configuration>
-                    <release>11</release>
-                </configuration>
+				    <archive>
+				        <manifest>
+				            <mainClass>org.programirame.Main</mainClass>
+				            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+				        </manifest>
+				    </archive>
+				</configuration>
             </plugin>
             <plugin>
 			    <groupId>org.openjfx</groupId>

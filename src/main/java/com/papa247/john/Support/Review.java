@@ -42,27 +42,26 @@ public class Review {
     /*
      * "Create" a review (object) from a JSONObject
      */
-    public Review(JSONObject reviewObj) {
-        this(reviewObj, DataBases.getUser(reviewObj.getString("author"), DataBases.UsernameLookupType.username));
-    }
-    
-    public Review(JSONObject reviewObj, User user) {
-        author = user;
-        rating = reviewObj.getDouble("rating");
-        title = reviewObj.getString("title");
-        contents = reviewObj.getString("contents");
+    public Review(JSONObject jo) {
+        if (!jo.has("author") || !jo.has("rating") || !jo.has("title") || !jo.has("targetType") || !jo.has("target"))
+            throw new Exceptions.InvalidJSON("Invalid JSON data passed.");
         
-        targetType = TargetType.fromNum(reviewObj.getInt("targetType"));
+        author = DataBases.getUser(jo.getString("author"), DataBases.UsernameLookupType.username);
+        rating = jo.getDouble("rating");
+        title = jo.getString("title");
+        contents = jo.getString("contents");
+        
+        targetType = TargetType.fromNum(jo.getInt("targetType"));
         
         if (targetType == TargetType.User)
             try {
-                target = new Target(DataBases.getUser(reviewObj.getString("target"), DataBases.UsernameLookupType.username));
+                target = new Target(DataBases.getUser(jo.getString("target"), DataBases.UsernameLookupType.username));
             } catch(Exceptions.NoSuchUserFound e) {
                 
             }
         else
             try {
-                target = new Target(DataBases.getAddress(reviewObj.getInt("target")));
+                target = new Target(DataBases.getAddress(jo.getInt("target")));
             } catch(Exceptions.NoSuchAddressFound e) {
                 
             }

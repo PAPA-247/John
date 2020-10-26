@@ -105,12 +105,9 @@ public class MainWindowController implements Initializable {
             // This gets nasty...
             for (Node node : box.getChildren()) { // For every object in our AnchorPane (which is just a button and a vbox)
                 if (node.getId() != null) { // Check if the accessible text is empty...
-                    System.out.println(node.getId());
                     if (node.getId().equals("vbox")) { // If it is not and equals 'vbox' we know this is our vbox object
                         // VBox
-                        System.out.println("VBox got");
                         for (Node node2 : ((Pane) node).getChildren()) { // Round two, check the vbox's children
-                            System.out.println("Item");
                             if (node2.getId()!= null) { // Accessible text there...
                                 switch(node2.getId()) {
                                     case "btnDebug": // This 'node2' is the debug button 
@@ -124,7 +121,8 @@ public class MainWindowController implements Initializable {
                     } else if (node.getId().equals("btnExit")) {
                         node.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
                             System.out.println("Exiting...");
-                            // Later, save the database
+                            Session.logout();
+                            DataBases.save();
                             System.exit(0);
                         });
                     }
@@ -132,7 +130,7 @@ public class MainWindowController implements Initializable {
             }
                         
             hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
-                System.out.println("Menu clicked");
+                System.out.println("[MainWindow] Drawer opened");
                 if (drawer.isOpened() || drawer.isOpening())
                     drawer.close();
                 else
@@ -141,6 +139,7 @@ public class MainWindowController implements Initializable {
             });
             
             if (App.debug) {
+                System.out.println("[MainWindow] Debug mode active! Filling in blank data");
                 // Set Avatar (testing)
                 Image im = new Image(getClass().getResource("Images/Billy.jpg").toString(), false);
                 imgAvatar.setFill(new ImagePattern(im));
@@ -154,6 +153,7 @@ public class MainWindowController implements Initializable {
             // Account Menu
             setupAccountMenu(false);
             
+            DataBases.load();
             
         } catch (IOException e1) {
             System.out.println("Failed to load drawer data! >> Nothing is going to work!! <<");

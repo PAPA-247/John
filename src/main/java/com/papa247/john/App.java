@@ -5,8 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
+import javafx.stage.StageStyle;
 import java.io.IOException;
+import com.papa247.john.UIComponents.SplashScreenController;
 
 /**
  * JavaFX App
@@ -19,18 +20,26 @@ public class App extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        try {
+        try {            
             System.out.println("Papa is in the house!");
+            
+            System.out.println("[App] Loading splash screen");
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/SplashScreen" + ".fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            SplashScreenController splashScreenController = fxmlLoader.getController();
+            Scene splashScene = new Scene(root, 640,320);
+            Stage splashScreen = new Stage();
+            splashScreen.initStyle(StageStyle.UNDECORATED);
+            splashScreen.setScene(splashScene);
+            splashScreen.setOnShown(e -> splashScreenController.loaded());
+            //splashScreen.showAndWait(); // Wait for DataBase to finish
+            
+            
             System.out.println("Loading main window...");
             scene = new Scene(loadFXML("MainWindow"), 640, 480);
             stage.setTitle("TeamPAPA: Project John");
             stage.setScene(scene);
             stage.show();
-            
-            // TODO [#3]: Loading screen
-            // It may take some time to load the database, so a welcome screen would be nice.
-            // Also, this needs to load in a FX thread because of the message boxes
-            DataBases.load();
         } catch(Exception e) {
             System.out.println("We crashed.");
             com.papa247.john.UIComponents.AlertWindows.showException("Program crash", "It appears we have crashed.", "The John program has closed unsuccessfully.", e);

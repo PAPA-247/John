@@ -43,6 +43,7 @@ import com.papa247.john.Support.Range;
 import com.papa247.john.UIComponents.AlertWindows;
 import com.papa247.john.User.User;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.Label;
 
 
 public class DataBases {
@@ -785,6 +786,27 @@ public class DataBases {
         if (!okay) return false;
         okay =  DataBases.loadListings(); // This will load the addresses then the listings.
         if (!okay) return false;
+        for (User user : DataBases.getUsers()) {
+            user.renderReviews(); // Update the review objects to point to the proper listings/addresses
+        }
+        return true;
+    }
+    /**
+     * Load and setup all data from the JSON files for the DataBase. Also writes progress to a label
+     * @param statusLabel label to update with our progress
+     * @return load successful
+     */
+    public static boolean load(Label statusLabel) {
+        statusLabel.setText("Loading users");
+        boolean okay = DataBases.loadUsers();
+        if (!okay) return false;
+        statusLabel.setText("Loading addresses");
+        okay = DataBases.loadAddresses();
+        if (!okay) return false;
+        statusLabel.setText("Setting up listings");
+        okay =  DataBases.loadListings(); // This will load the addresses then the listings.
+        if (!okay) return false;
+        statusLabel.setText("Setting up reviews");
         for (User user : DataBases.getUsers()) {
             user.renderReviews(); // Update the review objects to point to the proper listings/addresses
         }
