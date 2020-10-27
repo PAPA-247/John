@@ -7,6 +7,7 @@ package com.papa247.john.Listing;
 
 import org.json.JSONObject;
 import com.papa247.john.Support.Coordinate;
+import com.papa247.john.Support.Review;
 import com.papa247.john.User.User;
 
 public class Address {
@@ -18,6 +19,7 @@ public class Address {
     public String city;
     public int id;
     public Coordinate cords;
+    public String name = "Address";
 
     public Address(JSONObject jsonObject) {
         // TODO Auto-generated constructor stub
@@ -29,13 +31,13 @@ public class Address {
      * @param listing   The listing... to add...
      */
     public void addListing(Listing listing) {
-        // TODO Auto-generated method stub
-        
     }
 
     public JSONObject toJSON() {
-        // TODO Auto-generated method stub
         return null;
+    }
+
+    public void addReviewOf(Review review) {
     }
 
 }

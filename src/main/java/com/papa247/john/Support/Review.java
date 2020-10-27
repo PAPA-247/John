@@ -8,11 +8,21 @@
 
 package com.papa247.john.Support;
 
+import java.io.IOException;
 import org.json.JSONObject;
+import com.papa247.john.App;
 import com.papa247.john.DataBases;
+import com.papa247.john.Enumerators.AccountType;
 import com.papa247.john.Enumerators.TargetType;
 import com.papa247.john.Listing.Address;
+import com.papa247.john.UIComponents.ReviewController;
 import com.papa247.john.User.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+//import javafx.stage.StageStyle;
 
 public class Review {
     /*
@@ -29,14 +39,30 @@ public class Review {
             this.address = address;
         }
         public Target() {}
+        
+        @Override
+        public boolean equals(Object target) {
+            Target tar = (Target) target;
+            if (tar.user!=null) {
+                if (this.user!=null)
+                    return (tar.user.equals(this.user));
+                else
+                    return false;
+            } else {
+                if (this.address!=null)
+                    return (tar.address.equals(this.address));
+                else
+                    return false;
+            }
+        }
     }
     
     public User author;
     public Target target;
     public TargetType targetType;
-    public double rating;
-    public String title;
-    public String contents;
+    public double rating = 0;
+    public String title = "";
+    public String contents = "";
     
     
     /*
@@ -92,7 +118,81 @@ public class Review {
 
     public Review() { // Generate blank target
     }
+    
+    /**
+     * Create a new review of an address. Opens the review 'prompt'
+     * @param author
+     * @param address
+     */
+    public Review(User author, Address address) {
+        targetType = TargetType.Address;
+        if (author.accountType != AccountType.PROPERTYMANAGER && author.accountType != AccountType.REALTOR)
+            leaveReview(author, new Target(address));
+    }
+    /**
+     * Create a new review of a user (owner). Opens the review 'prompt'
+     * @param author
+     * @param user
+     */
+    public Review(User author, User user) {
+        targetType = TargetType.User;
+        if (user.accountType != AccountType.STUDENT)
+            leaveReview(author, new Target(user));
+    }
+    
+    
 
+    public void delete() {
+        // TODO: Notify listing about this
+        // A potential idea is to RE-RENDER *ALL* reviews for everything. We should maybe have a method on addresses to remove reviews... wait
+        // BUT YES. TO-DO, add a .removeReview() method to addresses that removes a review (this object) from its list of reviews (that's it the target of)
+        author.removeReview(this);
+        //target.address.removeReview(this);
+        //target.user.removeReview(this);
+    }
+    
+    
+    private Review leaveReview(User author, Target target) {
+        System.out.println("[Review] Loading review editor");
+        
+        this.author = author;
+        this.target = target;
+        String name;
+        if (targetType == TargetType.User)
+            name = target.user.username;
+        else
+            name = target.address.name;
+        
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Review.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            ReviewController controller = fxmlLoader.getController();
+            Scene reviewScene = new Scene(root, 640,320);
+            Stage reviewScreen = new Stage();
+            reviewScreen.setResizable(false);
+            reviewScreen.setTitle("Review of " + name);
+//            reviewScreen.initStyle(StageStyle.UTILITY);
+            reviewScreen.initModality(Modality.WINDOW_MODAL);
+            reviewScreen.setScene(reviewScene);
+            reviewScreen.setOnShown(e -> {
+                    controller.setup(this);
+                    controller.setEditor(true);
+                });
+            reviewScreen.showAndWait();
+        } catch(IOException e) {
+            
+        }
+        
+        author.addReview(this);
+        if (this.targetType == TargetType.User)
+            this.target.user.addReviewOf(this);
+        else
+            this.target.address.addReviewOf(this);
+        
+        return this;
+    }
+    
+    
     public JSONObject toJSON() {
         if (author == null)
             return new JSONObject();
@@ -110,5 +210,22 @@ public class Review {
         jo.put("contents", contents);
         
         return jo;
+    }
+    
+    
+    @Override
+    public boolean equals(Object review) {
+        Review rvw = (Review) review;
+        
+        if (rvw.author==null || rvw.title == null || rvw.contents == null || rvw.target == null)
+            return false;
+        
+        if (rvw.author.equals(this.author)
+                && rvw.title.equals(this.title)
+                && rvw.contents.equals(this.contents)
+                && rvw.target.equals(this.target)) {
+            return true;
+        }
+        return false;
     }
 }

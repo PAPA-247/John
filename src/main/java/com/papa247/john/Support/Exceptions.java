@@ -60,6 +60,8 @@ public class Exceptions  {
     }
     
     
+    
+    
     public static class PasswordComplexityNotMet extends RuntimeException {
         private static final long serialVersionUID = 1006;
 
@@ -68,13 +70,14 @@ public class Exceptions  {
         }
     }
     
-    public static class InvalidUserJSON extends RuntimeException {
+    public static class InvalidUserJSON extends InvalidJSON {
         private static final long serialVersionUID = 1007;
 
         public InvalidUserJSON(String errorMessage) {
             super(errorMessage);
         }
     }
+    
     
     public static class InvalidJSON extends RuntimeException {
         private static final long serialVersionUID = 1008;
@@ -83,4 +86,24 @@ public class Exceptions  {
             super(errorMessage);
         }
     }
+    
+    
+    
+    public static class LoadFailed extends RuntimeException {
+        private static final long serialVersionUID = 1009;
+
+        public LoadFailed(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+    
+    public static class SaveFailed extends RuntimeException {
+        private static final long serialVersionUID = 1010;
+
+        public SaveFailed(String errorMessage) {
+            super(errorMessage);
+        }
+    }
+    
+    
 }

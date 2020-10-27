@@ -773,56 +773,59 @@ public class DataBases {
         return saveAddresses();
     }
     
-    
-    // TODO [#4]: Return a new exception when save/load fails
-    // Optionally explain why the save/load failed. Either way this will allow our code to react to and explain the problem at hand.
-    
+        
     /**
      * Load and setup all data from JSON files for the DataBase
      * @return load successful
      */
-    public static boolean load() {
+    public static void load() throws Exceptions.SaveFailed {
         boolean okay = DataBases.loadUsers();
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to load users.");
+        
         okay =  DataBases.loadListings(); // This will load the addresses then the listings.
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to load listings.");
+        
         for (User user : DataBases.getUsers()) {
+            user.renderListings();
             user.renderReviews(); // Update the review objects to point to the proper listings/addresses
         }
-        return true;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to render users.");
     }
     /**
      * Load and setup all data from the JSON files for the DataBase. Also writes progress to a label
      * @param statusLabel label to update with our progress
      * @return load successful
      */
-    public static boolean load(Label statusLabel) {
+    public static void load(Label statusLabel) {
         statusLabel.setText("Loading users");
         boolean okay = DataBases.loadUsers();
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to load users.");
+        
         statusLabel.setText("Loading addresses");
         okay = DataBases.loadAddresses();
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to load addresses.");
+        
         statusLabel.setText("Setting up listings");
         okay =  DataBases.loadListings(); // This will load the addresses then the listings.
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to load listings.");
+        
         statusLabel.setText("Setting up reviews");
         for (User user : DataBases.getUsers()) {
             user.renderReviews(); // Update the review objects to point to the proper listings/addresses
         }
-        return true;
+        if (!okay) throw new Exceptions.LoadFailed("Failed to render users.");
     }
     /**
      * Save all database data to JSON files
      * @return save successful
      */
-    public static boolean save() {
+    public static void save() {
         boolean okay = DataBases.saveListings();
-        if (!okay) return false;
-        okay = DataBases.saveAddresses(); // Should already be called by saveListings()
-        if (!okay) return false;
+        if (!okay) throw new Exceptions.SaveFailed("Failed to save listings.");
+        //okay = DataBases.saveAddresses(); // Should already be called by saveListings()
+        //if (!okay) throw new Exceptions.SaveFailed("Failed to save addresses.");
         okay = DataBases.saveUsers();
-        return okay;
+        if (!okay) throw new Exceptions.SaveFailed("Failed to save users.");
     }
     
     

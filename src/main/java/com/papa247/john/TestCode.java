@@ -7,12 +7,20 @@
 
 package com.papa247.john;
 
+import java.io.IOException;
 import java.util.Scanner;
 import com.papa247.john.DataBases.UsernameLookupType;
 import com.papa247.john.Enumerators.AccountType;
 //import com.papa247.john.*;
 import com.papa247.john.Support.*;
+import com.papa247.john.UIComponents.ReviewController;
 import com.papa247.john.User.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 public class TestCode {
     
@@ -84,6 +92,114 @@ public class TestCode {
         DataBases.loadUsers();
         for (User usr : DataBases.getUsers()) {
             System.out.println("Username: " + usr.username + " (email: " + usr.emailAddress + ")");
+        }
+    }
+    
+    public static void reviews() {
+        //System.out.println("Be sure to login as billy first, otherwise you cannot edit the review.");
+        User ogSession = Session.user;
+        
+        User user;
+        try {
+            user = DataBases.getUser("billy", UsernameLookupType.username);
+        } catch (Exceptions.NoSuchUserFound e) {
+            System.out.println("User billy not registered! Cannot test reviews. Make sure you register an account under \"billy\"!");
+            return;
+        }
+        
+        Session.user = user; // logged in now :^)
+        System.out.println("Reviews of billy: ");
+        for (Review review : user.getReviewsOf()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
+        }
+        
+        System.out.println("Creating review object. (We're pointing it to Billy.");
+        Review ourReview = new Review(user, user);
+        
+        System.out.println("Our review (title): " + ourReview.title);
+        System.out.println("Our review (contents): " + ourReview.contents);
+        
+        DataBases.save();
+        
+        System.out.println("Opening review viewer");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Review.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            ReviewController controller = fxmlLoader.getController();
+            Scene reviewScene = new Scene(root, 640,320);
+            Stage reviewScreen = new Stage();
+            reviewScreen.initStyle(StageStyle.UTILITY);
+//            reviewScreen.initModality(Modality.WINDOW_MODAL);
+            reviewScreen.setScene(reviewScene);
+            reviewScreen.setOnShown(e -> controller.setup(ourReview));
+            reviewScreen.showAndWait();
+        } catch (IOException e) {
+            System.out.println("Or not...\n" + e.getMessage());
+        }
+        
+        System.out.println("Reviews of billy: ");
+        for (Review review : user.getReviewsOf()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
+        }
+        
+//        if (ourReview!=null) {
+//            System.out.println("Deleting the review...");
+//            ourReview.delete();
+//        }
+        
+        Session.user = ogSession; // back to normal
+    }
+    
+    public static void deleteReviews() {
+        User user = Session.user;
+        
+        if (user==null) {
+            try {
+                user = DataBases.getUser("billy", UsernameLookupType.username);
+            } catch (Exceptions.NoSuchUserFound e) {
+                System.out.println("No account found, please login first.");
+                return;
+            }
+            System.out.println("Not logged in, using billy.");
+        }
+        
+        System.out.println("Revmoing reviews of " + user.username);
+        
+        for (Review review : user.getReviewsOf()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
+            review.delete();
+        }
+        System.out.println("Revmoing reviews by " + user.username);
+        for (Review review : user.getReviews()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
+            review.delete();
+        }
+    }
+    
+    public static void listReviews(User user) {
+        if (user == null) {
+            user = Session.user;
+            
+            if (user==null) {
+                try {
+                    user = DataBases.getUser("billy", UsernameLookupType.username);
+                } catch (Exceptions.NoSuchUserFound e) {
+                    System.out.println("No account found, please login first.");
+                    return;
+                }
+                System.out.println("Not logged in, using billy.");
+            }
+        }
+        
+        System.out.println("==============\n"
+                + "Reviews by " + user.username);
+        for (Review review : user.getReviews()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
+        }
+        System.out.println("===============\n"
+                + "Reviews of " + user.username);
+        for (Review review : user.getReviewsOf()) {
+            System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
         }
     }
 }

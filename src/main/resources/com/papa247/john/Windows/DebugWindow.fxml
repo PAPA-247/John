@@ -5,23 +5,27 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.DebugWindowController">
+<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="358.0" prefWidth="479.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.DebugWindowController">
   <tabs>
     <Tab text="Test functions">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnCheckUser" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkUser" text="Check UserDB / User" />
-                  <Button layoutX="14.0" layoutY="50.0" mnemonicParsing="false" onAction="#loginWindow" prefHeight="25.0" prefWidth="125.0" text="Login window" />
-                  <Button fx:id="btnListUser" layoutX="159.0" layoutY="14.0" mnemonicParsing="false" onAction="#listUsers" text="List users" />
+                  <Button layoutX="15.0" layoutY="15.0" mnemonicParsing="false" onAction="#loginWindow" prefHeight="25.0" prefWidth="125.0" text="Login window" />
+                  <Button layoutX="14.0" layoutY="65.0" mnemonicParsing="false" onAction="#testReviews" prefHeight="25.0" prefWidth="126.0" text="Test reviews" />
+                  <Button layoutX="14.0" layoutY="133.0" mnemonicParsing="false" onAction="#deleteReviews" prefHeight="25.0" prefWidth="126.0" text="Delete my reviews" />
+                  <Button layoutX="14.0" layoutY="99.0" mnemonicParsing="false" onAction="#listReviews" prefHeight="25.0" prefWidth="126.0" text="List my reviews" />
                </children></AnchorPane>
       </content>
     </Tab>
-    <Tab text="????">
+    <Tab text="Data Base">
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button layoutX="215.0" layoutY="140.0" mnemonicParsing="false" prefHeight="92.0" prefWidth="171.0" text="massive button" />
+                  <Button fx:id="btnCheckUser" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkUser" text="Check UserDB / User" />
+                  <Button fx:id="btnListUser" layoutX="14.0" layoutY="51.0" mnemonicParsing="false" onAction="#listUsers" prefHeight="25.0" prefWidth="126.0" text="List users" />
+                  <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="126.0" text="Load DB" />
+                  <Button layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="126.0" text="Save DB" />
                </children></AnchorPane>
       </content>
     </Tab>

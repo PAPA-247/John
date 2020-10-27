@@ -40,10 +40,14 @@ public class User {
 	public AccountType accountType;    // Owner, Student, Admin, etc
 	public Listing[] savedListings = new Listing[0];   // Favorites
 	private Review[] reviews = new Review[0];          // Saved with User data
+	private Review[] reviewsOf = new Review[0];        // These are the reviews WE'RE a target of (do not save)
 	public Address[] ownedAddresses = new Address[0];  // Owner
 	public Listing[] ownedListings = new Listing[0];   // Owner
 
 	private JSONArray _reviews;        // We have to renders these AFTER loading the other data
+	private JSONArray _savedListings;  // "
+	private JSONArray _ownedAddresses; // "
+	private JSONArray _ownedListings;  // "
 	
 	// Password stuff (sensitive stuff)
 	/**
@@ -131,6 +135,8 @@ public class User {
 		    throw new Exceptions.PasswordComplexityNotMet("Provided password was too sort.");
 		}
 		
+		System.out.println("[User] Changing " + username + "'s password");
+		
 		token = hashPassword(pwd);
 		return save(); // Save changes
 	}
@@ -169,28 +175,20 @@ public class User {
 		if (jo.has("accountType"))
 			accountType = AccountType.fromNum(jo.getInt("accountType"));
 
+		
 		savedListings = new Listing[0];
-//		JSONArray ja = new JSONArray(jo.getString("savedListings"));
 		if (jo.has("savedListings"))
-			jo.getJSONArray("savedListings").forEach(lID -> {
-			    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-			    savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
-			});
+            _savedListings = jo.getJSONArray("savedListings");
 		
 		ownedListings = new Listing[0];
 		if (jo.has("ownedListings"))
-        	jo.getJSONArray("ownedListings").forEach(lID -> {
-            	Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-            	ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
-        	});
-        
-        ownedAddresses = new Address[0];
-        if (jo.has("ownedAddresses"))
-        	jo.getJSONArray("ownedAddresses").forEach(lID -> {
-            	Address address = DataBases.getAddress(Integer.parseInt((String) lID));
-            	ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
-        	});
+            _ownedListings = jo.getJSONArray("ownedListings");
+		
+		ownedAddresses = new Address[0];
+		if (jo.has("ownedAddresses"))
+            _ownedAddresses = jo.getJSONArray("ownedAddresses");
     
+		
         reviews = new Review[0];
         if (jo.has("reviews"))
 	        _reviews = jo.getJSONArray("reviews");
@@ -199,12 +197,51 @@ public class User {
 	        token = jo.getString("token");
     }
     
+    /**
+     * JSONObject reviews -> Review reviews.
+     * We do this here because we need to call this AFTER loading the listings/addresses and other users to make sure those objects are setup correctly.
+     */
     public void renderReviews() {
         if (reviews.length==0)
-            _reviews.forEach(lID -> {
-                reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], new Review((JSONObject) lID)); // probably not a good idea to setup reviews now..?
+            _reviews.forEach(reviewObj -> {
+                Review review = new Review((JSONObject) reviewObj);
+                reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], review);
             });
+        
+        for (Review review : reviews) {
+            // Add the review object to the target object :)
+            if (review.targetType == TargetType.User)
+                review.target.user.addReviewOf(review);
+            else
+                review.target.address.addReviewOf(review);
+        }
     }
+    /**
+     * Replaces the listing IDs with actual listing objects
+     */
+    public void renderListings() {
+        if (savedListings.length==0)
+            if (_savedListings!=null)
+                _savedListings.forEach(lID -> {
+                    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
+                    savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
+                });
+        
+        if (ownedListings.length==0)
+            if (_ownedListings!=null)
+                _ownedListings.forEach(lID -> {
+                    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
+                    ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
+                });
+        
+        if (ownedAddresses.length==0)
+            if (_ownedAddresses!=null)
+                _ownedAddresses.forEach(lID -> {
+                    Address address = DataBases.getAddress(Integer.parseInt((String) lID));
+                    ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
+                });
+    }
+    
     
     /**
      * Returns a JSONObject of this class
@@ -279,18 +316,38 @@ public class User {
 	public Review[] getReviews() {
 		return reviews;
 	}
-	public boolean addReview(Review rvw) {
-	    if (rvw.equals(new Review()))
+	public Review[] getReviewsOf() {
+	    return reviewsOf;
+	}
+	public boolean addReview(Review review) {
+	    if (review.equals(new Review()))
             return true; // Blank review
 	    
-	    reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], rvw);
+	    reviews = ArrayUtils.add(reviews, new Review[reviews.length+1], review);
         
         return save();
 	}
-	public boolean removeReview(Review rvw) {
-		reviews = ArrayUtils.remove(reviews, new Review[reviews.length-1], rvw);
-		
+	public boolean addReviewOf(Review review) {
+	    if (review.equals(new Review()))
+            return true; // Blank review
+        
+        reviewsOf = ArrayUtils.add(reviewsOf, new Review[reviewsOf.length+1], review);
+        
+        return save();
+	}
+	
+	
+	public boolean removeReview(Review review) {
+	    if (reviews.length==0)
+	        return true;
+		reviews = ArrayUtils.remove(reviews, new Review[reviews.length-1], review);
 		return save();
+	}
+	public boolean removeReviewOf(Review review) {
+	    if (reviewsOf.length==0)
+            return true;
+	    reviewsOf = ArrayUtils.remove(reviewsOf, new Review[reviewsOf.length-1], review);
+        return save();
 	}
 	
 	public double getRating() {

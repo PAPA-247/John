@@ -7,6 +7,7 @@ package com.papa247.john.UIComponents;
 
 
 import java.io.IOException;
+import com.papa247.john.DataBases;
 import com.papa247.john.TestCode;
 
 import javafx.event.ActionEvent;
@@ -56,6 +57,30 @@ public class DebugWindowController {
     void manageAccount(ActionEvent event) {
         System.out.println("Showing My Account window");
         
+    }
+    
+    @FXML
+    void testReviews(ActionEvent event) {
+        TestCode.reviews();
+    }
+    
+    @FXML
+    void deleteReviews(ActionEvent event) {
+        TestCode.deleteReviews();
+    }
+    
+    @FXML
+    void listReviews(ActionEvent event) {
+        TestCode.listReviews(null);
+    }
+    
+    @FXML
+    void save(ActionEvent event) {
+        DataBases.save();
+    }
+    @FXML
+    void load(ActionEvent event) {
+        DataBases.load();
     }
 }
 

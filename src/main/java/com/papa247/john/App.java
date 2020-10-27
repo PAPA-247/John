@@ -24,15 +24,15 @@ public class App extends Application {
             System.out.println("Papa is in the house!");
             
             // This doesn't really work (just black when loading), so we don't use it for now.
-            System.out.println("[App] Loading splash screen");
-            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Windows/SplashScreen" + ".fxml"));
-            Parent root = (Parent) fxmlLoader.load();
-            SplashScreenController splashScreenController = fxmlLoader.getController();
-            Scene splashScene = new Scene(root, 640,320);
-            Stage splashScreen = new Stage();
-            splashScreen.initStyle(StageStyle.UNDECORATED);
-            splashScreen.setScene(splashScene);
-            splashScreen.setOnShown(e -> splashScreenController.loaded());
+//            System.out.println("[App] Loading splash screen");
+//            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("Windows/SplashScreen" + ".fxml"));
+//            Parent root = (Parent) fxmlLoader.load();
+//            SplashScreenController splashScreenController = fxmlLoader.getController();
+//            Scene splashScene = new Scene(root, 640,320);
+//            Stage splashScreen = new Stage();
+//            splashScreen.initStyle(StageStyle.UNDECORATED);
+//            splashScreen.setScene(splashScene);
+//            splashScreen.setOnShown(e -> splashScreenController.loaded());
             //splashScreen.showAndWait(); // Wait for DataBase to finish
             
             
@@ -41,6 +41,22 @@ public class App extends Application {
             stage.setOnCloseRequest(e -> {
                 System.out.println("[MainWindow] Closing...");
                 DataBases.save();
+            });
+            stage.setOnShown(e -> {
+                System.out.println("[MainWindow] Opened!");
+                if (debug) {
+                    try {
+                        Scene dSc = new Scene(loadFXML("Windows/DebugWindow"), 300, 300);
+                        Stage dSt = new Stage();
+//                        dSt.setAlwaysOnTop(true);
+                        dSt.setScene(dSc);
+                        dSt.show();
+                        dSt.sizeToScene();
+                    } catch (IOException ee) {
+                        System.out.println("Failed to display debug window.");
+                    }
+                }
+                
             });
             stage.setTitle("TeamPAPA: Project John");
             stage.setScene(scene);
