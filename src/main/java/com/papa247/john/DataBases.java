@@ -224,6 +224,13 @@ public class DataBases {
     }
     
         
+    
+    
+    
+    
+    
+    
+    
     // Address API
     /**
      * Returns a unique number to be used for a new address listing. No other Address will have this ID.
@@ -244,6 +251,7 @@ public class DataBases {
         addresses = ArrayUtils.add(addresses, newAddresses, address);
         if (addresses.length==ogLength+1)
             lastAddressID = Math.max(addresses[ogLength].id, lastAddressID);
+        addressListingsToListings();
     }
     /**
      * Removes an address from the addresses array
@@ -255,6 +263,7 @@ public class DataBases {
         
         Address[] newAddresses = new Address[addresses.length-1];
         addresses = ArrayUtils.remove(addresses, newAddresses, address);
+        addressListingsToListings();
     }
     
     /**
@@ -264,7 +273,7 @@ public class DataBases {
      */
     public static Address getAddress(User owner) {
         for (Address address : addresses)
-            if (address.owner.equals(owner))
+            if (address.hasManager(owner))
                 return address;
         
         throw new Exceptions.NoSuchAddressFound("No address found for user " + owner);
@@ -288,7 +297,7 @@ public class DataBases {
      * @return          The address object that owns {listing}
      */
     public static Address getAddress(Listing listing) {
-        return listing.address;
+        return listing.parent;
     }
     
     public static Address getAddress(int lID) {
@@ -313,7 +322,7 @@ public class DataBases {
         for (int i=0; i<length; i++) {
             addAddress(new Address(ja.getJSONObject(i)));
         }        
-        renderListings();
+        addressListingsToListings(); // be sure
         return true;
     }
     /**
@@ -322,7 +331,7 @@ public class DataBases {
      */
     public static boolean saveAddresses() {
         // Save Listings
-        syncListings();        
+        listingsToAddresses();        
         JSONArray ja = new JSONArray();
         for (int i=0; i<addresses.length; i++) {
             ja.put(addresses[i].toJSON().toString());
@@ -331,12 +340,19 @@ public class DataBases {
     }
     
     
+    
+    
+    
+    
+    
+    
+    
     // Listing API
     /**
-     * Not public, but who cares.
      * Fills the listings array using the listing data in the addresses (addresses[i].listings => listings)
+     * From address to the listing array
      */
-    private static void renderListings() {
+    public static void addressListingsToListings() {
         int lID = 0;
         for (Address address : addresses) {
             for (Listing listing : address.listings) {
@@ -347,16 +363,17 @@ public class DataBases {
     }
     /**
      * For each address in each listing we add that listing to the address
+     * So we put all of our Listings objects into their parents
      */
-    private static void syncListings() {
+    public static void listingsToAddresses() {
         for (Listing listing : listings) {
             for (Address address : addresses) {
-                if (address.equals(listing.address)) {
+                if (address.equals(listing.parent)) {
                     address.addListing(listing); // This method SHOULD ignore duplicates...
                 }
             }
         }
-        renderListings(); // we synced the listings, which will include everything
+        addressListingsToListings(); // we synced the listings, which will include everything
     }
     
     /**
@@ -377,6 +394,7 @@ public class DataBases {
         listings = ArrayUtils.add(listings, newListings, listing);
         if (listings.length==ogLength+1)
             lastListingID = Math.max(lastListingID, listings[ogLength].id);
+        listingsToAddresses();
     }
     /**
      * Remove a listing object from the database's listing array. You will need to save the changes.
@@ -385,6 +403,7 @@ public class DataBases {
     public static void removeListing(Listing listing) {
         Listing[] newListings = new Listing[listings.length-1];
         listings = ArrayUtils.remove(listings, newListings, listing);
+        listingsToAddresses();
     }
     
     /**
@@ -406,7 +425,7 @@ public class DataBases {
      */
     public static Listing getListing(String apartmentNumber) {
         for (Listing listing : listings) {
-            if (listing.appartmentNumber.equals(apartmentNumber))
+            if (listing.apartmentNumber.equals(apartmentNumber))
                 return listing;
         }
         throw new Exceptions.NoListingsFound("Failed to find any search results.");
@@ -431,6 +450,7 @@ public class DataBases {
         boolean chkTotalSize = (searchData.totalSize == null)? false : true;
         boolean chkWindowCount = (searchData.windows == null)? false : true;
         boolean chkBedroomSize = (searchData.bedroomSize == null)? false : true;
+        boolean chkAddress = (searchData.addresses == null)? false : true;
         
         boolean chkAmminities = false;
         boolean chkListingType = false;
@@ -440,6 +460,7 @@ public class DataBases {
         boolean chkAppliances = false;
         boolean chkFixtures = false;
         boolean chkFurniture = false;
+        
         
         for (Amminities e : Amminities.values()) {
             if (searchData.amminities.getInt(e.toString()) != 1) {
@@ -493,19 +514,31 @@ public class DataBases {
         Listing[] foundListings = new Listing[listings.length];
         int length = 0;
         for (Listing listing : listings) {
+            if (chkAddress) {
+                boolean match = false;
+                for (int i : searchData.addresses) {
+                    if (i  == listing.parent.id) {
+                        match = true;
+                        break;
+                    }
+                }
+                if (!match)
+                    continue; // This listing is not owned by one of our addresses.
+            }
+            
             if (chkPrice) {
                 if (!searchData.priceRange.within(listing.monthlyPrice))
                     continue;
             }
             if (chkRentLength) {
-                if (!searchData.rentLength.within(listing.rentLength))
+                if (!searchData.rentLength.within(listing.getRentLength()))
                     continue;
             }
-            if (chkOwner) {
-                if (!searchData.owner.equals(listing.owner))
-                    continue;
-
-            }
+//            if (chkOwner) {
+//                if (!searchData.owner.equals(listing.owner))
+//                    continue;
+//
+//            }
             if (chkBedroomCount) {
                 if (!searchData.bedroomCount.within(listing.bedrooms.length))
                     continue;
@@ -768,8 +801,8 @@ public class DataBases {
      * @return if save successful
      */
     public static boolean saveListings() {
-        syncListings();        
-        renderListings();
+        listingsToAddresses();        
+        addressListingsToListings();
         return saveAddresses();
     }
     
@@ -811,6 +844,7 @@ public class DataBases {
         
         statusLabel.setText("Setting up reviews");
         for (User user : DataBases.getUsers()) {
+            user.renderListings();
             user.renderReviews(); // Update the review objects to point to the proper listings/addresses
         }
         if (!okay) throw new Exceptions.LoadFailed("Failed to render users.");
@@ -837,6 +871,7 @@ public class DataBases {
      *
      */
     public static class SearchData {
+        public int[] addresses; // Must be owned by these addresses (USE IDs)!!
         public Range priceRange;
         public Range rentLength;
         public User owner;

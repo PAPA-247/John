@@ -6,110 +6,69 @@
 package com.papa247.john.Listing;
 import java.io.*;
 import java.util.*;
-import org.json.simple.*;
-import org.json.simple.parser.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
+import com.papa247.john.DataBases;
+import com.papa247.john.DataBases.SearchData;
+import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Coordinate;
 import com.papa247.john.Support.Review;
 import com.papa247.john.User.User;
 
 public class Address {
-    JSONParser parser = new JSONParser();
-    public String name = "Address";
-    public String streetAddress;
-    public String city;
-    public String state;
-    public String postalCode;
-    public String country;
-    public Coordinate longitude;
-    public Coordinate latitude;
-    public Review[] reviews;
-    public Listing[] listings;
-    public User[] managers;
-    public int id;
-    public Coordinate cords;
+    public int id;                  // Used to reference this address when an object is not desirable
+    public String name;             // Name of the place.
+    public String streetAddress;    // ..
+    public String city;             // ..
+    public String state;            // ..
+    public String postalCode;       // ..
+    public String country;          // ..
+    
+    public Coordinate longitude;    // The longitude coordinate of this address
+    public Coordinate latitude;     // The latitude coordinate of this address
+    
+    public Review[] reviewsOf;      // Reviews of this address
+    public Listing[] listings;      // Our listings for this address
+    public User[] managers;         // Who manages this address
+    
+    
    
     
 
     public Address(JSONObject jsonObject) {
         if (jsonObject.has("Name"))
-            name = (String)jsonObject.get("Name");
+            name = jsonObject.getString("Name");
         if (jsonObject.has("streetAddress"))
-            streetAddress = (String)jsonObject.get("streetAddress");
+            streetAddress = jsonObject.getString("streetAddress");
         if (jsonObject.has("city"))
-            city = (String)jsonObject.get("city");
+            city = jsonObject.getString("city");
         if (jsonObject.has("state"))
-            state = (String)jsonObject.get("state");
+            state = jsonObject.getString("state");
         if (jsonObject.has("postalCode"))
-            postalCode = (String)jsonObject.get("postalCode");
+            postalCode = jsonObject.getString("postalCode");
         if (jsonObject.has("country"))
-            country= (String)jsonObject.get("country");
+            country= jsonObject.getString("country");
         if (jsonObject.has("longitude"))
-            longitude = (Coordinate)jsonObject.get("longitude"); 
+            longitude = new Coordinate(jsonObject.getJSONObject("longitude"));
         if (jsonObject.has("Latitude"))
-            Latitude = (Coordinate)jsonObject.get("Latitude"); 
+            latitude = new Coordinate(jsonObject.getJSONObject("Latitude")); 
        
+        listings = new Listing[0];
         if(jsonObject.has("listings"))
-           listings = jsonObject.getJSONArray("listings");
+           jsonObject.getJSONArray("listings").forEach(e -> {
+               Listing listing = new Listing((JSONObject) e, this);
+               listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);
+               DataBases.addListing(listing);
+           });
        
+       managers = new User[0];
        if (jsonObject.has("managers"))
-           managers = jsonObject.getJSONArray("managers");
+           jsonObject.getJSONArray("managers").forEach(e -> {
+              User user = new User((JSONObject) e);
+              managers = ArrayUtils.add(managers, new User[managers.length+1], user);
+           });
     }
 
-    /**
-     * This adds a listing to the list of listings
-     * Ignores duplicates
-     * @param listing   The listing... to add...
-     */
-    public void addListing(Listing listing) {
-        for(int i  = 0; i<listings.length;i++) {
-            if(listings[i]==null) {
-                listings[i] = listing;
-            }
-        }
-    }
-    public boolean removeListing(Listing listing) {
-        for(int i  = 0; i<listings.length;i++) {
-            if(listings[i]!=null&&listings[i].equals(listing)) {
-                listings[i] = null;
-                return true;
-            }else {
-                return false;
-            }
-        }
-    }
-    public boolean removeManager(User manager) {
-        for(int i = 0;i<managers.length;i++) {
-            if(managers[i]!=null&&managers[i].equals(manager)) {
-                managers[i] = null;
-                return true;
-            }else {
-                return false;
-            }
-        }
-    }
-    public boolean removeReview(Review review) {
-        for(int i = 0; i<reviews.length;i++) {
-            if(reviews[i]!=null&&revies[i].equals(review)) {
-                reviews[i] = null;
-                return true;
-            }else {
-                return false;
-            }
-        }
-           
-    }
-    public boolean addReview(Review review) {
-        for(int i = 0;i<reviews.length;i++) {
-            if(reviews[i]==null) {
-                reviews[i] = review;
-                return true;
-            }else {
-                return false;
-            }
-        }
-    }
     
     public JSONObject toJSON() {
         JSONObject jo = new JSONObject();
@@ -129,44 +88,100 @@ public class Address {
             ja.put(listing.id);
         jo.put("listings", ja);
         
-        ja = new JSONArray();
-        for (Review review : reviews)
-            ja.put(reviews.target);
-        jo.put("reviews", ja);
         
         ja = new JSONArray();
-        for (User users : managers)
-            ja.put(managers.userName);
+        for (User user : managers)
+            ja.put(user.username);
         jo.put("managers", ja);
         
-        return jo;    }
-
-    public void addReviewOf(Review review) {
-        for(int i  = 0; i<listings.length;i++) {
-            if(reviews[i]==null) {
-                reviews[i] = review;
+        return jo;
+    }
+    
+    /**
+     * Calculates how far away an address is from another address (useful for something I'm sure)
+     * @param address
+     * @return distance (mi)
+     */
+    public double distanceFrom(Address address) {
+        
+        return 0;
+    }
+    
+    /**
+     * Check if a user is a manager of this address or not
+     * @param user
+     * @return
+     */
+    public boolean hasManager(User user) {
+        for (User usr : managers) {
+            if (usr.equals(user))
+                return true;
+        }
+        return false;
+    }
+    
+    /**
+     * This adds a listing to the list of listings
+     * Ignores duplicates
+     * @param listing   The listing... to add...
+     */
+    public boolean addListing(Listing listing) {
+        if (listing.equals(new Listing()))
+            return true; // Blank listing
+        
+        listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);
+        DataBases.addressListingsToListings();
+        return DataBases.saveAddresses();
+    }
+    
+    /**
+     * This removes a listing from the list of listings...
+     * @param listing
+     * @return
+     */
+    public boolean removeListing(Listing listing) {
+        if (listings.length==0)
+            return true;
+        
+        listings = ArrayUtils.remove(listings, new Listing[listings.length-1], listing);
+        DataBases.addressListingsToListings();
+        return DataBases.saveAddresses();
+    }
+    
+    public boolean removeManager(User manager) {
+        managers = ArrayUtils.remove(managers, new User[managers.length-1], manager);
+        return true;
+    }
+    
+    public boolean removeReviewOf(Review review) {
+        if (reviewsOf.length == 0)
+            return true;
+        reviewsOf = ArrayUtils.remove(reviewsOf, new Review[reviewsOf.length-1], review);
+        return true;
+           
+    }
+    
+    public boolean addReviewOf(Review review) {
+        reviewsOf = ArrayUtils.add(reviewsOf, new Review[reviewsOf.length+1], review);
+        return true;
+    }
+    
+    
+    public Lease[] getLeases(boolean signed) {
+        Lease[] leases = new Lease[0];
+        for (Lease lease : leases) {
+            if (lease.getSigned() && signed) {
+                leases = ArrayUtils.add(leases, new Lease[leases.length+1], lease);
+            } else if (!signed) {
+                leases = ArrayUtils.add(leases, new Lease[leases.length+1], lease);
             }
         }
+        return leases;
     }
-
-}
-public class Room {
-    public RoomType type;
-    public double size;
-    public FloorType floor;
-    public Extensions[]  extensions= new Extensions[];
-    public Appliances[]  appliances= new Appliances[];
-    public Fixtures[]  fixtures= new Fixtures[];
-    public Furniture[]  furniture= new Furniture[];
-    public int windows;
-    public String name;
-    public Room(JSONObject room) {
-        
-    }
-    public void reset() {
-        
-    }
-    public JSONObject toJSON() {
-        
+    
+    public Listing[] getListings(SearchData searchData) {
+        searchData.addresses = new int[1];
+        searchData.addresses[0] = this.id;        
+        return DataBases.getListings(searchData);
     }
 }
