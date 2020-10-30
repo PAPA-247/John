@@ -25,6 +25,51 @@ public enum Fixtures {
     VENT,
     HVAC_RETURN,
     NONE;
+    
+
+    public String toIcon() {
+        // TODO: Fixtures icons
+        switch(this) {
+            case STALLS:
+                return "";
+            case TOILET:
+                return "";
+            case SHOWER:
+                return "";
+            case BATHTUB:
+                return "";
+            case BATHTUB_JETS:
+                return "";
+            case SINK_SINGLE:
+                return "";
+            case SINK_DOUBLE:
+                return "";
+            case MIRROR:
+                return "";
+            case TOWEL_HOLDER:
+                return "";
+            case HANDTOWEL_HOLDER:
+                return "";
+            case CELIN_FAN:
+                return "";
+            case LIGHT_ROUND:
+                return "";
+            case LIGHT_RACKSTRIP:
+                return "";
+            case LIGHT_LEDSTRIP:
+                return "";
+            case LIGHT_SQUARE:
+                return "";
+            case FAN:
+                return "";
+            case VENT:
+                return "";
+            case HVAC_RETURN:
+                return "";
+        }
+        return "gmi-error";
+    }
+
 
     public static Fixtures fromString(String s) {
         switch(s) {

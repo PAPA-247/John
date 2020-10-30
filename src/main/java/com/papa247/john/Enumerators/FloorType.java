@@ -18,6 +18,31 @@ public enum FloorType {
     HEATED,
     NONE;
 
+    public String toIcon() {
+    	// TODO: FloorType icons
+    	switch(this) {
+			case CARPET:
+				return "";
+			case HARDWOOD:
+				return "";
+			case LAMINATE:
+				return "";
+			case TILE:
+				return "";
+			case GRASS:
+				return "";
+			case ROCK:
+				return "";
+			case PAVED:
+				return "";
+			case CONCRETE:
+				return "";
+			case HEATED:
+				return "";
+    	}
+    	return "gmi-error";
+    }
+
     public static FloorType fromString(String s) {
     	switch(s) {
     		case "CARPET":

@@ -22,6 +22,9 @@ public class Listing {
     public String apartmentNumber;
     public double monthlyPrice;
 
+    public String title;
+    public String description;
+    
     public Lease lease;
     public ListingType listingType;
     
@@ -32,7 +35,9 @@ public class Listing {
     
     
     public Listing(JSONObject jo, Address parent) {
-        if (!jo.has("id") || !jo.has("apartmentNumber") || !jo.has("monthlyPrice") || !jo.has("lease") || !jo.has("listingType") || !jo.has("bedrooms"))
+        if (!jo.has("id") || !jo.has("apartmentNumber") || !jo.has("monthlyPrice")
+                || !jo.has("lease") || !jo.has("listingType") || !jo.has("bedrooms")
+                || !jo.has("title") || !jo.has("description"))
             return; // No valid (or empty either way).
         
         id = jo.getInt("id");
@@ -41,6 +46,9 @@ public class Listing {
     
         lease = new Lease(jo.getJSONObject("lease"), this);
         listingType = ListingType.fromString(jo.getString("listingType"));
+        
+        description = jo.getString("description");
+        title = jo.getString("title");
         
         photos = new String[0];
         if (jo.has("photos"))
@@ -82,6 +90,8 @@ public class Listing {
         jo.put("id", id);
         jo.put("apartmentNumber", apartmentNumber);
         jo.put("monthlyPrice", monthlyPrice);
+        jo.put("tite", title);
+        jo.put("description", description);
         jo.put("lease", lease.toJSON());
         jo.put("listingType", listingType.toString());
         
@@ -155,5 +165,55 @@ public class Listing {
     
     public boolean Delete() {
         return false;
+    }
+
+    public boolean isEmpty() {
+        // TODO: Auto-generated method stub: Listing.isEmpty()
+        // Return whether or not this object is "empty" I.E. a new-unfilled listing
+        return false;
+    }
+    
+    
+    
+    // Setters
+    private boolean isNullOrEmpty(String a) {
+        if (a==null)
+            return true;
+        if (a.replace(" ", "").equals(""))
+            return true;
+        return false;
+    }
+
+    public void setApartmentNumber(String aN) {
+        if (isNullOrEmpty(aN))
+            return;
+
+        apartmentNumber = aN;
+    }
+
+    public void parent (Address a) {
+        if (!a.isEmpty())
+            return;
+        parent = a;
+    }
+    public void id (int a) {
+        if (id<0)
+            return;
+        
+        id = a;            
+    }
+    public void setMonthlyPrice (double a) {
+        if (a>0)
+            monthlyPrice = a;
+    }
+    public void setTitle (String a) {
+        if (isNullOrEmpty(a))
+            return;
+        title = a;
+    }
+    public void setDescription (String a) {
+        if (isNullOrEmpty(a))
+            return;
+        description = a;
     }
 }

@@ -16,7 +16,8 @@ public class App extends Application {
 
     private static Scene scene;
     
-    public static boolean debug = true;
+    public final static boolean debug = true;
+    public final static boolean GUI = false;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -41,6 +42,7 @@ public class App extends Application {
             stage.setOnCloseRequest(e -> {
                 System.out.println("[MainWindow] Closing...");
                 DataBases.save();
+                System.exit(0);
             });
             stage.setOnShown(e -> {
                 System.out.println("[MainWindow] Opened!");
@@ -54,6 +56,7 @@ public class App extends Application {
                         dSt.sizeToScene();
                     } catch (IOException ee) {
                         System.out.println("Failed to display debug window.");
+                        ee.printStackTrace(); // for testing, need to know what error was thrown.
                     }
                 }
                 
@@ -79,8 +82,13 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        launch();
+        if (GUI)
+            launch();
+        else
+            ConsoleUI.main();
+        
         System.out.println("Goodbye :(");
+        DataBases.save();
         System.exit(0);
     }
 

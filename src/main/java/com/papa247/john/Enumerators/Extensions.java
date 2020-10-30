@@ -14,6 +14,10 @@ public enum Extensions {
     CLOSET,
     NONE;
 
+    public String toIcon() {
+        return "gmi-checkroom"; // clothes hanger
+    }
+
     public static Extensions fromString(String s) {
     	switch(s) {
     		case "CLOSET_COMMON":

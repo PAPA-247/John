@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXRadioButton?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ToggleGroup?>
@@ -26,7 +27,7 @@
                </font>
             </Label>
             <Label fx:id="lblError" alignment="CENTER" contentDisplay="CENTER" layoutX="186.0" layoutY="158.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="160.0" />
-            <JFXButton fx:id="btnLogin" buttonType="RAISED" layoutX="174.0" layoutY="347.0" onAction="#loginUser" text="Login" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="345.0">
+            <JFXButton fx:id="btnLogin" buttonType="RAISED" defaultButton="true" layoutX="174.0" layoutY="347.0" onAction="#loginUser" text="Login" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="345.0">
                <font>
                   <Font size="14.0" />
                </font>
@@ -39,7 +40,7 @@
             <!-- <JFXSpinner fx:id="spinner" disable="true" layoutX="175.0" layoutY="360.0" visible="false" /> -->
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="apRegister" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #404040;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="apRegister" disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="400.0" style="-fx-background-color: #404040;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane layoutX="50.0" layoutY="115.0" prefHeight="315.0" prefWidth="310.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="115.0">
                <children>
@@ -66,10 +67,13 @@
                </font>
             </Label>
             <Label fx:id="lblError1" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="84.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="84.0" />
-            <JFXButton fx:id="btnRegisterFinal" buttonType="RAISED" layoutX="50.0" layoutY="434.0" onAction="#registerUserFinal" text="Register" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="434.0">
+            <JFXButton fx:id="btnRegisterFinal" buttonType="RAISED" defaultButton="true" layoutX="50.0" layoutY="434.0" onAction="#registerUserFinal" text="Register" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="434.0">
                <font>
                   <Font size="14.0" />
                </font>
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
             </JFXButton>
          </children>
       </AnchorPane>
@@ -99,12 +103,12 @@
                </font>
             </Label>
             <Label fx:id="lblMAError" alignment="CENTER" contentDisplay="CENTER" layoutX="50.0" layoutY="71.0" textAlignment="CENTER" textFill="#ff6060" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="71.0" />
-            <JFXButton fx:id="btnMAApply" buttonType="RAISED" layoutX="50.0" layoutY="501.0" onAction="#myAccountApply" prefHeight="35.0" prefWidth="310.0" text="Apply" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="64.0" AnchorPane.topAnchor="501.0">
+            <JFXButton fx:id="btnMAApply" buttonType="RAISED" defaultButton="true" layoutX="50.0" layoutY="501.0" onAction="#myAccountApply" prefHeight="35.0" prefWidth="310.0" text="Apply" textAlignment="CENTER" textFill="WHITE" AnchorPane.topAnchor="501.0">
                <font>
                   <Font size="14.0" />
                </font>
             </JFXButton>
-            <JFXButton fx:id="btnApplyClose" buttonType="RAISED" layoutX="50.0" layoutY="545.0" onAction="#myAccountApplyClose" prefHeight="35.0" prefWidth="310.0" text="Apply and close" textAlignment="CENTER" textFill="WHITE" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="545.0">
+            <JFXButton fx:id="btnApplyClose" buttonType="RAISED" layoutX="50.0" layoutY="545.0" onAction="#myAccountApplyClose" prefHeight="35.0" prefWidth="310.0" text="Apply and close" textAlignment="CENTER" textFill="WHITE" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0" AnchorPane.topAnchor="545.0">
                <font>
                   <Font size="14.0" />
                </font>

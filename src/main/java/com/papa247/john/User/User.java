@@ -351,20 +351,20 @@ public class User {
 	}
 	
 	public double getRating() {
-	    if (reviews.length==0)
+	    if (reviewsOf.length==0)
 	        return 5;
 	    
-		double rating = reviews[0].rating; // A running average
-		if (reviews.length>1) {
-		    for (int i=1; i<reviews.length; i++) {
-		        if (reviews[i].targetType == TargetType.User) 
-		            if (reviews[i].target.user.equals(this))
-		                rating = (rating + reviews[i].rating)/2; // Add rating to avg
+		double rating = reviewsOf[0].rating; // A running average
+		if (reviewsOf.length>1) {
+		    for (int i=1; i<reviewsOf.length; i++) {
+		        if (reviewsOf[i].targetType == TargetType.User) 
+		            if (reviewsOf[i].target.user.equals(this))
+		                rating = (rating + reviewsOf[i].rating)/2; // Add rating to avg
 		    }
 		    
 		    return rating;
 		} else {
-		    return reviews[0].rating;
+		    return reviewsOf[0].rating;
 		}
 	}
 	public boolean delete() {

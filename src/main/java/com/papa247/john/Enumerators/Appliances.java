@@ -30,6 +30,57 @@ public enum Appliances {
     TV_SMART,
     NONE;
 
+    public String toIcon() {
+        // TODO: Appliances icons (ehhh)
+        switch(this) {
+            case WASHER:
+                return "";
+            case DRYER:
+                return "";
+            case DISHWASHER:
+                return "";
+            case STOVE:
+                return "";
+            case STOVETOP:
+                return "";
+            case FRIDGE:
+                return "";
+            case FRIDGEFREEZER:
+                return "";
+            case FRIDGEFREEZERICE:
+                return "";
+            case MICROWAVE:
+                return "";
+            case DINNINGWARE:
+                return "";
+            case CABINETS:
+                return "";
+            case COFFEE_MAKER:
+                return "";
+            case RANGE_HOOD:
+                return "";
+            case GARBAGE_DISPOSAL:
+                return "";
+            case TRASH_COMPACTOR:
+                return "";
+            case TRASH_BIN:
+                return "";
+            case AC:
+                return "";
+            case HEAT_GENERIC:
+                return "";
+            case HEAT_PUMP:
+                return "";
+            case TV:
+                return "";
+            case TV_SMART:
+                return "";
+            
+            default:
+                return "gmi-error";
+        }
+    }
+
     public static Appliances fromString(String s) {
         switch(s) {
             case "WASHER":

@@ -9,8 +9,30 @@
 
 .button-raised {
     -jfx-button-type: RAISED;
+    -fx-background-color: #CCCCCC;
 }
 
+.button-flat {
+	-fx-background-color: rgba(127, 127, 127, 0.1);
+	-jfx-button-type: FLAT;
+}
+
+.sample-icon {
+    -glyph-name: "STAR";
+    -glyph-size: 16px;
+}
+
+
+
+
+/*
+ *	Apply google Roboto font to all UI components
+ */
+
+.root {
+    -fx-font-family: "Roboto";
+    -fx-font-smoothing-type: gray;
+}
 
 
 /*******************************************************************************
@@ -57,17 +79,29 @@
 }
 
 .icons-rippler {
-    -jfx-rippler-fill: #FE774D;
+    -jfx-rippler-fill: #4D81F7;
     -jfx-mask-type: CIRCLE;
 }
 
-.icons-rippler1 {
-    -jfx-rippler-fill: #4285F4;
-    -jfx-mask-type: CIRCLE;
-}
 
+.jfx-rippler:hover {
+    -fx-cursor: hand;
+}
 .icons-rippler:hover {
     -fx-cursor: hand;
+}
+
+.toggle-iconFav .icon {
+    -fx-fill: #F82FB8;
+}
+
+.toggle-iconFav {
+    -jfx-toggle-color: rgba(248, 47, 184, 0.3);
+    -jfx-untoggle-color: transparent;
+}
+
+.toggle-iconFav .jfx-rippler {
+    -jfx-rippler-fill: rgba(247, 77, 193, 0.3);
 }
 
 .animated-burgers .jfx-hamburger StackPane {

@@ -10,6 +10,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.papa247.john.DataBases;
 import com.papa247.john.DataBases.SearchData;
+import com.papa247.john.DataBases.UsernameLookupType;
+import com.papa247.john.Enumerators.TargetType;
 import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Coordinate;
 import com.papa247.john.Support.Review;
@@ -64,7 +66,7 @@ public class Address {
        managers = new User[0];
        if (jsonObject.has("managers"))
            jsonObject.getJSONArray("managers").forEach(e -> {
-              User user = new User((JSONObject) e);
+              User user = DataBases.getUser((String) e, UsernameLookupType.username);
               managers = ArrayUtils.add(managers, new User[managers.length+1], user);
            });
     }
@@ -79,13 +81,13 @@ public class Address {
         jo.put("state", state);
         jo.put("postalCode", postalCode);
         jo.put("country", country);
-        jo.put("longitude", longitude);
-        jo.put("latitude", latitude);
+        jo.put("longitude", longitude.toJSON());
+        jo.put("latitude", latitude.toJSON());
         
         
         JSONArray ja = new JSONArray();
         for (Listing listing : listings)
-            ja.put(listing.id);
+            ja.put(listing.toJSON());
         jo.put("listings", ja);
         
         
@@ -103,6 +105,10 @@ public class Address {
      * @return distance (mi)
      */
     public double distanceFrom(Address address) {
+        // TODO: Address Google Maps API (or some other maps API) to calculate distance
+        // Details here: https://developers.google.com/maps/documentation/directions/start
+        // Probably like this actually: https://maps.googleapis.com/maps/api/directions/json?origin=LAT,LONG&destination=LAT,LONG&key=YOUR_API_KEY
+        
         
         return 0;
     }
@@ -179,9 +185,32 @@ public class Address {
         return leases;
     }
     
+    public double getRating() {
+        if (reviewsOf.length==0)
+            return 5;
+        
+        double rating = reviewsOf[0].rating; // A running average
+        if (reviewsOf.length>1) {
+            for (int i=1; i<reviewsOf.length; i++) {
+                if (reviewsOf[i].targetType == TargetType.Address) 
+                    if (reviewsOf[i].target.address.equals(this))
+                        rating = (rating + reviewsOf[i].rating)/2; // Add rating to avg
+            }
+            
+            return rating;
+        } else {
+            return reviewsOf[0].rating;
+        }
+    }
+    
     public Listing[] getListings(SearchData searchData) {
         searchData.addresses = new int[1];
         searchData.addresses[0] = this.id;        
         return DataBases.getListings(searchData);
+    }
+
+
+    public boolean isEmpty() {
+        return false;
     }
 }

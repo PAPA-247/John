@@ -35,6 +35,67 @@ public enum Furniture {
     HAMIC,
     NONE;
 
+    public String toIcon() {
+        // TODO: Furniture icons (I don't think we can actually do this.)
+        switch(this) {
+            case TWINBED:
+                return "";
+            case TWINXLBED:
+                return "";
+            case FULLBED:
+                return "";
+            case QUEENBED:
+                return "";
+            case KINGBED:
+                return "";
+            case DESK:
+                return "";
+            case NIGHTSTAND:
+                return "";
+            case DRESSER:
+                return "";
+            case CHAIR:
+                return "";
+            case CHAIR_OFFICE:
+                return "";
+            case CURTAINS:
+                return "";
+            case CURTAINS_SHOWER:
+                return "";
+            case CURTAINS_ROD:
+                return "";
+            case BLINDS:
+                return "";
+            case BEDDING:
+                return "";
+            case SOFA:
+                return "";
+            case SOFA_CHAIR:
+                return "";
+            case RECLINER:
+                return "";
+            case COFFE_TABLE:
+                return "";
+            case SIDE_TABLE:
+                return "";
+            case CHAIRS:
+                return "";
+            case TABLE:
+                return "";
+            case UMBRELLA:
+                return "";
+            case GRILL:
+                return "";
+            case FENCE:
+                return "";
+            case CANOPY:
+                return "";
+            case HAMIC:
+                return "";
+        }
+        return "gmi-error";
+    }
+
     public static Furniture fromString(String s) {
         switch(s) {
             case "TWINBED":

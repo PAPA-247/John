@@ -19,6 +19,32 @@ public enum RoomType {
     FAMILY,
     NONE;
 
+    public String toIcon() {
+        switch(this) {
+            case BEDROOM:
+                return "fas-bed";
+            case BATHROOM:
+                return "fas-toilet";
+            case KITCHEN:
+                return "gmi-kitchen";
+            case LIVING_ROOM:
+                return "fas-couch";
+            case ENTRY:
+                return "fas-door-open";
+            case PATIO:
+                return "gmi-deck";
+            case GUEST:
+                return ""; // ???
+            case OFFICE:
+                return "fas-mail-bulk";
+            case DINNING:
+                return "fas-utensils";
+            case FAMILY:
+                return "gmi-family-restroom"; // shhh, I know... its all I could find
+        }
+        return "gmi-error";
+    }
+
     public static RoomType fromString(String s) {
         switch(s) {
             case "BEDROOM":

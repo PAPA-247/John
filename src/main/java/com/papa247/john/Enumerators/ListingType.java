@@ -17,6 +17,31 @@ public enum ListingType {
     SINGLE_ROOM,
     NONE;
 
+    public String toIcon() {
+    	// TODO: Icons for Listing Types.
+    	switch(this) {
+			case APARTMENT:
+				return "";
+			case CONDO:
+				return "";
+			case STUDIO:
+				return "";
+			case DUPLEX:
+				return "";
+			case TOWNHOME:
+				return "";
+			case LOFT:
+				return "";
+			case HOUSE:
+				return "";
+			case CO_OP:
+				return "";
+			case SINGLE_ROOM:
+				return "";
+    	}
+    	return "gmi-error";
+    }
+
     public static ListingType fromString(String s) {
     	switch(s) {
     		case "APARTMENT":

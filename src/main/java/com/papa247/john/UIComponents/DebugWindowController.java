@@ -7,6 +7,7 @@ package com.papa247.john.UIComponents;
 
 
 import java.io.IOException;
+import com.papa247.john.App;
 import com.papa247.john.DataBases;
 import com.papa247.john.TestCode;
 
@@ -43,6 +44,24 @@ public class DebugWindowController {
             Parent root = (Parent)loader.load();
             Stage stage = new Stage();
             stage.setTitle("Login");
+            stage.setScene(new Scene(root));
+            stage.setResizable(false);
+            stage.initStyle(StageStyle.UTILITY);
+            stage.centerOnScreen();
+            stage.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @FXML
+    void listingWindow(ActionEvent event) {
+        System.out.println("'Show blank listing window' clicked");
+        try {
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("UIComponents/Listing.fxml"));
+            Parent root = (Parent)loader.load();
+            Stage stage = new Stage();
+            stage.setTitle("Blank Listing");
             stage.setScene(new Scene(root));
             stage.setResizable(false);
             stage.initStyle(StageStyle.UTILITY);

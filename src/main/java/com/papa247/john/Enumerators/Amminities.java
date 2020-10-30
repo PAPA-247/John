@@ -33,12 +33,79 @@ public enum Amminities {
     FURNISHED_FULLY,
     GYM,
     UTILITIES_INCLUDED,
+    INTERNET,
+    WIFI,
     NONE;
 
+    public String toIcon() {
+        switch(this) {
+            case PET_FRIENDLY:
+                return "fas-paw";
+            case WASHERDRYER:
+                return "gmi-local-laundry-service";
+            case DISHWASHER: // uhHH
+                return "na";
+            case POOL:
+                return "gmi-pool";
+            case GOLF_COURSE:
+                return "gmi-golf-course";
+            case GRILL:
+                return "gmi-outdoor-grill";
+            case CLUB_HOUSE:
+                return "fas-campground"; // eh
+            case PARK:
+                return "fas-tree"; // eh
+            case PLAYGROUND:
+                return "na"; // ???
+            case BACKYARD:
+                return "gmi-fence"; // ???
+            case FRONTYARD:
+                return "gmi-grass"; // ???
+            case GATED:
+                return "fas-dungeon";
+            case SECURITY_SYSTEM:
+                return "fas-fingerprint"; // eh
+            case CAMERAS:
+                return "fas-video";
+            case SECURITY_PERSONAL:
+                return "fas-user-secret"; // eh
+            case GAS_NATURAL: // Remove?
+                return "fas-burn";
+            case GAS_PROPANE: // Remove?
+                return "fas-burn";
+            case ELECTRIC:
+                return "fas-bolt";
+            case GARBAGE_PICKUP:
+                return "fas-trash-alt";
+            case PARKING:
+                return "gmi-local-parking";
+            case PARKING_INCLUDED:
+                return "fas-parking";
+            case BIKE_RACKS:
+                return "fas-bicycle";
+            case ELECTRIC_CAR_CHARGER:
+                return "gmi-ev-station";
+            case FURNISHED_PARTIALLY:
+                return "fas-chair";
+            case FURNISHED_FULLY:
+                return "fas-couch";
+            case GYM:
+                return "gmi-fitness-center";
+            case UTILITIES_INCLUDED:
+                return "";
+            case INTERNET:
+                return "";
+            case WIFI:
+                return "gmi-wifi";
+            default:
+                return "gmi-error";
+        }
+    }
+    
     public static Amminities fromString(String s) {
         switch(s) {
             case "PET_FRIENDLY":
-                    return Amminities.PET_FRIENDLY;
+                return Amminities.PET_FRIENDLY;
             case "WASHERDRYER":
                 return Amminities.WASHERDRYER;
             case "DISHWASHER":

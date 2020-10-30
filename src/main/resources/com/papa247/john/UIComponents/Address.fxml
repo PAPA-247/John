@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXToggleNode?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.Cursor?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -17,12 +15,12 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="375.0" prefWidth="745.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.ListingController">
+<AnchorPane prefHeight="470.0" style="-fx-background-color: #DDDDDD;" stylesheets="@../style.css" prefWidth="745.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.AddressController">
    <children>
       <AnchorPane fx:id="apView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="734.0" style="-fx-background-color: #DDDDDD;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane fx:id="apImages" prefHeight="165.0" prefWidth="734.0" style="-fx-background-color: #888888;" visible="false" />
-            <AnchorPane fx:id="apListingData" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="apListingData" prefHeight="275.0" prefWidth="745.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane fx:id="apTitleRating" prefHeight="65.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -50,19 +48,8 @@
                                           </Label>
                                     </StackPane>
                                  </JFXRippler>
-                              <JFXRippler fx:id="btnSignLease" onDragDetected="#btnSignLease" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                                          <Label>
-                                             <graphic>
-                                                <FontIcon iconLiteral="fas-file-signature" iconSize="16" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Sign lease" />
-                                             </tooltip>
-                                          </Label>
-                                    </StackPane>
-                              </JFXRippler>
-                              <JFXRippler fx:id="btnReviews" onDragDetected="#btnReviews" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
+                              <JFXRippler fx:id="btnViewListings" onDragDetected="#btnViewListings" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler" />
+                              <JFXRippler fx:id="btnLeaveReview" onDragDetected="#btnLeaveReview" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
                                           <Label>
                                              <graphic>
@@ -74,21 +61,6 @@
                                           </Label>
                                     </StackPane>
                               </JFXRippler>
-                              <JFXToggleNode fx:id="btnFavorite" onAction="#btnFavorite" prefHeight="45.0" prefWidth="45.0" style="-jfx-toggle-color: #FF00AE;" styleClass="toggle-iconFav">
-                                 <graphic>
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                                       <children>
-                                          <FontIcon iconColor="#ff4d94" iconLiteral="fas-heart" iconSize="16" />
-                                       </children>
-                                    </StackPane>
-                                 </graphic>
-                                 <cursor>
-                                    <Cursor fx:constant="HAND" />
-                                 </cursor>
-                                 <tooltip>
-                                    <Tooltip text="Favorite" />
-                                 </tooltip>
-                              </JFXToggleNode>
                            </children>
                         </HBox>
                      </children>
@@ -98,7 +70,7 @@
                      <children>
                         <AnchorPane fx:id="apDescription" prefHeight="173.0" prefWidth="509.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="103.0" layoutY="34.0" prefHeight="143.0" prefWidth="509.0" text="&lt;Description&gt;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="15.0" />
+                              <Label alignment="TOP_LEFT" layoutX="103.0" layoutY="34.0" prefHeight="143.0" prefWidth="509.0" text="&lt;Description&gt;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="15.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="apInfo" layoutX="559.0" prefHeight="223.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -107,7 +79,7 @@
                                  <children>
                                     <AnchorPane>
                                        <children>
-                                          <Label fx:id="lblApartmentNumber" text="Apartment number: XXX" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label fx:id="lblListingCount" text="Number of Listings: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
@@ -115,40 +87,11 @@
                                     </AnchorPane>
                                     <AnchorPane>
                                        <children>
-                                          <Label fx:id="lblBedrooms" text="Bedrooms: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Label fx:id="lblMonthlyPrice" text="Monthly price: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Label fx:id="lblLeaseLength" text="Lease length: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Label fx:id="lblAddress" text="Address: " AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                          <Label fx:id="lblManagers" text="Managers:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                              <tooltip>
                                                 <Tooltip text="The address (complex) managing this listing" />
                                              </tooltip>
                                           </Label>
-                                          <JFXButton fx:id="btnViewParent" buttonType="RAISED" onAction="#btnViewParent" styleClass="button-raised" text="View address" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
-                                             <tooltip>
-                                                <Tooltip text="Shows you all listings under the above address." />
-                                             </tooltip>
-                                          </JFXButton>
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
@@ -188,21 +131,73 @@
                   </AnchorPane>
                </children>
             </AnchorPane>
+            <ScrollPane fx:id="spReviews" fitToHeight="true" fitToWidth="true" layoutY="275.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="275.0">
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+               <content>
+                  <StackPane>
+                     <children>
+                        <Label fx:id="lblNoReviews" text="No reviews" textFill="#686868">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <VBox fx:id="vboxReviews" />
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="apEdit" disable="true" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="734.0" style="-fx-background-color: #DDDDDD;" stylesheets="@../style.css" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <AnchorPane fx:id="apImages1" prefHeight="165.0" prefWidth="734.0" style="-fx-background-color: #888888;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-            <AnchorPane fx:id="apListingData1" layoutY="165.0" prefHeight="241.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <AnchorPane fx:id="apImages1" prefHeight="165.0" prefWidth="734.0" style="-fx-background-color: #888888;" visible="false" AnchorPane.bottomAnchor="305.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+            <AnchorPane fx:id="apListingData1" prefHeight="275.0" prefWidth="745.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <AnchorPane fx:id="apTitleRating1" prefHeight="65.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <JFXTextField fx:id="txtTitle" layoutY="2.0" prefHeight="65.0" prefWidth="509.0" promptText="Title" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
+                        <JFXTextField fx:id="txtTitle" promptText="Title" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
                      </children>
                   </AnchorPane>
                   <AnchorPane fx:id="apButtons1" layoutX="534.0" prefHeight="65.0" prefWidth="215.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
-                        <HBox fx:id="hboxButtons1" alignment="CENTER_RIGHT" layoutY="1.0" prefHeight="65.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0" />
+                        <HBox fx:id="hboxButtons1" alignment="CENTER_RIGHT" layoutY="1.0" prefHeight="65.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+                           <children>
+                              <JFXRippler fx:id="btnDelete" disable="true" onDragDetected="#btnDelete" position="BACK" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler" visible="false">
+                                 <control>
+                                    <StackPane>
+                                       <children>
+                                          <Label>
+                                             <graphic>
+                                                <FontIcon iconLiteral="fas-edit" iconSize="16" />
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="Edit listing" />
+                                             </tooltip>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                 </control>
+                              </JFXRippler>
+                              <JFXRippler fx:id="btnSave" onDragDetected="#btnSave" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
+                                 <control>
+                                    <StackPane prefHeight="150.0" prefWidth="200.0">
+                                       <children>
+                                          <Label>
+                                             <graphic>
+                                                <FontIcon iconLiteral="fas-save" iconSize="16" text="" />
+                                             </graphic>
+                                             <tooltip>
+                                                <Tooltip text="View reviews" />
+                                             </tooltip>
+                                          </Label>
+                                       </children>
+                                    </StackPane>
+                                 </control>
+                              </JFXRippler>
+                           </children>
+                        </HBox>
                      </children>
                   </AnchorPane>
                   <Pane layoutY="65.0" prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: gray;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="65.0" />
@@ -215,12 +210,11 @@
                         </AnchorPane>
                         <AnchorPane fx:id="apInfo1" layoutX="559.0" prefHeight="223.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <VBox fx:id="vboxInfo1" alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" spacing="5.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                              <VBox fx:id="vboxInfo1" alignment="CENTER_LEFT" prefHeight="200.0" prefWidth="100.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
                                  <children>
                                     <AnchorPane>
                                        <children>
-                                          <Label fx:id="lblApartmentNumber1" text="Apartment number:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <JFXTextField fx:id="txtApartmentNumber" layoutX="110.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="83.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label fx:id="lblListingCount1" text="Number of Listings: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
@@ -228,46 +222,15 @@
                                     </AnchorPane>
                                     <AnchorPane>
                                        <children>
-                                          <Label fx:id="lblBedrooms1" text="Bedrooms:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <JFXTextField fx:id="txtBedrooms" layoutX="60.0" layoutY="10.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <Label fx:id="lblManagers1" text="Managers:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                             <tooltip>
+                                                <Tooltip text="The address (complex) managing this listing" />
+                                             </tooltip>
+                                          </Label>
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
                                        </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Label fx:id="lblMonthlyPrice1" text="Monthly price:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <JFXTextField fx:id="txtMonthlyPrice" layoutX="70.0" layoutY="20.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <children>
-                                          <Label fx:id="lblLeaseLength1" text="Lease length:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                          <JFXTextField fx:id="txtLeaseLength" layoutX="80.0" layoutY="30.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="75.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                       <padding>
-                                          <Insets bottom="5.0" top="5.0" />
-                                       </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <padding>
-                                          <Insets top="15.0" />
-                                       </padding>
-                                       <children>
-                                          <JFXButton fx:id="btnSave" buttonType="RAISED" onAction="#btnSave" style="-fx-background-color: #61FF91;" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <padding>
-                                          <Insets bottom="15.0" top="15.0" />
-                                       </padding>
-                                       <children>
-                                          <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#btnSave" style="-fx-background-color: #FF6161;" text="Delete" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
                                     </AnchorPane>
                                  </children>
                               </VBox>
@@ -275,7 +238,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="apIcons1" prefHeight="50.0" prefWidth="509.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0">
                            <children>
-                              <HBox fx:id="hboxIcons1" layoutY="-14.0" prefHeight="35.0" prefWidth="381.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+                              <HBox fx:id="hboxIcons1" layoutY="-14.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <StackPane>
                                        <children>
@@ -297,7 +260,6 @@
                                     </StackPane>
                                  </children>
                               </HBox>
-                              <JFXButton fx:id="btnEditAmminities" buttonType="RAISED" onAction="#btnEditAmminities" text="Edit Amminities" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                            </children>
                         </AnchorPane>
                      </children>

@@ -12,6 +12,21 @@ public enum AccountType {
 	ADMINISTRATOR,
 	INVALID;
     
+    public String toIcon() {
+        switch(this) {
+            case STUDENT:
+                return "fas-user-graduate";
+            case PROPERTYMANAGER:
+                return "fas-user-tie";
+            case REALTOR:
+                return "fas-user-tie";
+            case ADMINISTRATOR:
+                return "fas-user-cog";
+            default:
+                return "fas-user-times";
+        }
+    }
+
     public static AccountType fromNum(int num) {
         switch (num) {
             case 0:
