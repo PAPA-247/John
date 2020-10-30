@@ -31,7 +31,7 @@ public enum Appliances {
     NONE;
 
     public String toIcon() {
-        // TODO [$5f9bcc3fe352ce000751967b]: Appliances icons (ehhh)
+        // TODO [#6]: Appliances icons (ehhh)
         switch(this) {
             case WASHER:
                 return "";

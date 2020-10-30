@@ -18,7 +18,7 @@ public enum ListingType {
     NONE;
 
     public String toIcon() {
-    	// TODO [$5f9bcc3fe352ce000751967f]: Icons for Listing Types.
+    	// TODO [#10]: Icons for Listing Types.
     	switch(this) {
 			case APARTMENT:
 				return "";
