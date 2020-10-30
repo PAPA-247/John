@@ -19,7 +19,7 @@ public enum FloorType {
     NONE;
 
     public String toIcon() {
-    	// TODO: FloorType icons
+    	// TODO [$5f9bcc3fe352ce000751967d]: FloorType icons
     	switch(this) {
 			case CARPET:
 				return "";

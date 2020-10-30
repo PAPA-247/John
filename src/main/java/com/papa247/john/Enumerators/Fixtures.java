@@ -28,7 +28,7 @@ public enum Fixtures {
     
 
     public String toIcon() {
-        // TODO: Fixtures icons
+        // TODO [$5f9bcc3fe352ce000751967c]: Fixtures icons
         switch(this) {
             case STALLS:
                 return "";

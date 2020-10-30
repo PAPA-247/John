@@ -36,7 +36,7 @@ public enum Furniture {
     NONE;
 
     public String toIcon() {
-        // TODO: Furniture icons (I don't think we can actually do this.)
+        // TODO [$5f9bcc3fe352ce000751967e]: Furniture icons (I don't think we can actually do this.)
         switch(this) {
             case TWINBED:
                 return "";
