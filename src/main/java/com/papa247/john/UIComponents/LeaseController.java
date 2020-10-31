@@ -125,7 +125,7 @@ public class LeaseController {
 
     @FXML
     void exportPDF(ActionEvent event) {
-        // TODO: Export lease agreement as a PDF (or text file, doesn't matter)
+        // TODO [$5f9dd55be65e40000707176d]: Export lease agreement as a PDF (or text file, doesn't matter)
     }
 
     @FXML
@@ -188,10 +188,10 @@ public class LeaseController {
                 contents = contents.replace("%MONTHLY_PRICE%", Double.toString(lease.listing.monthlyPrice));
                 contents = contents.replace("%BEDROOM_COUNT%", Double.toString(lease.listing.bedrooms.length));
                 contents = contents.replace("%BATHROOM_COUNT%", Double.toString(lease.listing.rooms.length - lease.listing.bedrooms.length)); // Not right.
-                // TODO: Start and end dates for lease
+                // TODO [$5f9dd55be65e40000707176e]: Start and end dates for lease
                 contents = contents.replace("%START_DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
                 contents = contents.replace("%END_DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-                // TODO: Damage cost
+                // TODO [$5f9dd55be65e40000707176f]: Damage cost
             }
             
             txtContents.setText(contents);
