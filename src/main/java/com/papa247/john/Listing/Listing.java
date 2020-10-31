@@ -16,22 +16,25 @@ import com.papa247.john.Support.Review;
 import com.papa247.john.User.User;
 
 public class Listing {
+    
+    // TODO: Multiple listings of the same type that are / arenot avaliable
+    // No one wants to enter 5 listings for the same item, make it so pepople can duplicate listings?
 
     public Address parent;
     public int id;
-    public String apartmentNumber;
-    public double monthlyPrice;
+    public String apartmentNumber = "";
+    public double monthlyPrice = 0.0;
 
-    public String title;
-    public String description;
+    public String title = "";
+    public String description = "";
     
     public Lease lease;
-    public ListingType listingType;
+    public ListingType listingType = ListingType.APARTMENT;
     
-    public String[] photos;
-    public Amminities[] amminities;
-    public Room[] rooms;
-    public Room[] bedrooms;
+    public String[] photos = new String[0];
+    public Amminities[] amminities = new Amminities[0];
+    public Room[] rooms = new Room[0];
+    public Room[] bedrooms = new Room[0];
     
     
     public Listing(JSONObject jo, Address parent) {
@@ -42,7 +45,7 @@ public class Listing {
         
         id = jo.getInt("id");
         apartmentNumber = jo.getString("apartmentNumber");
-        monthlyPrice = jo.getDouble("montlyPrice");
+        monthlyPrice = jo.getDouble("monthlyPrice");
     
         lease = new Lease(jo.getJSONObject("lease"), this);
         listingType = ListingType.fromString(jo.getString("listingType"));
@@ -90,7 +93,7 @@ public class Listing {
         jo.put("id", id);
         jo.put("apartmentNumber", apartmentNumber);
         jo.put("monthlyPrice", monthlyPrice);
-        jo.put("tite", title);
+        jo.put("title", title);
         jo.put("description", description);
         jo.put("lease", lease.toJSON());
         jo.put("listingType", listingType.toString());
@@ -107,11 +110,19 @@ public class Listing {
 
         ja = new JSONArray();
         for (Room room : rooms)
-            ja.put(room.toJSON());
+            if (room!=null)
+                ja.put(room.toJSON());
+            else
+                ja.put(new Room().toJSON());
         jo.put("rooms", ja);
+        
+        
         ja = new JSONArray();
         for (Room room : bedrooms)
-            ja.put(room.toJSON());
+            if (room!=null)
+                ja.put(room.toJSON());
+            else
+                ja.put(new Room().toJSON());
         jo.put("bedrooms", ja);
 
         return jo;
@@ -163,8 +174,9 @@ public class Listing {
         return size;
     }
     
-    public boolean Delete() {
-        return false;
+    public void delete() {
+        DataBases.removeListing(this);
+        DataBases.save();
     }
 
     public boolean isEmpty() {
@@ -215,5 +227,33 @@ public class Listing {
         if (isNullOrEmpty(a))
             return;
         description = a;
+    }
+
+    @Override
+    public String toString() {
+        return this.title;
+    }
+    
+    @Override
+    public boolean equals(Object obj) {
+        Listing comp = (Listing) obj;
+        if (comp.title.equals(this.title) && comp.id == this.id)
+            return true;
+        
+        return false;
+    }
+    
+    // GUI
+    public void editLease() {
+        DataBases.editLease(this);
+    }
+
+    public void viewLease() {
+        DataBases.viewLease(this);
+        
+    }
+
+    public String getStreetAddress() {
+        return parent.streetAddress + " " + apartmentNumber + ", " + parent.city + ", " + parent.state + " (" + parent.postalCode + ")";
     }
 }

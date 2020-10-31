@@ -34,6 +34,32 @@
     -fx-font-smoothing-type: gray;
 }
 
+.button-icon {
+    -fx-pref-width: 35px;
+    -fx-background-radius: 35px;
+    -fx-pref-height: 35px;
+    -fx-min-width: -fx-pref-width;
+    -fx-max-width: -fx-pref-width;
+    -fx-min-height: -fx-pref-height;
+    -fx-max-height: -fx-pref-height;
+    -jfx-button-type: RAISED;
+}
+
+/* Node button in ListingsHost*/
+.icon-button {
+    -fx-pref-width: 45px;
+    -fx-background-color: #0F9D58;
+    -fx-background-radius: 45px;
+    -fx-pref-height: 45px;
+    -fx-min-width: -fx-pref-width;
+    -fx-max-width: -fx-pref-width;
+    -fx-min-height: -fx-pref-height;
+    -fx-max-height: -fx-pref-height;
+    -jfx-button-type: RAISED;
+}
+.icon-button .jfx-rippler{
+    -jfx-rippler-fill: rgba(255,255,255, .87);
+}
 
 /*******************************************************************************
  *                                                                             *

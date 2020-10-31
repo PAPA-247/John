@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #DDDDDD;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.LeaseController">
+   <children>
+      <AnchorPane fx:id="apSign" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane fx:id="apTop" prefHeight="50.0" prefWidth="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <children>
+                  <JFXTextField fx:id="txtTitle" editable="false" prefHeight="23.0" prefWidth="490.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="105.0" AnchorPane.topAnchor="15.0" />
+                  <JFXButton fx:id="btnSaveEdit" onAction="#btnSaveEdit" styleClass="button-flat" text="Edit" AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0">
+                     <padding>
+                        <Insets left="25.0" right="25.0" />
+                     </padding>
+                  </JFXButton>
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apMid" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="125.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <TextArea fx:id="txtContents" layoutX="15.0" layoutY="15.0" maxWidth="568.0" prefHeight="193.0" prefWidth="568.0" promptText="Lease agreement" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+               </children>
+            </AnchorPane>
+            <AnchorPane fx:id="apBottom" prefHeight="125.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
+               <children>
+                  <JFXButton fx:id="btnSign" buttonType="RAISED" defaultButton="true" onAction="#signLease" styleClass="button-raised" text="Sign" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                     <padding>
+                        <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                     </padding>
+                  </JFXButton>
+                  <JFXButton fx:id="btnExportPDF" disable="true" layoutX="14.0" layoutY="50.0" onAction="#exportPDF" text="Export as PDF" visible="false" />
+                  <JFXTextField fx:id="txtSignature" layoutX="8.0" layoutY="2.0" prefHeight="23.0" prefWidth="475.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="0.0" />
+                  <AnchorPane fx:id="apUsers" prefHeight="94.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0">
+                     <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                     </padding>
+                     <children>
+                        <Label fx:id="lblUsers" layoutX="45.0" layoutY="45.0" prefHeight="45.0" prefWidth="456.0" text="Users on Lease:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="115.0" AnchorPane.topAnchor="0.0" />
+                        <JFXButton fx:id="btnEditUsers" disable="true" layoutX="483.0" layoutY="35.0" onAction="#btnEditUsers" styleClass="button-flat" text="Edit users" AnchorPane.rightAnchor="0.0">
+                           <padding>
+                              <Insets bottom="5.0" left="25.0" right="25.0" top="5.0" />
+                           </padding>
+                        </JFXButton>
+                     </children>
+                  </AnchorPane>
+               </children>
+            </AnchorPane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

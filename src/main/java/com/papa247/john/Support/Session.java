@@ -23,6 +23,8 @@ public class Session {
     public static User user;
     public static String userLoginToken; // RocketFuel (may be used later for remote API calls and when WE'RE not authenticating users ourselves)
     
+    public static CallBack updateListings;
+    
     
     public Session() {}
     
@@ -95,5 +97,11 @@ public class Session {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean isLoggedIn() {
+        if (user!=null && userLoginToken!=null)
+            return (userLoginToken != "");
+        return false;
     }
 }

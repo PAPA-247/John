@@ -30,6 +30,10 @@ public class Coordinate {
         seconds = jo.getString("seconds");
     }
     
+    public Coordinate() {
+        // Blank
+    }
+
     public JSONObject toJSON() {
         JSONObject jo = new JSONObject();
         jo.put("degrees", degrees);

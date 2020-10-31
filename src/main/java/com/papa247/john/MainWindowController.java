@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXPopup.PopupHPosition;
 import com.jfoenix.controls.JFXPopup.PopupVPosition;
 import com.jfoenix.skins.JFXPopupSkin;
 import com.papa247.john.Support.Session;
+import com.papa247.john.UIComponents.ListingController;
+import com.papa247.john.UIComponents.ListingHostController;
 import com.papa247.john.User.User;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
@@ -56,6 +58,10 @@ public class MainWindowController implements Initializable {
     
     private JFXPopup accountPopup;
 
+    
+    private ListingHostController listingHostController;
+    
+    
     private Stage getNewWindow(String FXML, int width, int height) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(FXML + ".fxml"));
@@ -131,12 +137,17 @@ public class MainWindowController implements Initializable {
                         
             hamburger.addEventHandler(MouseEvent.MOUSE_CLICKED, (e) -> {
                 System.out.println("[MainWindow] Drawer opened");
-                if (drawer.isOpened() || drawer.isOpening())
+                if (drawer.isOpened() || drawer.isOpening()) {
                     drawer.close();
-                else
+                    drawer.setDisable(true);
+                }
+                else {
                     drawer.open();
-                
+                    drawer.setDisable(false);
+                }
             });
+            
+            drawer.setDisable(true); // if we don't do this, mouse inputs go to the drawer not the content host.
             
             if (App.debug) {
                 System.out.println("[MainWindow] Debug mode active! Filling in blank data");
@@ -154,8 +165,19 @@ public class MainWindowController implements Initializable {
             
             DataBases.load();
             
+            
+            // Setup content host
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("UIComponents/ListingsHost.fxml"));
+            loader.setRoot(ContentHost);
+            AnchorPane listingHost = (AnchorPane)loader.load();
+            listingHostController = loader.getController();
+            
+            listingHostController.displayListings(DataBases.getListings());
+            
+            
+            
         } catch (IOException e1) {
-            System.out.println("Failed to load drawer data! >> Nothing is going to work!! <<");
+            System.out.println("Failed to load FXML data!");
             e1.printStackTrace();
         }
         

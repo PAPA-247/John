@@ -17,7 +17,7 @@ public class App extends Application {
     private static Scene scene;
     
     public final static boolean debug = true;
-    public final static boolean GUI = false;
+    public final static boolean GUI = true;
 
     @Override
     public void start(Stage stage) throws IOException {
@@ -38,7 +38,7 @@ public class App extends Application {
             
             
             System.out.println("Loading main window...");
-            scene = new Scene(loadFXML("MainWindow"), 640, 480);
+            scene = new Scene(loadFXML("MainWindow"), 1050, 550);
             stage.setOnCloseRequest(e -> {
                 System.out.println("[MainWindow] Closing...");
                 DataBases.save();

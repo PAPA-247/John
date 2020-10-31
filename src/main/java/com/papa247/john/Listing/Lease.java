@@ -12,56 +12,16 @@ import com.papa247.john.DataBases;
 import com.papa247.john.DataBases.UsernameLookupType;
 import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Exceptions;
+import com.papa247.john.UIComponents.AlertWindows;
 import com.papa247.john.User.User;
 
-public class Lease {
-    private class Signer {
-        public User user;
-        public boolean signed;
-        public String signedOn;
-        
-        public Signer() {
-        }
-        
-        public Signer(User user) {
-            this.user = user;
-        }
-        
-        public Signer(JSONObject jo) {
-            user = DataBases.getUser(jo.getString("user"), UsernameLookupType.username);
-            signed = jo.getBoolean("signed");
-            signedOn = jo.getString("LoclDateTime"); // maybe ...?
-        }
-        
-        public JSONObject toJSON() {
-            JSONObject jo = new JSONObject();
-            jo.put("user", user.username);
-            jo.put("signed", signed);
-            jo.put("signedOn", signedOn);
-            
-            return jo;
-        }
-        
-        @Override
-        public boolean equals(Object signr) {
-            Signer signer = (Signer) signr;
-            if (signer.user.equals(this.user) && signer.signed == this.signed)
-                return true;
-            return false;
-        }
-        
-        public void sign() {
-            signedOn = LocalDateTime.now().toString(); // UTC..??
-            signed = true;
-        }
-    }
+public class Lease {    
+    public String title = "";
+    public String contents = "";
+    public String documentURL = "";
+    public double rentLength = 0.0;
     
-    public String title;
-    public String contents;
-    public String documentURL;
-    public double rentLength;
-    
-    public Signer[] signers;
+    public Signer[] signers = new Signer[0];
     
     // Other stuff
     public Listing listing;
@@ -145,17 +105,27 @@ public class Lease {
     
     public boolean sign(User user) {
         boolean found = false;
+        boolean locked = false; // Block new signers?
         
         for (Signer signer : signers) {
             if (signer.user.equals(user)) {
                 signer.sign();
                 found = true;
+                break;
+            }
+            if (signer.signed) {
+                locked = true;
+                break;
             }
         }
         
-        if (!found) {
+        if (!found && !locked) {
             // add as signer
             addSigner(user).sign();
+        } else if(locked) {
+            AlertWindows.showAlert("Failed to sign lease", "You cannot sign a lease already assigned to another user!",
+                    "This lease has been signed by another user, and therefore locked. Ask them to add you as a co-signer.");
+            return false;
         }
         
         try {
@@ -166,4 +136,9 @@ public class Lease {
         }
     }
     
+    
+    @Override
+    public String toString() {
+        return this.title;
+    }
 }

@@ -8,14 +8,12 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane xmlns="http://javafx.com/javafx/11.0.1" stylesheets="@../style.css" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.SearchPannelController">
+<AnchorPane style="-fx-background-color: #BBBBBB;" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.SearchPannelController">
    <children>
-      <VBox prefHeight="740.0" prefWidth="250.0" style="-fx-background-color: #BBBBBB;" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <VBox prefHeight="740.0" prefWidth="250.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <AnchorPane fx:id="apPrice" prefWidth="200.0">
                <padding>
@@ -30,8 +28,8 @@
                   <HBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <children>
                         <JFXTextField fx:id="txtPriceLower" onAction="#adjustSearch" prefHeight="25.0" prefWidth="65.0" />
-                        <Label text="between" />
-                        <JFXTextField fx:id="txtPriceHigher" onAction="#adjustSearch" prefHeight="25.0" prefWidth="65.0" />
+                        <Label text="-" />
+                        <JFXTextField fx:id="txtPriceUpper" onAction="#adjustSearch" prefHeight="25.0" prefWidth="65.0" />
                      </children>
                   </HBox>
                </children>
@@ -49,43 +47,35 @@
                   <HBox alignment="CENTER" spacing="15.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="20.0">
                      <children>
                         <JFXTextField fx:id="txtBedroomsLower" onAction="#adjustSearch" prefHeight="25.0" prefWidth="65.0" />
-                        <Label text="between" />
+                        <Label text="-" />
                         <JFXTextField fx:id="txtBedroomsUpper" onAction="#adjustSearch" prefHeight="25.0" prefWidth="65.0" />
                      </children>
                   </HBox>
                </children>
             </AnchorPane>
-            <AnchorPane fx:id="apMustInclude" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="apMustInclude" prefHeight="250.0" prefWidth="200.0">
                <children>
-                  <Label text="Must include" AnchorPane.bottomAnchor="183.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label text="Must include" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <JFXComboBox fx:id="comboMustInclude" promptText="Select an amminity" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
-                  <StackPane layoutX="15.0" layoutY="85.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-                     <children>
-                        <JFXChipView fx:id="chipMustInclude" promptText="Type an amminity..." />
-                     </children>
-                  </StackPane>
+                  <JFXChipView fx:id="chipMustInclude" layoutX="15.0" layoutY="85.0" promptText="Type an amminity..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
             </AnchorPane>
-            <AnchorPane fx:id="apMustExclude" prefHeight="200.0" prefWidth="200.0">
+            <AnchorPane fx:id="apMustExclude" prefHeight="250.0" prefWidth="200.0">
                <children>
-                  <Label text="Must exclude" AnchorPane.bottomAnchor="183.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Label text="Must exclude" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
                   <JFXComboBox fx:id="comboMustExclude" promptText="Select an amminity" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="28.0" />
-                  <StackPane layoutX="15.0" layoutY="85.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0">
-                     <children>
-                        <JFXChipView fx:id="chipMustExclude" promptText="Type an amminity..." />
-                     </children>
-                  </StackPane>
+                  <JFXChipView fx:id="chipMustExclude" layoutX="15.0" layoutY="85.0" promptText="Type an amminity..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="70.0" />
                </children>
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />

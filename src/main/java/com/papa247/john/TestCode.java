@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.util.Scanner;
 import com.papa247.john.DataBases.UsernameLookupType;
 import com.papa247.john.Enumerators.AccountType;
+import com.papa247.john.Listing.Address;
+import com.papa247.john.Listing.Listing;
 //import com.papa247.john.*;
 import com.papa247.john.Support.*;
 import com.papa247.john.UIComponents.ReviewController;
@@ -201,5 +203,41 @@ public class TestCode {
         for (Review review : user.getReviewsOf()) {
             System.out.println("Title: " + review.title + " (contents: " + review.contents + ")");
         }
+    }
+
+    public static void selection() {
+        System.out.println("Testing address selection.");
+        Address a = Select.getAddress();
+        if (a!=null)
+            System.out.println("Selected: " + a.name);
+        
+        System.out.println("Testing listing selection.");
+        Listing b = Select.getListing();
+        if (b!=null)
+            System.out.println("Selected: " + b.title);
+        
+        System.out.println("Testing user selection.");
+        User c = Select.getUser();
+        if (c!=null)
+            System.out.println("Selected: " + c.username);
+        
+        
+        System.out.println("Testing address selection.");
+        Address[] aa = Select.getAddresses();
+        for (Address a1 : aa)
+            if (a1!=null)
+                System.out.println("Selected: " + a1.name);
+        
+        System.out.println("Testing listing selection.");
+        Listing[] bb = Select.getListings();
+        for (Listing b1 : bb)
+            if (b1!=null)
+                System.out.println("Selected: " + b1.title);
+        
+        System.out.println("Testing user selection.");
+        User[] cc = Select.getUsers();
+        for (User c1 : cc)
+            if (c1!=null)
+                System.out.println("Selected: " + c1.username);
     }
 }

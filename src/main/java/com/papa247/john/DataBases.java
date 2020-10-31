@@ -35,15 +35,27 @@ import org.json.JSONObject;
 
 import com.papa247.john.Enumerators.*;
 import com.papa247.john.Listing.Address;
+import com.papa247.john.Listing.Lease;
 import com.papa247.john.Listing.Listing;
 import com.papa247.john.Listing.Room;
 import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Exceptions;
+import com.papa247.john.Support.Select;
 import com.papa247.john.Support.Range;
+import com.papa247.john.Support.Session;
+import com.papa247.john.UIComponents.AddressController;
 import com.papa247.john.UIComponents.AlertWindows;
+import com.papa247.john.UIComponents.LeaseController;
+import com.papa247.john.UIComponents.ListingController;
 import com.papa247.john.User.User;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 
 public class DataBases {
@@ -247,11 +259,16 @@ public class DataBases {
      */
     public static void addAddress(Address address) {
         int ogLength = addresses.length;
+        
+        if (address.id==-1)
+            address.id = assignNewAddressID();
+        
         Address[] newAddresses = new Address[addresses.length+1];
         addresses = ArrayUtils.add(addresses, newAddresses, address);
+        
         if (addresses.length==ogLength+1)
             lastAddressID = Math.max(addresses[ogLength].id, lastAddressID);
-        addressListingsToListings();
+        updateListings();
     }
     /**
      * Removes an address from the addresses array
@@ -263,7 +280,7 @@ public class DataBases {
         
         Address[] newAddresses = new Address[addresses.length-1];
         addresses = ArrayUtils.remove(addresses, newAddresses, address);
-        addressListingsToListings();
+        updateListings();
     }
     
     /**
@@ -319,10 +336,14 @@ public class DataBases {
     public static boolean loadAddresses() {
         JSONArray ja = loadFile("Addresses", DataPaths.addresses);
         int length = ja.length();
+        listings = new Listing[0];
         for (int i=0; i<length; i++) {
-            addAddress(new Address(ja.getJSONObject(i)));
-        }        
-        addressListingsToListings(); // be sure
+            Address a = new Address(new JSONObject(ja.getString(i)));
+            addAddress(a); // Get the string -> convert to JSONObject -> convert to Address object -> add to addresses
+            for (Listing listing : a.listings) {
+                listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);
+            }
+        }
         return true;
     }
     /**
@@ -330,8 +351,7 @@ public class DataBases {
      * @return save successful
      */
     public static boolean saveAddresses() {
-        // Save Listings
-        listingsToAddresses();        
+        // Save Listings      
         JSONArray ja = new JSONArray();
         for (int i=0; i<addresses.length; i++) {
             ja.put(addresses[i].toJSON().toString());
@@ -352,28 +372,15 @@ public class DataBases {
      * Fills the listings array using the listing data in the addresses (addresses[i].listings => listings)
      * From address to the listing array
      */
-    public static void addressListingsToListings() {
+    public static void updateListings() {
         int lID = 0;
         for (Address address : addresses) {
             for (Listing listing : address.listings) {
+                listing.parent = address;
                 lID = Math.max(lID, listing.id); // Used when assigning listing IDs (just a counter that goes up)
-                addListing(listing);
+                listings = ArrayUtils.add(listings, new Listing[listings.length + 1], listing);
             }
         }
-    }
-    /**
-     * For each address in each listing we add that listing to the address
-     * So we put all of our Listings objects into their parents
-     */
-    public static void listingsToAddresses() {
-        for (Listing listing : listings) {
-            for (Address address : addresses) {
-                if (address.equals(listing.parent)) {
-                    address.addListing(listing); // This method SHOULD ignore duplicates...
-                }
-            }
-        }
-        addressListingsToListings(); // we synced the listings, which will include everything
     }
     
     /**
@@ -389,21 +396,14 @@ public class DataBases {
      * @param listing the listing object to add
      */
     public static void addListing(Listing listing) {
-        int ogLength = listings.length;
-        Listing[] newListings = new Listing[ogLength+1];
-        listings = ArrayUtils.add(listings, newListings, listing);
-        if (listings.length==ogLength+1)
-            lastListingID = Math.max(lastListingID, listings[ogLength].id);
-        listingsToAddresses();
+        listing.parent.addListing(listing);
     }
     /**
      * Remove a listing object from the database's listing array. You will need to save the changes.
      * @param listing the listing object to remove
      */
     public static void removeListing(Listing listing) {
-        Listing[] newListings = new Listing[listings.length-1];
-        listings = ArrayUtils.remove(listings, newListings, listing);
-        listingsToAddresses();
+        listing.parent.removeListing(listing);
     }
     
     /**
@@ -437,6 +437,8 @@ public class DataBases {
      * @param searchData a new instance of SearchData with filled in requirements
      * @return an array of listings to searchData.
      */
+    // TODO: Search within a provided listings array
+    // Be able to provide the method with an array of listings to search through
     public static Listing[] getListings(SearchData searchData) {
         /*
          * For every Listing in listings, we compare it's data to searchData. If we have a match, we add that listing to a new array (sData). At the end we return that array
@@ -766,7 +768,8 @@ public class DataBases {
         }
 
         
-        throw new Exceptions.NoListingsFound("Failed to find any search results.");
+        return new Listing[0];
+//        throw new Exceptions.NoListingsFound("Failed to find any search results.");
     }
     /**
      * Get an array of listings at a particular address
@@ -801,8 +804,7 @@ public class DataBases {
      * @return if save successful
      */
     public static boolean saveListings() {
-        listingsToAddresses();        
-        addressListingsToListings();
+        updateListings();
         return saveAddresses();
     }
     
@@ -863,6 +865,197 @@ public class DataBases {
     }
     
     
+    
+    
+    
+    
+    
+    // New stuff
+    public static void newAddress() {
+        if (Session.user==null) {
+            System.out.println("[DataBases] Failed to create a new address, user not logged in.");
+        }
+        
+        System.out.println("[DataBases] Creating a new address...");
+        final Address newAddress = new Address();
+        
+        newAddress.addManager(Session.user);
+        
+        editAddress(newAddress);
+    }
+    
+    
+    public static void newListing() {
+        if (Session.user==null) {
+            System.out.println("[DataBases] Failed to create a new listing, user not logged in.");
+        }
+        
+        Address[] managerOf = new Address[0];
+        for (Address a : addresses) {
+            if (a.hasManager(Session.user))
+                managerOf = ArrayUtils.add(managerOf, new Address[managerOf.length+1], a);
+        }
+        
+        
+        
+        System.out.println("[DataBases] Creating a new address...");
+        final Listing newListing = new Listing();
+        
+        Address parent = Select.getAddress(managerOf, "Select an address for the listing");
+        if (parent==null) {
+            AlertWindows.showAlert("Error adding listing!", "No parent address selected.", "You must select an address as the listing's parent to create a listing!");
+            return;
+        }
+        
+        newListing.parent = parent;
+        newListing.lease = new Lease(newListing);
+        
+        editListing(newListing);
+    }
+    
+    public static void newReview(Address address) {
+        // TODO: New review methods in DataBases.
+        // Take a look at the test code for this snippet, it has already been done... (just rushing to finish by tonight...)
+        
+    }   
+    
+    
+    public static void editAddress(Address address) {
+        System.out.println("[DataBases] Opening address editor");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Address.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            AddressController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 640,320);
+            Stage stage = new Stage();
+//            reviewScreen.initStyle(StageStyle.UTILITY);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setScene(scene);
+            stage.setTitle("New address");
+            stage.setOnShown(e -> controller.setUp(address));
+            controller.setEditing(true);
+            stage.showAndWait();
+            // Closed
+            System.out.println("Grabbing modified address...");
+            Address a = controller.getAddress(); // If I don't do this, controller.setUp will yell about not being final ..?
+            
+            if (a.isEmpty()) {
+                AlertWindows.showAlert("Address creation failed.", "Failed to add your new address into our database.",
+                        "Make sure you fill in all details when creating an address");
+                return;
+            }
+            System.out.println("[DataBases] Adding address");
+            addAddress(a);
+            
+            save();
+        } catch (IOException e) {
+            System.out.println("Or not...\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public static void editListing(Listing listing) {
+        System.out.println("[DataBases] Opening Listing editor");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Listing.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            ListingController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 640,320);
+            Stage stage = new Stage();
+//            reviewScreen.initStyle(StageStyle.UTILITY);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle("Edit listing for address " + listing.parent.name);
+            stage.setScene(scene);
+            stage.setOnShown(e -> {
+                controller.setup(listing);
+                controller.setEditing(true);
+            });
+            stage.showAndWait();
+            // Closed
+            System.out.println("[DataBases] Grabbing modified listing...");
+            Listing newListing1 = controller.getListing();
+            
+            if (newListing1.isEmpty()) {
+                AlertWindows.showAlert("Listing creation failed.", "Failed to add your new listing into our database.",
+                        "Make sure you fill in all details when creating an address");
+                return;
+            }
+            System.out.println("[DataBases] Adding listing");
+            addListing(newListing1);
+            
+            // Modify lease
+            
+            System.out.println("[DataBases] Opening lease");
+            editLease(newListing1);
+            
+            save();
+        } catch (IOException e) {
+            System.out.println("Or not...\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    
+    public static void editLease(Listing parent) {
+        System.out.println("[DataBases] Opening lease editor");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Lease.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            LeaseController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 640,320);
+            Stage stage = new Stage();
+//            reviewScreen.initStyle(StageStyle.UTILITY);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle("New lease for " + parent.title);
+            stage.setScene(scene);
+            stage.setOnShown(e -> {
+                controller.setUp(parent.lease);
+                controller.setEditing(true);
+            });
+            stage.showAndWait();
+            // Closed
+            System.out.println("[DataBases] Grabbing modified lease...");
+            Lease newLease = controller.getLease();
+            
+            System.out.println("[DataBases] Saving lease");
+            parent.lease = newLease;
+            
+            save();
+        } catch (IOException e) {
+            System.out.println("Or not...\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public static void viewLease(Listing listing) {
+        System.out.println("[DataBases] Opening lease viewer");
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(App.class.getResource("UIComponents/Lease.fxml"));
+            Parent root = (Parent) fxmlLoader.load();
+            LeaseController controller = fxmlLoader.getController();
+            Scene scene = new Scene(root, 640,320);
+            Stage stage = new Stage();
+//            reviewScreen.initStyle(StageStyle.UTILITY);
+            stage.initModality(Modality.WINDOW_MODAL);
+            stage.setTitle("Viewing lease for " + listing.title);
+            stage.setScene(scene);
+            stage.setOnShown(e -> controller.setUp(listing.lease));
+            controller.setEditing(false);
+            stage.showAndWait();
+            // Closed
+            System.out.println("[DataBases] Grabbing modified lease...");
+            Lease newLease = controller.getLease();
+            
+            System.out.println("[DataBases] Saving lease");
+            listing.lease = newLease;
+            
+            save();
+        } catch (IOException e) {
+            System.out.println("Or not...\n" + e.getMessage());
+            e.printStackTrace();
+        }
+    } 
+    
+    
+    
         
     // Other stuff (support)
     /**
@@ -876,19 +1069,19 @@ public class DataBases {
         public Range rentLength;
         public User owner;
         public Range bedroomCount;
-        public JSONObject amminities;
-        public JSONObject listingTypes;
+        public JSONObject amminities = new JSONObject();
+        public JSONObject listingTypes = new JSONObject();
         public Range totalSize; // Apartment size (total size)
         
         // Room data
         public Range windows;
         public Range bedroomSize; // Room size
-        public JSONObject roomTypes;
-        public JSONObject floorTypes;
-        public JSONObject extensions;
-        public JSONObject appliances;
-        public JSONObject fixtures;
-        public JSONObject furniture;
+        public JSONObject roomTypes = new JSONObject();
+        public JSONObject floorTypes = new JSONObject();
+        public JSONObject extensions = new JSONObject();
+        public JSONObject appliances = new JSONObject();
+        public JSONObject fixtures = new JSONObject();
+        public JSONObject furniture = new JSONObject();
         
         public SearchData() {
             // Setup JSONObjects
@@ -937,7 +1130,4 @@ public class DataBases {
         email_address,
         phone_number;
     }
-    
-    
-    
 }

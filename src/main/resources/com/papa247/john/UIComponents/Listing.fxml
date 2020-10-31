@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXRippler?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXToggleNode?>
@@ -38,42 +37,21 @@
                      <children>
                         <HBox fx:id="hboxButtons" alignment="CENTER_RIGHT" layoutY="1.0" prefHeight="65.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <JFXRippler fx:id="btnEdit" disable="true" onDragDetected="#btnEdit" position="BACK" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler" visible="false">
-                                    <StackPane>
-                                          <Label>
-                                             <graphic>
-                                                <FontIcon iconLiteral="fas-edit" iconSize="16" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Edit listing" />
-                                             </tooltip>
-                                          </Label>
-                                    </StackPane>
-                                 </JFXRippler>
-                              <JFXRippler fx:id="btnSignLease" onDragDetected="#btnSignLease" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                                          <Label>
-                                             <graphic>
-                                                <FontIcon iconLiteral="fas-file-signature" iconSize="16" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="Sign lease" />
-                                             </tooltip>
-                                          </Label>
-                                    </StackPane>
-                              </JFXRippler>
-                              <JFXRippler fx:id="btnReviews" onDragDetected="#btnReviews" prefHeight="45.0" prefWidth="45.0" styleClass="icons-rippler">
-                                    <StackPane prefHeight="150.0" prefWidth="200.0">
-                                          <Label>
-                                             <graphic>
-                                                <FontIcon iconLiteral="fas-comment-alt" iconSize="16" />
-                                             </graphic>
-                                             <tooltip>
-                                                <Tooltip text="View reviews" />
-                                             </tooltip>
-                                          </Label>
-                                    </StackPane>
-                              </JFXRippler>
+                              <JFXButton fx:id="btnEdit" contentDisplay="GRAPHIC_ONLY" onAction="#btnEdit" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-edit" iconSize="16" />
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnViewLease" contentDisplay="GRAPHIC_ONLY" onAction="#btnViewLease" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-file-signature" iconSize="16" text="" />
+                                 </graphic>
+                              </JFXButton>
+                              <JFXButton fx:id="btnReviews" contentDisplay="GRAPHIC_ONLY" onAction="#btnReviews" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-comment-alt" iconSize="16" />
+                                 </graphic>
+                              </JFXButton>
                               <JFXToggleNode fx:id="btnFavorite" onAction="#btnFavorite" prefHeight="45.0" prefWidth="45.0" style="-jfx-toggle-color: #FF00AE;" styleClass="toggle-iconFav">
                                  <graphic>
                                     <StackPane prefHeight="150.0" prefWidth="200.0">
@@ -98,7 +76,7 @@
                      <children>
                         <AnchorPane fx:id="apDescription" prefHeight="173.0" prefWidth="509.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                            <children>
-                              <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="103.0" layoutY="34.0" prefHeight="143.0" prefWidth="509.0" text="&lt;Description&gt;" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="15.0" />
+                              <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="103.0" layoutY="34.0" prefHeight="143.0" prefWidth="509.0" text="&lt;Description&gt;" wrapText="true" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="35.0" AnchorPane.topAnchor="15.0" />
                            </children>
                         </AnchorPane>
                         <AnchorPane fx:id="apInfo" layoutX="559.0" prefHeight="223.0" prefWidth="215.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -160,7 +138,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="apIcons" prefHeight="50.0" prefWidth="509.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0">
                            <children>
-                              <HBox fx:id="hboxIcons" layoutY="-14.0" prefHeight="50.0" prefWidth="200.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
+                              <HBox fx:id="hboxIcons" layoutY="-14.0" prefHeight="50.0" prefWidth="200.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <StackPane>
                                        <children>
@@ -266,7 +244,7 @@
                                           <Insets bottom="15.0" top="15.0" />
                                        </padding>
                                        <children>
-                                          <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#btnSave" style="-fx-background-color: #FF6161;" text="Delete" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#btnDelete" style="-fx-background-color: #FF6161;" text="Delete" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                     </AnchorPane>
                                  </children>
@@ -275,7 +253,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="apIcons1" prefHeight="50.0" prefWidth="509.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0">
                            <children>
-                              <HBox fx:id="hboxIcons1" layoutY="-14.0" prefHeight="35.0" prefWidth="381.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
+                              <HBox fx:id="hboxIcons1" layoutY="-14.0" prefHeight="35.0" prefWidth="381.0" spacing="15.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="113.0" AnchorPane.topAnchor="0.0">
                                  <children>
                                     <StackPane>
                                        <children>

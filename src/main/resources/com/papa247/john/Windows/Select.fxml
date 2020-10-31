@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXChipView?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="apRoot" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="425.0" prefWidth="350.0" style="-fx-background-color: #CCCCCC;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.SelectController">
+   <children>
+      <Label fx:id="lblTitle" layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="320.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="15.0" />
+      <AnchorPane fx:id="apSelectors" layoutX="15.0" layoutY="55.0" prefHeight="140.0" prefWidth="320.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0">
+         <children>
+            <JFXComboBox fx:id="comboAddresses" disable="true" prefHeight="25.0" prefWidth="320.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXComboBox fx:id="comboListings" disable="true" prefHeight="25.0" prefWidth="320.0" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXComboBox fx:id="comboUsers" editable="true" prefHeight="25.0" prefWidth="320.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXChipView fx:id="chipAddresses" prefHeight="150.0" prefWidth="320.0" promptText="Type selection here ..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXChipView fx:id="chipListings" prefHeight="150.0" prefWidth="320.0" promptText="Type selection here ..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+            <JFXChipView fx:id="chipUsers" prefHeight="150.0" prefWidth="320.0" promptText="Type selection here ..." AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000025" />
+         </effect>
+      </AnchorPane>
+      <AnchorPane fx:id="apData" layoutX="14.0" layoutY="95.0" prefHeight="155.0" prefWidth="320.0" AnchorPane.bottomAnchor="55.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="215.0">
+         <children>
+            <Label fx:id="lblName" layoutX="95.0" layoutY="37.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblDescription" alignment="TOP_LEFT" layoutX="62.0" layoutY="85.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
+         </children>
+         <effect>
+            <DropShadow blurType="GAUSSIAN" color="#00000025" />
+         </effect>
+      </AnchorPane>
+      <JFXButton layoutX="149.0" layoutY="377.0" onAction="#btnSelect" prefHeight="25.0" prefWidth="185.0" text="Okay" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" />
+   </children>
+</AnchorPane>

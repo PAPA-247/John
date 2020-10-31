@@ -14,7 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 
-public class SetAmminitiesController {
+public class SetAminitiesController {
     
     @FXML
     private VBox vbox;
@@ -28,10 +28,14 @@ public class SetAmminitiesController {
             chk.setText(a.toString());
             chk.setSelected(false);
             entries.put(a, chk);
+            //vbox.getChildren().add(chk); // Might not work, no time to test
         }
     }
     
     public void setUp(Amminities[] amminities) {
+        entries.forEach((a, chk) -> {
+            vbox.getChildren().add(chk);
+        });
         for (Amminities a : amminities) {
             entries.get(a).setSelected(true);
         }
@@ -43,7 +47,11 @@ public class SetAmminitiesController {
             if (chk.isSelected())
                 checked.add(A);
         });
-        return (Amminities[]) checked.toArray();
+        Amminities[] a = new Amminities[checked.size()];
+        for (int i = 0; i<checked.size(); i++)
+            a[i] = checked.get(i);
+        
+        return a;
     }
     
 }

@@ -8,6 +8,7 @@
 package com.papa247.john.UIComponents;
 
 import java.io.IOException;
+import java.util.Optional;
 import org.kordamp.ikonli.javafx.FontIcon;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRippler;
@@ -15,8 +16,11 @@ import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXToggleNode;
 import com.jfoenix.controls.JFXTooltip;
+import com.papa247.john.App;
+import com.papa247.john.DataBases;
 import com.papa247.john.Enumerators.AccountType;
 import com.papa247.john.Enumerators.Amminities;
+import com.papa247.john.Listing.Address;
 import com.papa247.john.Listing.Listing;
 import com.papa247.john.Listing.Room;
 import com.papa247.john.Support.Session;
@@ -25,6 +29,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -32,10 +37,14 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class ListingController {
+    
+    // TODO: Duplicate button
+    // Have a button that allows a listing to be duplicated.
 
     @FXML
     private AnchorPane apView;
@@ -65,13 +74,13 @@ public class ListingController {
     private HBox hboxButtons;
 
     @FXML
-    private JFXRippler btnEdit;
+    private JFXButton btnEdit;
 
     @FXML
-    private JFXRippler btnSignLease;
+    private JFXButton btnViewLease;
 
     @FXML
-    private JFXRippler btnReviews;
+    private JFXButton btnReviews;
 
     @FXML
     private JFXToggleNode btnFavorite;
@@ -188,45 +197,52 @@ public class ListingController {
     private JFXButton btnEditAmminities;
 
     private Listing listing;
-    private Amminities[] _amminities;
+    private Amminities[] _amminities = new Amminities[0];
     
     
-    public boolean setUp(Listing listing) {
+    public boolean setup(Listing listing) {
         this.listing = listing;
-        if (!listing.isEmpty())
-            return false;
+        _amminities = listing.amminities.clone();
         
-        refreshData();
-        
+        refreshData();     
         
         return true;
     }
     
     public void refreshData() {
-        lblTitle.setText(listing.title);
-        txtTitle.setText(listing.title);
-        lblDescription.setText(listing.description);
-        txtDescription.setText(listing.description);
+        if (listing==null)
+            return;
+        if (listing!=null) {
+            lblTitle.setText(listing.title);
+            txtTitle.setText(listing.title);
+            lblDescription.setText(listing.description);
+            txtDescription.setText(listing.description);
+            if (listing.parent==null)
+                listing.delete(); // Get him outta here.
+//            lblRating.setText(listing.parent.getRating() + "/5 Stars");
+        }
         
-        lblRating.setText(listing.parent.getRating() + "/5 Stars");
-        
-        if (listing.parent.hasManager(Session.user)) {
-            // They can edit
-            btnEdit.setVisible(true);
-            btnEdit.setEnabled(true);
-            
-            // Can't favorite, or sign lease
-            btnSignLease.setVisible(false);
-            btnSignLease.setEnabled(false);
+        if (Session.isLoggedIn()) {
+            if (listing.parent.hasManager(Session.user)) {
+                // They can edit
+                btnEdit.setVisible(true);
+                btnEdit.setDisable(false);
+                btnViewLease.setVisible(true);
+                btnViewLease.setDisable(false);
+                btnFavorite.setVisible(false);
+                btnFavorite.setDisable(true);
+            }
+            if (Session.user.accountType==AccountType.PROPERTYMANAGER || Session.user.accountType == AccountType.REALTOR) {
+                // It'd be odd... they should just make a new account
+                btnViewLease.setVisible(false);
+                btnViewLease.setDisable(true);
+            }
+        } else {
+            btnEdit.setVisible(false);
+            btnEdit.setDisable(true);
             btnFavorite.setVisible(false);
             btnFavorite.setDisable(true);
         }
-        if (Session.user!=null)
-            if (Session.user.accountType==AccountType.PROPERTYMANAGER || Session.user.accountType == AccountType.REALTOR) {
-                // It'd be odd... they should just make a new account
-                btnSignLease.setVisible(false);
-                btnSignLease.setEnabled(false);
-            }
         
         
         lblApartmentNumber.setText("Apartment number: " + listing.apartmentNumber);
@@ -240,46 +256,55 @@ public class ListingController {
         
         lblLeaseLength.setText("Lease length: " + listing.lease.rentLength);
         txtLeaseLength.setText(String.valueOf(listing.lease.rentLength));
+        if (listing.parent!=null)
+            lblAddress.setText("Address: " + listing.parent.name);
         
-        lblAddress.setText("Address: " + listing.parent.name);
+        refreshAminities();
+    }
+    
+    private StackPane getIcon(Amminities a) {
+        Label lbl = new Label();
+        StackPane sp = new StackPane();
+        JFXTooltip tt = new JFXTooltip();
+        tt.setText("Has: " + a.toString());
         
-        _amminities = listing.amminities.clone();
-        for (Amminities a : _amminities) {
-            String icon = a.toIcon();
-            Label lbl = new Label();
-            StackPane sp = new StackPane();
-            JFXTooltip tt = new JFXTooltip();
-            tt.setText("Has: " + a.toString());
-            
-            if (icon.equals("na"))
-                lbl.setText(a.toString());
-            else {
+        if (a.toIcon().equals("na"))
+            lbl.setText(a.toString());
+        else {
+            try {
                 FontIcon fi = new FontIcon();
                 fi.setIconLiteral(a.toIcon());
                 fi.setIconSize(16);
                 lbl.setGraphic(fi);
                 lbl.setTooltip(tt);
+            } catch (Exception e) {
+                lbl.setText(a.toString());
             }
-            sp.getChildren().add(lbl);
-            hboxIcons.getChildren().add(sp);
-            hboxIcons1.getChildren().add(sp);
+        }
+        sp.getChildren().add(lbl);
+        return sp;
+    }
+    
+    private void refreshAminities() {
+        hboxIcons.getChildren().clear();
+        hboxIcons1.getChildren().clear();
+        for (Amminities a : _amminities) {
+            hboxIcons.getChildren().add(getIcon(a));
+            hboxIcons1.getChildren().add(getIcon(a));
         }
     }
     
     @FXML
-    void btnEdit(MouseEvent event) {
-        apView.setVisible(false);
-        apView.setDisable(true);
-        apEdit.setVisible(true);
-        apEdit.setDisable(false);
+    void btnEdit(ActionEvent event) {
+        setEditing(true);
     }
 
     @FXML
     void btnEditAmminities(ActionEvent event) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("SetAmminities.fxml"));
+            FXMLLoader loader = new FXMLLoader(App.class.getResource("Windows/SetAminities.fxml"));
             Parent root = (Parent)loader.load();
-            SetAmminitiesController controller = loader.getController();
+            SetAminitiesController controller = loader.getController();
             Stage stage = new Stage();
             stage.setTitle("Amminities for: " + listing.title);
             stage.setScene(new Scene(root));
@@ -291,7 +316,7 @@ public class ListingController {
             });
             stage.setOnCloseRequest(e -> {
                 _amminities = controller.getChecked();
-                refreshData();
+                refreshAminities();
             });
             stage.showAndWait();
         } catch (IOException e) {
@@ -301,14 +326,17 @@ public class ListingController {
 
     @FXML
     void btnFavorite(ActionEvent event) {
-        if (btnFavorite.isSelected())
-            Session.user.favoriteListing(listing);
+        if (Session.isLoggedIn())
+            if (btnFavorite.isSelected())
+                Session.user.favoriteListing(listing);
+            else
+                Session.user.unfavoriteListing(listing);
         else
-            Session.user.unfavoriteListing(listing);
+            AlertWindows.showMessage("Can't favorite", "Can't favorite that listing.", "Please login before favoriting listings.");
     }
 
     @FXML
-    void btnReviews(MouseEvent event) {
+    void btnReviews(ActionEvent event) {
         viewParent();
     }
     @FXML
@@ -325,7 +353,8 @@ public class ListingController {
             stage.setTitle(listing.parent.name);
             stage.setScene(new Scene(root));
             stage.setResizable(false);
-            stage.initStyle(StageStyle.UTILITY);
+//            stage.initStyle(StageStyle.UTILITY);
+            stage.initModality(Modality.WINDOW_MODAL);
             stage.centerOnScreen();
             stage.setOnShown(e -> {
                 controller.setUp(listing.parent);
@@ -339,7 +368,14 @@ public class ListingController {
     
 
     @FXML
-    void btnSave(ActionEvent event) {
+    void btnSave(ActionEvent event) {       
+        if (Session.isLoggedIn()) {
+            if (!listing.parent.hasManager(Session.user))
+                return;
+        }
+        else
+            return;
+        
         listing.setApartmentNumber(txtApartmentNumber.getText());
         listing.setTitle(txtTitle.getText());
         listing.setDescription(txtDescription.getText());
@@ -350,28 +386,28 @@ public class ListingController {
         listing.rooms = new Room[bRooms];
         listing.lease.rentLength = Double.parseDouble(txtLeaseLength.getText());
         
-        listing.amminities = _amminities.clone();
+        if (_amminities.length>0)
+            listing.amminities = _amminities.clone();
+        
+        setEditing(false);
+        DataBases.saveListings();
+        refreshData();
+    }
+    
+    @FXML
+    void btnDelete(ActionEvent event) {
+        if (listing.parent.hasManager(Session.user)) {
+            Optional<ButtonType> btn = AlertWindows.showPrompt("Delete listing", "Are you sure you want to delete this listing?",
+                    "Click \"Yes\" to delete address \"" + listing.title + "\".");
+            if (btn.get() == ButtonType.YES) {
+                listing.delete(); // k.
+            }
+        }
     }
 
     @FXML
-    void btnSignLease(MouseEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("../Windows/Lease.fxml"));
-            Parent root = (Parent)loader.load();
-            LeaseController controller = loader.getController();
-            Stage stage = new Stage();
-            stage.setTitle("Lease for: " + listing.title);
-            stage.setScene(new Scene(root));
-            stage.setResizable(false);
-            stage.initStyle(StageStyle.UTILITY);
-            stage.centerOnScreen();
-            stage.setOnShown(e -> {
-                controller.setIsSigning(true);
-            });
-            stage.showAndWait();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    void btnViewLease(ActionEvent event) {
+        listing.viewLease();
     }
 
     
@@ -386,6 +422,29 @@ public class ListingController {
         if (event.getCharacter().matches("\\D")) {
             event.consume(); // Consume non digits
         }
+    }
+
+    public Listing getListing() {
+        return listing;
+    }
+
+    public void setEditing(boolean edit) {
+        if (Session.isLoggedIn())
+            if (listing.parent.hasManager(Session.user)) {
+                if (edit) {
+                    apView.setDisable(true);
+                    apEdit.setDisable(false);
+                    
+                    apView.setVisible(false);
+                    apEdit.setVisible(true);
+                } else {
+                    apView.setDisable(false);
+                    apEdit.setDisable(true);
+                    
+                    apView.setVisible(true);
+                    apEdit.setVisible(false);
+                }
+            }
     }
 
 }

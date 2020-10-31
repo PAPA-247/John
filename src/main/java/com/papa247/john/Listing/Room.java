@@ -14,20 +14,20 @@ import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Exceptions;
 
 public class Room {
-    public RoomType type;           // Type of room
-    public double size;             // feet^3 of room
-    public int windows;             // Windows count
-    public String name;             // Room name (this allows us to refer to the room via the lease (typically "A", "B", etc))
+    public RoomType type = RoomType.NONE;   // Type of room
+    public double size = 0.0;               // feet^3 of room
+    public int windows = 0;                 // Windows count
+    public String name = "";                // Room name (this allows us to refer to the room via the lease (typically "A", "B", etc))
     
-    public FloorType flooring;      // Type of flooring in this room
-    public Extensions[] extensions; // Closets
-    public Appliances[] appliances; // ...
-    public Fixtures[] fixtures;     // Ceiling lights, fans, etc
-    public Furniture[] furniture;   // Desk, chair, bed, etc
+    public FloorType flooring = FloorType.NONE;         // Type of flooring in this room
+    public Extensions[] extensions = new Extensions[0]; // Closets
+    public Appliances[] appliances = new Appliances[0]; // ...
+    public Fixtures[] fixtures =  new Fixtures[0];      // Ceiling lights, fans, etc
+    public Furniture[] furniture = new Furniture[0];    // Desk, chair, bed, etc
     
     
     public Room(JSONObject jo) {
-        if (!jo.has("type") || !jo.has("floortype"))
+        if (!jo.has("type") || !jo.has("flooring"))
             throw new Exceptions.InvalidJSON("Invalid JSON data passed.");
 
         if (jo.has("type"))
@@ -71,6 +71,10 @@ public class Room {
             });
     }
     
+    public Room() {
+        // Blank
+    }
+
     public JSONObject toJSON() {
         JSONObject jo = new JSONObject();
         

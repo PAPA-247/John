@@ -4,8 +4,6 @@
 */
 
 package com.papa247.john.Listing;
-import java.io.*;
-import java.util.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import com.papa247.john.DataBases;
@@ -15,31 +13,36 @@ import com.papa247.john.Enumerators.TargetType;
 import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Coordinate;
 import com.papa247.john.Support.Review;
+import com.papa247.john.Support.StringUtils;
 import com.papa247.john.User.User;
 
 public class Address {
-    public int id;                  // Used to reference this address when an object is not desirable
-    public String name;             // Name of the place.
-    public String streetAddress;    // ..
-    public String city;             // ..
-    public String state;            // ..
-    public String postalCode;       // ..
-    public String country;          // ..
+    public int id = -1;                      // Used to reference this address when an object is not desirable
+    public String name;                 // Name of the place.
+    public String description = "";          // A description of the place
+    public String streetAddress = "";   // ..
+    public String city = "";            // ..
+    public String state = "";           // ..
+    public String postalCode = "";      // ..
+    public String country = "";         // ..
     
-    public Coordinate longitude;    // The longitude coordinate of this address
-    public Coordinate latitude;     // The latitude coordinate of this address
+    // TODO: Management company address (payment address)
+    // Referenced in the lease agreement template, we need to be able to specify a payment/management company address
     
-    public Review[] reviewsOf;      // Reviews of this address
-    public Listing[] listings;      // Our listings for this address
-    public User[] managers;         // Who manages this address
+    public Coordinate longitude = new Coordinate();    // The longitude coordinate of this address
+    public Coordinate latitude = new Coordinate();     // The latitude coordinate of this address
+    
+    public Review[] reviewsOf = new Review[0];      // Reviews of this address
+    public Listing[] listings = new Listing[0];      // Our listings for this address
+    public User[] managers = new User[0];         // Who manages this address
     
     
    
     
 
     public Address(JSONObject jsonObject) {
-        if (jsonObject.has("Name"))
-            name = jsonObject.getString("Name");
+        if (jsonObject.has("name")) // Do not capitalize stuff, I spent 1 hour just to realize this was being found :(
+            name = jsonObject.getString("name");
         if (jsonObject.has("streetAddress"))
             streetAddress = jsonObject.getString("streetAddress");
         if (jsonObject.has("city"))
@@ -54,11 +57,15 @@ public class Address {
             longitude = new Coordinate(jsonObject.getJSONObject("longitude"));
         if (jsonObject.has("Latitude"))
             latitude = new Coordinate(jsonObject.getJSONObject("Latitude")); 
+        
+        if (jsonObject.has("id"))
+            id = jsonObject.getInt("id");
        
         listings = new Listing[0];
         if(jsonObject.has("listings"))
            jsonObject.getJSONArray("listings").forEach(e -> {
                Listing listing = new Listing((JSONObject) e, this);
+               listing.parent = this;
                listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);
                DataBases.addListing(listing);
            });
@@ -72,6 +79,10 @@ public class Address {
     }
 
     
+    public Address() {
+    }
+
+
     public JSONObject toJSON() {
         JSONObject jo = new JSONObject();
         
@@ -83,6 +94,7 @@ public class Address {
         jo.put("country", country);
         jo.put("longitude", longitude.toJSON());
         jo.put("latitude", latitude.toJSON());
+        jo.put("id", id);
         
         
         JSONArray ja = new JSONArray();
@@ -136,7 +148,7 @@ public class Address {
             return true; // Blank listing
         
         listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);
-        DataBases.addressListingsToListings();
+        DataBases.updateListings();
         return DataBases.saveAddresses();
     }
     
@@ -150,13 +162,17 @@ public class Address {
             return true;
         
         listings = ArrayUtils.remove(listings, new Listing[listings.length-1], listing);
-        DataBases.addressListingsToListings();
+        DataBases.updateListings();
         return DataBases.saveAddresses();
     }
     
-    public boolean removeManager(User manager) {
+    public void removeManager(User manager) {
+        if (managers.length==0)
+            return;
         managers = ArrayUtils.remove(managers, new User[managers.length-1], manager);
-        return true;
+    }
+    public void addManager(User manager) {
+        managers = ArrayUtils.add(managers, new User[managers.length+1], manager);
     }
     
     public boolean removeReviewOf(Review review) {
@@ -211,6 +227,28 @@ public class Address {
 
 
     public boolean isEmpty() {
+        if (StringUtils.isNullOrEmpty(name) || StringUtils.isNullOrEmpty(description))
+            return true;
         return false;
+    }
+    
+    @Override
+    public String toString() {
+        return this.name;
+    }
+
+    public boolean equals(Object obj) {
+        Address comp = (Address) obj;
+        if (comp!=null)
+            if (comp.name != null)
+                if (comp.name.equals(this.name) && comp.id == this.id)
+                    return true;
+        
+        return false;
+    }
+    
+
+    public void delete() {
+        DataBases.removeAddress(this);        
     }
 }

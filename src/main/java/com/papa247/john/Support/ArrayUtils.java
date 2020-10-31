@@ -28,6 +28,9 @@ public class ArrayUtils {
         if (array[0]==null)
             array[0] = data;
         
+        if (data==null)
+            return array;
+        
         for (T obj : array)
             if (obj.equals(data))
                 return array; // Already there.
@@ -58,6 +61,9 @@ public class ArrayUtils {
         
         if (array.length==1)
             return newArray;
+        
+        if (data==null)
+            return array;
         
         int shift = 0;
         for (int i=0; i<array.length; i++) {

@@ -223,22 +223,34 @@ public class User {
         if (savedListings.length==0)
             if (_savedListings!=null)
                 _savedListings.forEach(lID -> {
-                    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-                    savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
+                    try {
+                        Listing listing = DataBases.getListing((Integer) lID);
+                        savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
+                    } catch (Exception e) {
+                        
+                    }
                 });
         
         if (ownedListings.length==0)
             if (_ownedListings!=null)
                 _ownedListings.forEach(lID -> {
-                    Listing listing = DataBases.getListing(Integer.parseInt((String) lID));
-                    ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
+                    try {
+                        Listing listing = DataBases.getListing((Integer) lID);
+                        ownedListings = ArrayUtils.add(ownedListings, new Listing[ownedListings.length+1], listing);
+                    } catch (Exception e) {
+                        
+                    }
                 });
         
         if (ownedAddresses.length==0)
             if (_ownedAddresses!=null)
                 _ownedAddresses.forEach(lID -> {
-                    Address address = DataBases.getAddress(Integer.parseInt((String) lID));
-                    ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
+                    try {
+                        Address address = DataBases.getAddress((Integer) lID);
+                        ownedAddresses = ArrayUtils.add(ownedAddresses, new Address[ownedAddresses.length+1], address);
+                    } catch (Exception e) {
+                    
+                    }
                 });
     }
     
@@ -293,10 +305,7 @@ public class User {
 	 * @param listing The listing to add to favorites (savedListings)
 	 * @return save successful
 	 */
-	public boolean favoriteListing(Listing listing) {
-		if (listing.equals(new Listing()))
-		    return true; // Blank listing
-		
+	public boolean favoriteListing(Listing listing) {		
 		savedListings = ArrayUtils.add(savedListings, new Listing[savedListings.length+1], listing);
 	    
 	    return save();	
@@ -307,6 +316,9 @@ public class User {
 	 * @return save successful
 	 */
 	public boolean unfavoriteListing(Listing listing) {
+	    if (savedListings.length==0)
+	        return true;
+	    
 	    savedListings = ArrayUtils.remove(savedListings, new Listing[savedListings.length+1], listing);
                 
         return save();
@@ -373,10 +385,19 @@ public class User {
 	}
 	
 	@Override
+	public String toString() {
+	    return this.username;
+	}
+	
+	@Override
 	public boolean equals(Object user) {
 	    User usr = (User) user;
-	    if (usr.username.equalsIgnoreCase(this.username))
-	        return true;
+	    if (this==null || usr == null)
+	        return false;
+	    
+	    if (usr.username!=null && this.username!=null)
+	        if (usr.username.equalsIgnoreCase(this.username))
+	            return true;
 	    return false;
 	}
 }

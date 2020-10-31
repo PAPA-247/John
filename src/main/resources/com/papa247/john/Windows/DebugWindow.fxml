@@ -16,6 +16,8 @@
                   <Button layoutX="14.0" layoutY="133.0" mnemonicParsing="false" onAction="#deleteReviews" prefHeight="25.0" prefWidth="126.0" text="Delete my reviews" />
                   <Button layoutX="14.0" layoutY="99.0" mnemonicParsing="false" onAction="#listReviews" prefHeight="25.0" prefWidth="126.0" text="List my reviews" />
                   <Button fx:id="btnListing" layoutX="151.0" layoutY="15.0" mnemonicParsing="false" onAction="#listingWindow" prefHeight="25.0" prefWidth="125.0" text="Blank listing window" />
+                  <Button fx:id="btnExpressLogin" layoutX="151.0" layoutY="65.0" mnemonicParsing="false" onAction="#btnExpressLogin" prefHeight="25.0" prefWidth="125.0" text="Become Billy" />
+                  <Button layoutX="151.0" layoutY="117.0" mnemonicParsing="false" onAction="#testSelection" prefHeight="25.0" prefWidth="125.0" text="Test Selection win" />
                </children></AnchorPane>
       </content>
     </Tab>
@@ -23,10 +25,15 @@
       <content>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
-                  <Button fx:id="btnCheckUser" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkUser" text="Check UserDB / User" />
-                  <Button fx:id="btnListUser" layoutX="14.0" layoutY="51.0" mnemonicParsing="false" onAction="#listUsers" prefHeight="25.0" prefWidth="126.0" text="List users" />
-                  <Button layoutX="14.0" layoutY="87.0" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="126.0" text="Load DB" />
-                  <Button layoutX="14.0" layoutY="123.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="126.0" text="Save DB" />
+                  <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#checkUser" text="Check UserDB / User" />
+                  <Button layoutX="14.0" layoutY="58.0" mnemonicParsing="false" onAction="#listUsers" prefHeight="25.0" prefWidth="126.0" text="List users" />
+                  <Button layoutX="150.0" layoutY="237.0" mnemonicParsing="false" onAction="#load" prefHeight="25.0" prefWidth="126.0" text="Load DB" />
+                  <Button layoutX="14.0" layoutY="237.0" mnemonicParsing="false" onAction="#save" prefHeight="25.0" prefWidth="126.0" text="Save DB" />
+                  <Button layoutX="150.0" layoutY="58.0" mnemonicParsing="false" onAction="#listAddresses" prefHeight="25.0" prefWidth="126.0" text="List Addresses" />
+                  <Button layoutX="150.0" layoutY="94.0" mnemonicParsing="false" onAction="#clearAddresses" prefHeight="25.0" prefWidth="126.0" text="Clear Addresses" />
+                  <Button layoutX="14.0" layoutY="94.0" mnemonicParsing="false" onAction="#clearUsers" prefHeight="25.0" prefWidth="126.0" text="Clear users" />
+                  <Button layoutX="14.0" layoutY="147.0" mnemonicParsing="false" onAction="#listListings" prefHeight="25.0" prefWidth="126.0" text="List Listings" />
+                  <Button layoutX="14.0" layoutY="181.0" mnemonicParsing="false" onAction="#clearListings" prefHeight="25.0" prefWidth="126.0" text="Clear Listings" />
                </children></AnchorPane>
       </content>
     </Tab>

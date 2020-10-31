@@ -1,16 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXNodesList?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
 
 <fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="669.0" prefWidth="917.0" stylesheets="@../style.css" type="AnchorPane" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.ListingHostController">
    <children>
-      <ScrollPane fx:id="spSearch" fitToWidth="true" prefHeight="400.0" prefWidth="185.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
-      <ScrollPane fx:id="spListings" fitToWidth="true" layoutX="185.0" prefHeight="400.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="185.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <ScrollPane fx:id="spSearch" fitToWidth="true" prefHeight="400.0" prefWidth="225.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" />
+      <ScrollPane fx:id="spListings" fitToWidth="true" layoutX="185.0" prefHeight="400.0" prefWidth="415.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="225.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <content>
-            <VBox fx:id="vboxListings" />
+            <VBox fx:id="vboxListings" spacing="25.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding></VBox>
          </content>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </ScrollPane>
+      <JFXNodesList fx:id="nodesList" rotate="180.0" spacing="15.0" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="25.0">
+         <children>
+            <JFXButton fx:id="btnNew" buttonType="RAISED" contentDisplay="GRAPHIC_ONLY">
+               <graphic>
+                  <FontIcon iconLiteral="fas-plus" iconSize="24" />
+               </graphic>
+               <styleClass>
+                  <String fx:value="icon-button" />
+                  <String fx:value="button-raised" />
+               </styleClass>
+            </JFXButton>
+            <JFXButton fx:id="btnListing" contentDisplay="GRAPHIC_ONLY" onAction="#newListing" text="Listing">
+               <graphic>
+                  <FontIcon iconLiteral="fas-home" iconSize="24" />
+               </graphic>
+            </JFXButton>
+            <JFXButton fx:id="btnAddress" contentDisplay="GRAPHIC_ONLY" onAction="#newAddress" text="Address">
+               <graphic>
+                  <FontIcon iconLiteral="fas-map-marker-alt" iconSize="24" />
+               </graphic>
+            </JFXButton>
+            <JFXButton contentDisplay="GRAPHIC_ONLY" onAction="#refreshData" text="Refresh">
+               <graphic>
+                  <FontIcon iconLiteral="fas-sync" iconSize="24" />
+               </graphic>
+            </JFXButton>
+         </children>
+      </JFXNodesList>
    </children>
 </fx:root>

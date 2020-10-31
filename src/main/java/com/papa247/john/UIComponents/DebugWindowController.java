@@ -9,8 +9,12 @@ package com.papa247.john.UIComponents;
 import java.io.IOException;
 import com.papa247.john.App;
 import com.papa247.john.DataBases;
+import com.papa247.john.DataBases.UsernameLookupType;
 import com.papa247.john.TestCode;
-
+import com.papa247.john.Listing.Address;
+import com.papa247.john.Listing.Listing;
+import com.papa247.john.Support.Session;
+import com.papa247.john.User.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,6 +28,9 @@ import javafx.stage.StageStyle;
 public class DebugWindowController {
     @FXML
     private Button btnCheckExample;
+    
+    @FXML
+    private Button btnExpressLogin;
 
     @FXML
     void checkUser(ActionEvent event) {
@@ -87,10 +94,41 @@ public class DebugWindowController {
     void deleteReviews(ActionEvent event) {
         TestCode.deleteReviews();
     }
-    
     @FXML
     void listReviews(ActionEvent event) {
         TestCode.listReviews(null);
+    }
+    
+    @FXML
+    void clearAddresses(ActionEvent event) {        for (Address address : DataBases.getAddresses()) {
+            address.delete();
+        }
+
+    }
+    @FXML
+    void clearListings(ActionEvent event) {        for (Listing listing : DataBases.getListings()) {
+            listing.delete();
+        }
+    }
+    @FXML
+    void clearUsers(ActionEvent event) {        for (User user : DataBases.getUsers()) {
+            user.delete();
+        }
+
+    }
+    @FXML
+    void listAddresses(ActionEvent event) {
+        System.out.println("========ADDRESSES========");
+        for (Address address: DataBases.getAddresses()) {
+            System.out.println(address.toString());
+        }
+    }
+    @FXML
+    void listListings(ActionEvent event) {
+        System.out.println("========LISTINGS========");
+        for (Listing listing : DataBases.getListings()) {
+            System.out.println("Title: " + listing.toString() + " address: " + listing.parent.name);
+        }
     }
     
     @FXML
@@ -100,6 +138,17 @@ public class DebugWindowController {
     @FXML
     void load(ActionEvent event) {
         DataBases.load();
+    }
+    
+    @FXML
+    void btnExpressLogin(ActionEvent event) {
+        Session.userLoginToken = "look,ImloggedinLocally";
+        Session.user = DataBases.getUser("billy", UsernameLookupType.username);
+    }
+    
+    @FXML
+    void testSelection(ActionEvent event) {
+        TestCode.selection();
     }
 }
 
