@@ -43,7 +43,7 @@ import javafx.stage.StageStyle;
 
 public class ListingController {
     
-    // TODO: Duplicate button
+    // TODO [#22]: Duplicate button
     // Have a button that allows a listing to be duplicated.
 
     @FXML

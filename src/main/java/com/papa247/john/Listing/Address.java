@@ -26,7 +26,7 @@ public class Address {
     public String postalCode = "";      // ..
     public String country = "";         // ..
     
-    // TODO: Management company address (payment address)
+    // TODO [#17]: Management company address (payment address)
     // Referenced in the lease agreement template, we need to be able to specify a payment/management company address
     
     public Coordinate longitude = new Coordinate();    // The longitude coordinate of this address
