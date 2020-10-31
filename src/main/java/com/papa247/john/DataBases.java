@@ -765,10 +765,12 @@ public class DataBases {
                 if (!match)
                     continue;
             }
+
+            foundListings = ArrayUtils.add(foundListings, new Listing[foundListings.length+1], listing);
         }
 
         
-        return new Listing[0];
+        return foundListings;
 //        throw new Exceptions.NoListingsFound("Failed to find any search results.");
     }
     /**
