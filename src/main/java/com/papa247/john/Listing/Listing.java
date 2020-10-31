@@ -17,7 +17,7 @@ import com.papa247.john.User.User;
 
 public class Listing {
     
-    // TODO [$5f9dd55be65e40000707176c]: Multiple listings of the same type that are / arenot avaliable
+    // TODO [#18]: Multiple listings of the same type that are / arenot avaliable
     // No one wants to enter 5 listings for the same item, make it so pepople can duplicate listings?
 
     public Address parent;

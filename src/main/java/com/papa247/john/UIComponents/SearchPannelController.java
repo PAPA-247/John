@@ -75,7 +75,7 @@ public class SearchPannelController {
     @FXML
     private JFXButton btnApply;
     
-    // TODO [$5f9dd55be65e400007071771]: Compare to companion field
+    // TODO [#23]: Compare to companion field
     // Make it so the upper limit can't be lower than the lower limit and vice-versa
     
     public void setListener(JFXTextField txt) { // Set to digits only. Replaces none digits with "".
