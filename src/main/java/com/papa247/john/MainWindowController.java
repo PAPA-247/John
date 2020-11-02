@@ -121,6 +121,10 @@ public class MainWindowController implements Initializable {
                                             openNewWindow("Windows/DebugWindow","Debug");
                                         });
                                         break;
+                                    case "btnViewListings": // View listings button (view all)
+                                        node2.addEventHandler(MouseEvent.MOUSE_RELEASED, e -> {
+                                            Session.displayListings.run(DataBases.getListings());
+                                        });
                                 }
                             }
                         }
@@ -152,13 +156,14 @@ public class MainWindowController implements Initializable {
             if (App.debug) {
                 System.out.println("[MainWindow] Debug mode active! Filling in blank data");
                 // Set Avatar (testing)
-                Image im = new Image(getClass().getResource("Images/Billy.jpg").toString(), false);
-                imgAvatar.setFill(new ImagePattern(im));
-            } else {
-                lblUser.setText("Welcome!");
-                Image stockImage = new Image(getClass().getResource("Images/BlankAvatar.jpg").toString(), false);
-                imgAvatar.setFill(new ImagePattern(stockImage));
+                //Image im = new Image(getClass().getResource("Images/Billy.jpg").toString(), false);
+                //imgAvatar.setFill(new ImagePattern(im));
             }
+            
+            // Username / Photo
+            lblUser.setText("Welcome!");
+            Image stockImage = new Image(getClass().getResource("Images/BlankAvatar.jpg").toString(), false);
+            imgAvatar.setFill(new ImagePattern(stockImage));
             
             // Account Menu
             setupAccountMenu(false);
@@ -191,14 +196,14 @@ public class MainWindowController implements Initializable {
         @FXML
         private void submit() {
             int index = AccountMenu.getSelectionModel().getSelectedIndex();
-            if (Session.user!=null) {
+            if (Session.isLoggedIn()) {
                 if (index == 0) { // My Account
                     System.out.println("[Account Menu] Opening account settings");
                      Session.openMyAccount();
                     
                 } else if (index == 1) { // My Favorites
                     System.out.println("[Account Menu] Switching to favorites view");
-                    // showFavorites(); ??
+                    Session.displayListings.run(Session.user.savedListings); // View favorites
                     
                 } else if (index == 2) {
                     System.out.println("[Account Menu] Logging out");
@@ -216,11 +221,6 @@ public class MainWindowController implements Initializable {
                 if (index == 0) {
                     System.out.println("[Account Menu] Logging in");
                     // Login
-                    
-//                    Stage stage = getNewWindow("Windows/UserWindow", 450, 515);
-//                    stage.setTitle("Login");
-//                    stage.setResizable(false);
-//                    stage.showAndWait();
                     Session.login();
                     
                     if (Session.user==null) {

@@ -86,7 +86,10 @@ public class SearchPannelController {
                     txt.setText(newValue.replaceAll("[^\\d]", ""));
                 }
             }
-        });        
+        });
+        txt.setOnAction(e-> {
+            Session.searchListings.run(getSearchData());
+        });
     }
     
     @FXML
@@ -127,7 +130,7 @@ public class SearchPannelController {
 
     @FXML
     void btnApply(ActionEvent event) {
-        Session.updateListings.run(getSearchData());
+        Session.searchListings.run(getSearchData());
     }
     
     
@@ -140,7 +143,7 @@ public class SearchPannelController {
         if (!txtBedroomsLower.getText().equals("") && !txtBedroomsUpper.getText().equals(""))
             searchData.bedroomCount = new Range<Integer>(getNumber(txtBedroomsLower),getNumber(txtBedroomsUpper));
         if (!txtPriceLower.getText().equals("") && !txtPriceUpper.getText().equals(""))
-            searchData.priceRange = new Range<Integer>(getNumber(txtPriceUpper), getNumber(txtPriceUpper));
+            searchData.priceRange = new Range<Integer>(getNumber(txtPriceLower), getNumber(txtPriceUpper));
         if (!txtLengthLower.getText().equals("") && !txtLengthUpper.getText().equals("")) // Not empty
             searchData.rentLength = new Range<Integer>(getNumber(txtLengthLower), getNumber(txtLengthUpper));
         

@@ -513,7 +513,7 @@ public class DataBases {
             }
         }
         
-        Listing[] foundListings = new Listing[listings.length];
+        Listing[] foundListings = new Listing[0];
         int length = 0;
         for (Listing listing : listings) {
             if (chkAddress) {
@@ -984,6 +984,7 @@ public class DataBases {
             }
             System.out.println("[DataBases] Adding listing");
             addListing(newListing1);
+            saveListings();
             
             // Modify lease
             
@@ -991,6 +992,8 @@ public class DataBases {
             editLease(newListing1);
             
             save();
+            
+            Session.displayListings.run(getListings()); 
         } catch (IOException e) {
             System.out.println("Or not...\n" + e.getMessage());
             e.printStackTrace();

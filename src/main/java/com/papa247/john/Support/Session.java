@@ -23,7 +23,8 @@ public class Session {
     public static User user;
     public static String userLoginToken; // RocketFuel (may be used later for remote API calls and when WE'RE not authenticating users ourselves)
     
-    public static CallBack updateListings;
+    public static CallBack searchListings;
+    public static CallBack displayListings;
     
     
     public Session() {}

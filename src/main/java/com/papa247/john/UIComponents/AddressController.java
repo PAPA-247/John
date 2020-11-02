@@ -197,7 +197,7 @@ public class AddressController {
 
     @FXML
     void btnViewListings(ActionEvent event) {
-        Session.updateListings.run(address.listings);
+        Session.displayListings.run(address.listings);
     }
 
     public Address getAddress() {

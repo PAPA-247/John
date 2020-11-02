@@ -16,7 +16,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.kordamp.ikonli.javafx.FontIcon?>
 
-<AnchorPane prefHeight="375.0" prefWidth="745.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.ListingController">
+<AnchorPane prefHeight="400.0" prefWidth="745.0" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.papa247.john.UIComponents.ListingController">
    <children>
       <AnchorPane fx:id="apView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="734.0" style="-fx-background-color: #DDDDDD;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -44,7 +44,7 @@
                               </JFXButton>
                               <JFXButton fx:id="btnViewLease" contentDisplay="GRAPHIC_ONLY" onAction="#btnViewLease" styleClass="button-icon">
                                  <graphic>
-                                    <FontIcon iconLiteral="fas-file-signature" iconSize="16" text="" />
+                                    <FontIcon iconLiteral="fas-file-signature" iconSize="16" />
                                  </graphic>
                               </JFXButton>
                               <JFXButton fx:id="btnReviews" contentDisplay="GRAPHIC_ONLY" onAction="#btnReviews" styleClass="button-icon">
@@ -86,6 +86,14 @@
                                     <AnchorPane>
                                        <children>
                                           <Label fx:id="lblApartmentNumber" text="Apartment number: XXX" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </padding>
+                                    </AnchorPane>
+                                    <AnchorPane>
+                                       <children>
+                                          <Label fx:id="lblRooms" text="Rooms: X" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
@@ -199,6 +207,15 @@
                                        <children>
                                           <Label fx:id="lblApartmentNumber1" text="Apartment number:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                           <JFXTextField fx:id="txtApartmentNumber" layoutX="110.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="83.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="110.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                       </children>
+                                       <padding>
+                                          <Insets bottom="5.0" top="5.0" />
+                                       </padding>
+                                    </AnchorPane>
+                                    <AnchorPane>
+                                       <children>
+                                          <Label fx:id="lblRooms1" text="Bedrooms:" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                                          <JFXTextField fx:id="txtRooms" layoutX="60.0" layoutY="10.0" onAction="#checkTextAttributes" onKeyTyped="#checkTextAttributes" prefHeight="23.0" prefWidth="143.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                                        </children>
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />

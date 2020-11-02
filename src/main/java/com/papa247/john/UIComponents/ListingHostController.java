@@ -86,9 +86,14 @@ public class ListingHostController {
             AnchorPane searchPane = (AnchorPane)loader.load();
             SearchPannelController controller = loader.getController();
             //controller.setUpdateMethod();
-            Session.updateListings = new CallBack() {
+            Session.searchListings = new CallBack() {
                 public void run(Object searchData) {
                     displayListings(DataBases.getListings((SearchData) searchData));
+                }
+            };
+            Session.displayListings = new CallBack() {
+                public void run(Object listings) {
+                    displayListings((Listing[]) listings);
                 }
             };
             controller.setListeners();

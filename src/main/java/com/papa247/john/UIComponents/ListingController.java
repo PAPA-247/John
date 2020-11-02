@@ -24,6 +24,8 @@ import com.papa247.john.Listing.Address;
 import com.papa247.john.Listing.Listing;
 import com.papa247.john.Listing.Room;
 import com.papa247.john.Support.Session;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -102,6 +104,9 @@ public class ListingController {
 
     @FXML
     private Label lblBedrooms;
+    
+    @FXML
+    private Label lblRooms;
 
     @FXML
     private Label lblMonthlyPrice;
@@ -168,6 +173,12 @@ public class ListingController {
 
     @FXML
     private JFXTextField txtBedrooms;
+    
+    @FXML
+    private Label lblRooms1;
+    
+    @FXML
+    private JFXTextField txtRooms;
 
     @FXML
     private Label lblMonthlyPrice1;
@@ -204,7 +215,14 @@ public class ListingController {
         this.listing = listing;
         _amminities = listing.amminities.clone();
         
-        refreshData();     
+        refreshData();
+        
+        setListener(txtBedrooms);
+        setListener(txtRooms);
+        setListener(txtLeaseLength);
+        setListener(txtMonthlyPrice);
+        
+        lblRooms1.setText("Bathrooms: ");
         
         return true;
     }
@@ -251,8 +269,11 @@ public class ListingController {
         lblBedrooms.setText("Bedrooms: " + listing.bedrooms.length);
         txtBedrooms.setText(String.valueOf(listing.bedrooms.length));
         
+        lblRooms.setText("Bathrooms: " + listing.rooms.length);
+        txtRooms.setText(String.valueOf(listing.rooms.length));
+        
         lblMonthlyPrice.setText("Monthly price: " + listing.monthlyPrice);
-        txtMonthlyPrice.setText(String.valueOf(listing.bedrooms.length));
+        txtMonthlyPrice.setText(String.valueOf(listing.monthlyPrice));
         
         lblLeaseLength.setText("Lease length: " + listing.lease.rentLength);
         txtLeaseLength.setText(String.valueOf(listing.lease.rentLength));
@@ -260,6 +281,17 @@ public class ListingController {
             lblAddress.setText("Address: " + listing.parent.name);
         
         refreshAminities();
+    }
+    
+    public void setListener(JFXTextField txt) { // Set to digits only. Replaces none digits with "".
+        txt.textProperty().addListener(new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue,  String newValue) {
+                if (!newValue.matches("\\d*")) {
+                    txt.setText(newValue.replaceAll("[^\\d]", ""));
+                }
+            }
+        });
     }
     
     private StackPane getIcon(Amminities a) {
@@ -382,8 +414,9 @@ public class ListingController {
         listing.setMonthlyPrice(Double.parseDouble(txtMonthlyPrice.getText()));
         
         int bRooms = Integer.parseInt(txtBedrooms.getText());
+        int rRooms = Integer.parseInt(txtRooms.getText());
         listing.bedrooms = new Room[bRooms]; // might work, could fail .. :)
-        listing.rooms = new Room[bRooms];
+        listing.rooms = new Room[rRooms]; // Nah it works
         listing.lease.rentLength = Double.parseDouble(txtLeaseLength.getText());
         
         if (_amminities.length>0)
