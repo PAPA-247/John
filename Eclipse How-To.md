@@ -67,9 +67,29 @@ All done!
 7) You now need to add your newly installed Scene Builder. Window > Preferences > JavaFX, to the right of "SceneBuilder executable" enter `C:\Program Files\SceneBuilder\SceneBuilder.exe`
 ![javafx-sb-3](https://resources.cnewb.co/CSCE247/javafx-sb-3.png)
 
+
+8) Open Scenebuilder (search for the program) and then open a blank document
+
+9) To the right of the "Library" search bar hit the little gear icon, then select "JAR/FXML Manager"
+![scenebuilder-1](https://resources.cnewb.co/CSCE247/scenebuilder-1.png)
+
+10) Click "Search repositories" and search for these:
+``
+ikonli-fontawesome5-pack
+ikonli-fontawesome-pack
+ikonli-material-pack
+ilonli-javafx
+jfoenix
+ikonli-core
+``
+![scenebuilder-2](https://resources.cnewb.co/CSCE247/scenebuilder-2.png)
+
+This installs the required dependencies to modify the GUI.
+
 Scene-Builder is now installed, right click a `.fxml` file and click "Open with Scene Builder" to use it.
 _Our window (`.fxml`) files are stored in `John/src/main/resources/com/papa247/john/`_
 ![fxml-example](https://resources.cnewb.co/CSCE247/open-fxml.png)
+
 
 
 
