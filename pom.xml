@@ -3,7 +3,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.papa247</groupId>
     <artifactId>john</artifactId>
-    <version>0.0.2-SNAPSHOT</version>
+    <version>0.1.0-SNAPSHOT</version>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>11</maven.compiler.source>
@@ -14,14 +14,7 @@
         <url>https://teampapa.cnewb.co</url>
     </organization>
     <url>https://github.com/PAPA-247/john</url>
-    <description>CSCE247 Project: John
-Offsite housing search tool
-
-
-
-Dependencies:
-SimpleJSON: an improved version of https://github.com/fangyidong/json-simple. It adds type safety, serialization, tidy formatting and improved performance.</description>
-	
+    <description>CSCE247 Project: John</description>
 	<repositories>
 	  <repository>
 	    <id>charm-glisten</id>
@@ -91,36 +84,33 @@ SimpleJSON: an improved version of https://github.com/fangyidong/json-simple. It
                 <configuration>
 				    <archive>
 				        <manifest>
-				            <mainClass>org.programirame.Main</mainClass>
+				            <mainClass>com.papa247.john.App</mainClass>
 				            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
 				        </manifest>
 				    </archive>
 				</configuration>
             </plugin>
             <plugin>
-			    <groupId>org.openjfx</groupId>
-			    <artifactId>javafx-maven-plugin</artifactId>
-			    <version>0.0.4</version>
-			    <configuration>
-			        <options>
-			        <option>--add-opens</option>
-			        <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
-			        <option>--add-opens</option>
-			        <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-			        <option>--add-exports</option>
-			        <option>javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix</option>
-			        <option>--add-exports</option>
-			        <option>javafx.controls/com.sun.javafx.scene.control=com.jfoenix</option>
-			        <option>--add-exports</option>
-			        <option>javafx.base/com.sun.javafx.binding=com.jfoenix</option>
-			        <option>--add-exports</option>
-			        <option>javafx.graphics/com.sun.javafx.stage=com.jfoenix</option>
-			        <option>--add-exports</option>
-			        <option>javafx.base/com.sun.javafx.event=com.jfoenix</option>
-			        </options>
-			        <mainClass>com.papa247.john.App</mainClass>
-			    </configuration>
-			</plugin>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>0.0.4</version>
+                <configuration>
+                    <mainClass>com.papa247.john.App</mainClass>
+                    <options>
+                        <option>--add-opens</option><option>javafx.graphics/com.sun.javafx.scene=ALL-UNNAMED</option>
+                        <option>--add-opens</option><option>javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED</option>
+                        <option>--add-opens</option><option>javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</option>
+                        <option>--add-opens</option><option>javafx.base/com.sun.javafx.binding=ALL-UNNAMED</option>
+                        <option>--add-opens</option><option>javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED</option>
+                        <option>--add-opens</option><option>javafx.base/com.sun.javafx.event=ALL-UNNAMED</option>
+                        <option>--add-exports</option><option>javafx.controls/com.sun.javafx.scene.control.behavior=ALL-UNNAMED</option>
+                        <option>--add-exports</option><option>javafx.controls/com.sun.javafx.scene.control=ALL-UNNAMED</option>
+                        <option>--add-exports</option><option>javafx.base/com.sun.javafx.binding=ALL-UNNAMED</option>
+                        <option>--add-exports</option><option>javafx.graphics/com.sun.javafx.stage=ALL-UNNAMED</option>
+                        <option>--add-exports</option><option>javafx.base/com.sun.javafx.event=ALL-UNNAMED</option>
+                    </options>
+                </configuration>
+            </plugin>
             <!-- <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
