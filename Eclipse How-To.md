@@ -71,7 +71,7 @@ All done!
 8) Open Scenebuilder (search for the program) and then open a blank document
 
 9) To the right of the "Library" search bar hit the little gear icon, then select "JAR/FXML Manager"
-![scenebuilder-1](https://resources.cnewb.co/CSCE247/scenebuilder-1.png)
+![scenebuilder-1](https://resources.cnewb.co/CSCE247/1scenebuilder-1.png)
 
 10) Click "Search repositories" and search for these:
 ``
@@ -82,7 +82,7 @@ ilonli-javafx
 jfoenix
 ikonli-core
 ``
-![scenebuilder-2](https://resources.cnewb.co/CSCE247/scenebuilder-2.png)
+![scenebuilder-2](https://resources.cnewb.co/CSCE247/1scenebuilder-2.png)
 
 This installs the required dependencies to modify the GUI.
 
