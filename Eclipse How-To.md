@@ -1,3 +1,21 @@
+### Compiling:
+1) Make sure you JDK11 as default for the project
+
+2) Click Run > Run configurations ..
+![compile-1](https://resources.cnewb.co/CSCE247/compile-1.png)
+Java Application > App
+
+3) Paste the following:
+``
+--add-exports javafx.controls/com.sun.javafx.scene.control.behavior=com.jfoenix
+--add-exports javafx.controls/com.sun.javafx.scene.control=com.jfoenix
+--add-exports javafx.base/com.sun.javafx.binding=com.jfoenix
+--add-exports javafx.graphics/com.sun.javafx.stage=com.jfoenix
+--add-exports javafx.base/com.sun.javafx.event=com.jfoenix
+``
+![compile-2](https://resources.cnewb.co/CSCE247/compile-2.png)
+
+
 ### Set Eclipse to run JDK11:
 _**Some photos may refer to JDK15. Please ignore these, we no longer use JDK15. (Some depedencies do not support it just yet)**_
 
