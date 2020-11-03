@@ -181,14 +181,40 @@
             <AnchorPane fx:id="apImages1" prefHeight="165.0" prefWidth="734.0" style="-fx-background-color: #888888;" visible="false" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
             <AnchorPane fx:id="apListingData1" layoutY="165.0" prefHeight="241.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
+                  <AnchorPane fx:id="apButtons1" layoutX="534.0" prefHeight="65.0" prefWidth="215.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <HBox fx:id="hboxButtons1" alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="200.0" spacing="15.0">
+                           <children>
+                              <JFXButton fx:id="btnSave" contentDisplay="GRAPHIC_ONLY" onAction="#btnSave" style="-fx-background-color: #61FF91;" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-save" iconSize="16" />
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Save listing" />
+                                 </tooltip>
+                              </JFXButton>
+                              <JFXButton fx:id="btnDuplicate" contentDisplay="GRAPHIC_ONLY" onAction="#btnDuplicate" style="-fx-background-color: #3f70c4;" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-clone" iconSize="16" />
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Duplicate listing" />
+                                 </tooltip>
+                              </JFXButton>
+                              <JFXButton fx:id="btnDelete" contentDisplay="GRAPHIC_ONLY" onAction="#btnDelete" style="-fx-background-color: #FF6161;" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Delete listing" />
+                                 </tooltip>
+                              </JFXButton>
+                           </children></HBox>
+                     </children>
+                  </AnchorPane>
                   <AnchorPane fx:id="apTitleRating1" prefHeight="65.0" prefWidth="515.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="225.0" AnchorPane.topAnchor="0.0">
                      <children>
                         <JFXTextField fx:id="txtTitle" layoutY="2.0" prefHeight="65.0" prefWidth="509.0" promptText="Title" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0" />
-                     </children>
-                  </AnchorPane>
-                  <AnchorPane fx:id="apButtons1" layoutX="534.0" prefHeight="65.0" prefWidth="215.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <children>
-                        <HBox fx:id="hboxButtons1" alignment="CENTER_RIGHT" layoutY="1.0" prefHeight="65.0" prefWidth="200.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0" />
                      </children>
                   </AnchorPane>
                   <Pane layoutY="65.0" prefHeight="1.0" prefWidth="200.0" style="-fx-background-color: gray;" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="65.0" />
@@ -247,22 +273,6 @@
                                        <padding>
                                           <Insets bottom="5.0" top="5.0" />
                                        </padding>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <padding>
-                                          <Insets top="15.0" />
-                                       </padding>
-                                       <children>
-                                          <JFXButton fx:id="btnSave" buttonType="RAISED" onAction="#btnSave" style="-fx-background-color: #61FF91;" text="Save" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
-                                    </AnchorPane>
-                                    <AnchorPane>
-                                       <padding>
-                                          <Insets bottom="15.0" top="15.0" />
-                                       </padding>
-                                       <children>
-                                          <JFXButton fx:id="btnDelete" buttonType="RAISED" onAction="#btnDelete" style="-fx-background-color: #FF6161;" text="Delete" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                                       </children>
                                     </AnchorPane>
                                  </children>
                               </VBox>

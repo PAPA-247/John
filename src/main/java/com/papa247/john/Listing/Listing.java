@@ -13,13 +13,10 @@ import com.papa247.john.Enumerators.Amminities;
 import com.papa247.john.Enumerators.ListingType;
 import com.papa247.john.Support.ArrayUtils;
 import com.papa247.john.Support.Review;
+import com.papa247.john.Support.StringUtils;
 import com.papa247.john.User.User;
 
 public class Listing {
-    
-    // TODO [#18]: Multiple listings of the same type that are / arenot avaliable
-    // No one wants to enter 5 listings for the same item, make it so pepople can duplicate listings?
-
     public Address parent;
     public int id;
     public String apartmentNumber = "";
@@ -37,11 +34,13 @@ public class Listing {
     public Room[] bedrooms = new Room[0];
     
     
-    public Listing(JSONObject jo, Address parent) {
+    public Listing(JSONObject jo, Address parent) {        
         if (!jo.has("id") || !jo.has("apartmentNumber") || !jo.has("monthlyPrice")
                 || !jo.has("lease") || !jo.has("listingType") || !jo.has("bedrooms")
                 || !jo.has("title") || !jo.has("description"))
             return; // No valid (or empty either way).
+        
+        this.parent = parent;
         
         id = jo.getInt("id");
         apartmentNumber = jo.getString("apartmentNumber");
@@ -180,8 +179,8 @@ public class Listing {
     }
 
     public boolean isEmpty() {
-        // TODO [#12]: Auto-generated method stub: Listing.isEmpty()
-        // Return whether or not this object is "empty" I.E. a new-unfilled listing
+        if (StringUtils.isNullOrEmpty(this.title))
+            return true; // Good enough for me
         return false;
     }
     

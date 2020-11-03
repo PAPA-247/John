@@ -396,7 +396,11 @@ public class DataBases {
      * @param listing the listing object to add
      */
     public static void addListing(Listing listing) {
-        listing.parent.addListing(listing);
+        if (listing.id==-1)
+            listing.id = assignNewListingID();
+        
+        if (listing.parent!=null)
+            listing.parent.addListing(listing);
     }
     /**
      * Remove a listing object from the database's listing array. You will need to save the changes.

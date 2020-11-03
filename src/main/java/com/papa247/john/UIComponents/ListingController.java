@@ -44,10 +44,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class ListingController {
-    
-    // TODO [#22]: Duplicate button
-    // Have a button that allows a listing to be duplicated.
-
     @FXML
     private AnchorPane apView;
 
@@ -197,6 +193,9 @@ public class ListingController {
 
     @FXML
     private JFXButton btnDelete;
+    
+    @FXML
+    private JFXButton btnDuplicate;
 
     @FXML
     private AnchorPane apIcons1;
@@ -425,6 +424,16 @@ public class ListingController {
         setEditing(false);
         DataBases.saveListings();
         refreshData();
+    }
+    
+    @FXML
+    void btnDuplicate(ActionEvent event) {
+        // Duplicates the listing
+        Listing newListing = new Listing(listing.toJSON(), listing.parent); // seems not so efficent, but I know it'll be seperate
+        newListing.title += " (1)";
+        newListing.id = DataBases.assignNewListingID();
+        DataBases.addListing(newListing);
+        Session.displayListings.run(DataBases.getListings());
     }
     
     @FXML

@@ -82,7 +82,7 @@ public class Room {
         jo.put("type", type.toString());
         jo.put("size", size);
         jo.put("windows", windows);
-        jo.put("flooring", flooring);
+        jo.put("flooring", flooring.toString());
 
         JSONArray ja = new JSONArray();
         for (Extensions a : extensions)

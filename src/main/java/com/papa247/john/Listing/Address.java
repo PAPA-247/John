@@ -144,7 +144,7 @@ public class Address {
      * @param listing   The listing... to add...
      */
     public boolean addListing(Listing listing) {
-        if (listing.equals(new Listing()))
+        if (listing.isEmpty())
             return true; // Blank listing
         
         listings = ArrayUtils.add(listings, new Listing[listings.length+1], listing);

@@ -40,16 +40,25 @@
                                  <graphic>
                                     <FontIcon iconLiteral="fas-edit" iconSize="16" />
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Edit address" />
+                                 </tooltip>
                               </JFXButton>
                               <JFXButton fx:id="btnViewListings" contentDisplay="GRAPHIC_ONLY" styleClass="button-icon">
                                  <graphic>
                                     <FontIcon iconLiteral="fas-table" iconSize="16" onDragDetected="#btnViewListings" />
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="View listings owned by this address" />
+                                 </tooltip>
                               </JFXButton>
                               <JFXButton fx:id="btnLeaveReview" contentDisplay="GRAPHIC_ONLY" styleClass="button-icon">
                                  <graphic>
                                     <FontIcon iconLiteral="fas-comment" iconSize="16" onDragDetected="#btnLeaveReview" />
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Leave a review" />
+                                 </tooltip>
                               </JFXButton>
                            </children>
                         </HBox>
@@ -123,15 +132,21 @@
                      <children>
                         <HBox fx:id="hboxButtons1" alignment="CENTER_RIGHT" layoutY="1.0" prefHeight="65.0" prefWidth="200.0" spacing="15.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
                            <children>
-                              <JFXButton fx:id="btnDelete" contentDisplay="GRAPHIC_ONLY" onAction="#btnDelete" style="-fx-background-color: #FF6161;" styleClass="button-icon">
-                                 <graphic>
-                                    <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
-                                 </graphic>
-                              </JFXButton>
                               <JFXButton fx:id="btnSave" contentDisplay="GRAPHIC_ONLY" onAction="#btnSave" style="-fx-background-color: #61FF91;" styleClass="button-icon">
                                  <graphic>
                                     <FontIcon iconLiteral="fas-save" iconSize="16" />
                                  </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Save address" />
+                                 </tooltip>
+                              </JFXButton>
+                              <JFXButton fx:id="btnDelete" contentDisplay="GRAPHIC_ONLY" onAction="#btnDelete" style="-fx-background-color: #FF6161;" styleClass="button-icon">
+                                 <graphic>
+                                    <FontIcon iconLiteral="fas-trash-alt" iconSize="16" />
+                                 </graphic>
+                                 <tooltip>
+                                    <Tooltip text="Delete address" />
+                                 </tooltip>
                               </JFXButton>
                            </children>
                         </HBox>

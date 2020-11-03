@@ -76,6 +76,8 @@ public class LeaseController {
         
         User[] selectedUsers = Select.getUser(DataBases.getUsers(), "Selects user for lease agreement.", users);
         
+        if (selectedUsers.length==0)
+            return;
         
         for (Signer user : lease.signers) {
             boolean found = false;
@@ -175,9 +177,10 @@ public class LeaseController {
         if (lease!=null) {
             String contents = lease.contents;
             String usrs = "";
-            for (Signer signer : lease.signers) {
-                usrs += " " + signer.user.username;
-            }
+            if (lease.signers!=null)
+                for (Signer signer : lease.signers) {
+                    usrs += " " + signer.user.username;
+                }
             
             if (!editing) {
                 contents = contents.replace("%DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
