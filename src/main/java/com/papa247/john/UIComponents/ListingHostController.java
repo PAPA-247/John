@@ -64,7 +64,7 @@ public class ListingHostController {
     }
     
     private void refresh() {
-        Listing[] listings = DataBases.getListings(); // For convience now
+        Listing[] listings = this.listings;
         
         vboxListings.getChildren().clear(); // Reset
         try {
