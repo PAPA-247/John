@@ -212,7 +212,10 @@ public class ListingController {
     
     public boolean setup(Listing listing) {
         this.listing = listing;
-        _amminities = listing.amminities.clone();
+        if (listing==null)
+            return false;
+        if (listing.amminities!=null)
+            _amminities = listing.amminities.clone();
         
         refreshData();
         

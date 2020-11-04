@@ -25,16 +25,22 @@ public class ArrayUtils {
             return newArray;
         }
         
-        if (array[0]==null)
+        if (array[0]==null) {
             array[0] = data;
+            return array;
+        }
+            
         
         if (data==null)
             return array;
         
-        for (T obj : array)
+        for (T obj : array) {
+            if (obj == null)
+                continue;
             if (obj.equals(data))
                 return array; // Already there.
-        
+        }
+            
         for (int i = 0; i<array.length; i++) {
             if (array[i]!=null)
                 newArray[i] = array[i];
