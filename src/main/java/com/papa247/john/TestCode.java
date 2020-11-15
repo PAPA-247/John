@@ -14,7 +14,13 @@ import org.json.JSONObject;
 import com.papa247.john.DataBases.UsernameLookupType;
 import com.papa247.john.Enumerators.AccountType;
 import com.papa247.john.Enumerators.Amminities;
+import com.papa247.john.Enumerators.Appliances;
+import com.papa247.john.Enumerators.Extensions;
+import com.papa247.john.Enumerators.Fixtures;
+import com.papa247.john.Enumerators.FloorType;
+import com.papa247.john.Enumerators.Furniture;
 import com.papa247.john.Enumerators.ListingType;
+import com.papa247.john.Enumerators.RoomType;
 import com.papa247.john.Listing.Address;
 import com.papa247.john.Listing.Lease;
 import com.papa247.john.Listing.Listing;
@@ -772,4 +778,95 @@ public class TestCode {
             return failedCount;
         }
     }
+    public static class RoomTests {
+        
+        private Room Room; // What we use to test with
+        
+        // These are the values we use for this room
+        private RoomType type = RoomType.GUEST;   // Type of room
+        private double size = 100.0;               // feet^3 of room
+        private int windows = 2;                 // Windows count
+        private String name = "Room Test Class";                // Room name (this allows us to refer to the room via the lease (typically "A", "B", etc))
+        
+        private FloorType flooring = FloorType.CARPET;         // Type of flooring in this room
+        public Extensions[] extensions = new Extensions[0]; // Closets
+        public Appliances[] appliances = new Appliances[0]; // ...
+        public Fixtures[] fixtures =  new Fixtures[0];      // Ceiling lights, fans, etc
+        public Furniture[] furniture = new Furniture[0];    // Desk, chair, bed, etc
+        
+        
+        
+        public RoomTests() {
+            // Initialize the (user) object for testing
+           
+            
+            JSONObject jo = new JSONObject();
+            
+            jo.put("name", name);
+            jo.put("type", type.toString());
+            jo.put("size", size);
+            jo.put("windows", windows);
+            jo.put("flooring", flooring.toString());
+
+            JSONArray ja = new JSONArray();
+            for (Extensions a : extensions)
+                ja.put(a.toString());
+            jo.put("extensions", ja);
+            
+            ja = new JSONArray();
+            for (Appliances a : appliances)
+                ja.put(a.toString());
+            jo.put("appliances", ja);
+            
+            ja = new JSONArray();
+            for (Fixtures a : fixtures)
+                ja.put(a.toString());
+            jo.put("fixtures", ja);
+            
+            ja = new JSONArray();
+            for (Furniture a : furniture)
+                ja.put(a.toString());
+            jo.put("furniture", ja);
+            
+            
+            Room = new Room(jo);
+            
+ 
+        }
+        
+        public void reset() {
+            type = null;
+            size = 0;
+            flooring = null;
+            extensions = null;
+            appliances = null;
+            fixtures = null;
+            furniture = null;
+            windows = 0;
+            name = null;
+        }
+        
+   
+        public boolean json() {
+            // Test Room > json > user
+            JSONObject jo = Room.toJSON();
+            if (new User(jo).equals(Room)) {
+                System.out.println("[Room JSON] Test passed.");
+                return true;
+            } else {
+                System.out.println("[***Room JSON] Test failed.");
+                return false;
+            }
+        }
+        
+        public int testAll() {
+            System.out.println("[Listing] Testing...");
+            int failedCount = 0;
+            if (!json())
+                failedCount++;
+            return failedCount;
+        }
+        
+    }
+    
 }
