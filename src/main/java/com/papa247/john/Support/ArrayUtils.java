@@ -71,6 +71,14 @@ public class ArrayUtils {
         if (data==null)
             return array;
         
+        boolean found = false;
+        for (T obj : array) {
+            if (obj.equals(data))
+                found = true;
+        }
+        if (!found)
+            return array;
+        
         int shift = 0;
         for (int i=0; i<array.length; i++) {
             if (array[i].equals(data)) {

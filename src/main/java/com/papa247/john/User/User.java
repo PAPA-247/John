@@ -319,7 +319,7 @@ public class User {
 	    if (savedListings.length==0)
 	        return true;
 	    
-	    savedListings = ArrayUtils.remove(savedListings, new Listing[savedListings.length+1], listing);
+	    savedListings = ArrayUtils.remove(savedListings, new Listing[savedListings.length-1], listing);
                 
         return save();
 	}

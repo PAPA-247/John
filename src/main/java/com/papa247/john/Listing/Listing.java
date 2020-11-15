@@ -35,9 +35,14 @@ public class Listing {
     
     
     public Listing(JSONObject jo, Address parent) {        
-        if (!jo.has("id") || !jo.has("apartmentNumber") || !jo.has("monthlyPrice")
-                || !jo.has("lease") || !jo.has("listingType") || !jo.has("bedrooms")
-                || !jo.has("title") || !jo.has("description"))
+        if (!jo.has("id")
+                || !jo.has("apartmentNumber")
+                || !jo.has("monthlyPrice")
+                || !jo.has("lease")
+                || !jo.has("listingType")
+                || !jo.has("bedrooms")
+                || !jo.has("title")
+                || !jo.has("description"))
             return; // No valid (or empty either way).
         
         this.parent = parent;

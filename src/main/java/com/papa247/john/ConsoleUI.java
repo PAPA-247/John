@@ -17,6 +17,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 import java.util.concurrent.Callable;
+import com.papa247.john.TestCode.UserTests;
 import com.papa247.john.Support.ArrayUtils;
 
 public class ConsoleUI {
@@ -75,7 +76,7 @@ public class ConsoleUI {
         input = new Scanner(System.in);
         String command = "";
         
-        Command[] L0Commands = new Command[3];
+        Command[] L0Commands = new Command[4];
         // Nasty, yes, but it works...
         L0Commands[0] = new Command("1", "Run GUI", new CMD() {
             public void run() {
@@ -83,7 +84,10 @@ public class ConsoleUI {
             }
         });
         L0Commands[1] = new Command("2", "Login", () -> Login());
-        L0Commands[2] = new Command("e", "Exit", new CMD() {
+        
+        L0Commands[2] = new Command("t", "Tests", () -> Tests());
+        
+        L0Commands[3] = new Command("e", "Exit", new CMD() {
             public void run() {
                 print("Goodbye!");
                 System.exit(0);
@@ -176,5 +180,51 @@ public class ConsoleUI {
     
     private static void Login() {
         print("Login:..==");
+    }
+    
+    
+    
+    private static void Tests() {
+        input = new Scanner(System.in);
+        String command = "";
+        
+        Command[] TestCommands = new Command[4];
+        // Nasty, yes, but it works...
+        TestCommands[0] = new Command("1", "Test User class", () -> new CMD() {
+                @Override
+                public void run() {
+                    UserTests userTests = new UserTests();
+                    userTests.testAll();
+                }
+            });
+
+        TestCommands[1] = new Command("2", "Test Listing class", () -> Login());
+        
+        TestCommands[2] = new Command("3", "Test Address class", () -> Tests());
+        
+        TestCommands[3] = new Command("b", "Main menu", () -> main());
+        
+        
+        printL0Header();
+        displayCommands(TestCommands);
+        System.out.print("? ");
+        command = input.next();
+        
+        processCommands(command, TestCommands);
+        
+        // Your program now.
+        // -> Note, DataBase *should* be setup.
+        while (true) {
+            print();
+            print("========================================");
+            print();
+            printL0Header();
+            
+            
+            displayCommands(TestCommands);
+            System.out.print("? ");
+            command = input.nextLine();
+            processCommands(command, TestCommands);
+        }
     }
 }

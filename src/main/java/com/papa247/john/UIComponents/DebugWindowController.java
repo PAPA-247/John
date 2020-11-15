@@ -150,5 +150,17 @@ public class DebugWindowController {
     void testSelection(ActionEvent event) {
         TestCode.selection();
     }
+    
+    @FXML
+    void userTests(ActionEvent event) {
+        TestCode.UserTests userTests = new TestCode.UserTests();
+        userTests.testAll();
+    }
+    
+    @FXML
+    void listingTests(ActionEvent event) {
+        TestCode.ListingTests listingTests = new TestCode.ListingTests();
+        listingTests.testAll();
+    }
 }
 

@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 //import javafx.stage.StageStyle;
 import java.io.IOException;
 //import com.papa247.john.UIComponents.SplashScreenController;
+import com.papa247.john.TestCode.UserTests;
 
 /**
  * JavaFX App
