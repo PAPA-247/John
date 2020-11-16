@@ -10,9 +10,11 @@ import java.io.IOException;
 import com.papa247.john.App;
 import com.papa247.john.DataBases;
 import com.papa247.john.DataBases.UsernameLookupType;
+import com.papa247.john.Enumerators.AccountType;
 import com.papa247.john.TestCode;
 import com.papa247.john.Listing.Address;
 import com.papa247.john.Listing.Listing;
+import com.papa247.john.Support.Review;
 import com.papa247.john.Support.Session;
 import com.papa247.john.User.User;
 import javafx.event.ActionEvent;
@@ -142,8 +144,30 @@ public class DebugWindowController {
     
     @FXML
     void btnExpressLogin(ActionEvent event) {
-        Session.userLoginToken = "look,ImloggedinLocally";
-        Session.user = DataBases.getUser("billy", UsernameLookupType.username);
+        if( DataBases.getUser("billy", UsernameLookupType.username) != null) {
+            
+            Session.userLoginToken = "look,ImloggedinLocally";
+            Session.user = DataBases.getUser("billy", UsernameLookupType.username);
+            System.out.println("billy found");
+        }else {
+            System.out.println("billy not found building billy");
+            User user = new User();
+            user.username = "billy";
+            user.firstName = "Billy";
+            user.middleName = "";
+            user.lastName = "Thomas";
+            user.phoneNumber = "+15386661888";
+            user.emailAddress = "billlyt@team.papa";
+            user.accountType = AccountType.ADMINISTRATOR;
+            user.studentID = "W0080082";
+            
+            user.addReview(new Review(user, "Billy is amazing", "I absolutley love this guy! He's amazing!", user, 5));
+            
+            DataBases.addUser(user);
+            Session.userLoginToken = "look,ImloggedinLocally";
+            Session.user = DataBases.getUser("billy", UsernameLookupType.username);
+        }
+      
     }
     
     @FXML
