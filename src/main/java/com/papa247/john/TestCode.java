@@ -780,7 +780,7 @@ public class TestCode {
     }
     public static class RoomTests {
         
-        private Room Room; // What we use to test with
+        private Room room; // What we use to test with
         
         // These are the values we use for this room
         private RoomType type = RoomType.GUEST;   // Type of room
@@ -829,28 +829,41 @@ public class TestCode {
             jo.put("furniture", ja);
             
             
-            Room = new Room(jo);
+            room = new Room(jo);
             
  
         }
         
-        public void reset() {
-            type = null;
-            size = 0;
-            flooring = null;
-            extensions = null;
-            appliances = null;
-            fixtures = null;
-            furniture = null;
-            windows = 0;
-            name = null;
-        }
+      
+        
+        public boolean isReset() {
+          Room testRoom = new Room();
+          testRoom.type = RoomType.BEDROOM;
+          testRoom.size = 5.0;
+          testRoom.windows = 2;
+          testRoom.name = "Test Room";
+          testRoom.flooring = FloorType.CARPET;
+          testRoom.extensions = ArrayUtils.add(extensions, new Extensions[extensions.length+1], Extensions.CLOSET);
+          testRoom.appliances = ArrayUtils.add(appliances, new Appliances[appliances.length+1], Appliances.AC);
+          testRoom.fixtures = ArrayUtils.add(fixtures, new Fixtures[fixtures.length+1], Fixtures.BATHTUB);
+          testRoom.furniture = ArrayUtils.add(furniture, new Furniture[furniture.length+1], Furniture.CHAIR);
+          
+          testRoom.reset();
+          if(testRoom.type == RoomType.NONE ||  testRoom.size == 0.0 || testRoom.windows == 0 || testRoom.name == "" || testRoom.flooring == FloorType.NONE 
+                  || testRoom.extensions == new Extensions[0] || testRoom.appliances == new Appliances[0] || testRoom.fixtures ==  new Fixtures[0] || testRoom.furniture == new Furniture[0]) {
+              System.out.println("[Reset] Test passed.");
+              return true;
+          } else {
+              System.out.println("[***Reset] Test failed.");
+              return false;
+          }
+         }
         
    
         public boolean json() {
-            // Test Room > json > user
-            JSONObject jo = Room.toJSON();
-            if (new User(jo).equals(Room)) {
+            // Test Room > json > room
+            JSONObject jo = room.toJSON();
+            if (new Room(jo).equals(room)) {
                 System.out.println("[Room JSON] Test passed.");
                 return true;
             } else {
@@ -864,9 +877,13 @@ public class TestCode {
             int failedCount = 0;
             if (!json())
                 failedCount++;
+            if (!isReset())
+                failedCount++;
             return failedCount;
         }
-        
     }
-    
 }
+        
+
+    
+
