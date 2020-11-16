@@ -44,7 +44,13 @@ public class Signer {
     
     @Override
     public boolean equals(Object signr) {
+        if (signr == null)
+            return false;
         Signer signer = (Signer) signr;
+        
+        if (signer.user == null && this.user == null && signer.signed == this.signed)
+            return true;
+            
         if (signer.user.equals(this.user) && signer.signed == this.signed)
             return true;
         return false;

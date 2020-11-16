@@ -119,4 +119,10 @@ public class Room {
         fixtures =  new Fixtures[0];      // Ceiling lights, fans, etc
         furniture = new Furniture[0];    // Desk, chair, bed, etc
     }
+
+    @Override
+    public boolean equals(Object room) {
+        Room r = (Room) room;
+        if ()
+    }
 }

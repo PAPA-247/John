@@ -185,7 +185,8 @@ public class LeaseController {
             if (!editing) {
                 contents = contents.replace("%DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
                 contents = contents.replace("%TENTANTS%", usrs);
-                contents = contents.replace("%LANDLOARD%", lease.listing.parent.managers[0].username); // The first manager
+                if (lease.listing.parent.managers.length>0)
+                    contents = contents.replace("%LANDLOARD%", lease.listing.parent.managers[0].username); // The first manager
                 contents = contents.replace("%ADDRESS%", lease.listing.getStreetAddress());
                 contents = contents.replace("%PAYMENT_ADDRESS%", lease.listing.getStreetAddress());
                 contents = contents.replace("%MONTHLY_PRICE%", Double.toString(lease.listing.monthlyPrice));
@@ -194,7 +195,7 @@ public class LeaseController {
                 // TODO [#20]: Start and end dates for lease
                 contents = contents.replace("%START_DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
                 contents = contents.replace("%END_DATE%", LocalDate.now().format(DateTimeFormatter.ofPattern("MM/dd/yyyy")));
-                // TODO [#21]: Damage cost
+                // Damage cost is determined by the lease agreement. They key it in WITH the agreement.
             }
             
             txtContents.setText(contents);

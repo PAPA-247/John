@@ -162,5 +162,11 @@ public class DebugWindowController {
         TestCode.ListingTests listingTests = new TestCode.ListingTests();
         listingTests.testAll();
     }
+    
+    @FXML
+    void roomTests(ActionEvent event) {
+        TestCode.RoomTests rTests = new TestCode.RoomTests();
+        rTests.testAll();
+    }
 }
 

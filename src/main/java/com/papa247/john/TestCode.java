@@ -25,6 +25,7 @@ import com.papa247.john.Listing.Address;
 import com.papa247.john.Listing.Lease;
 import com.papa247.john.Listing.Listing;
 import com.papa247.john.Listing.Room;
+import com.papa247.john.Listing.Signer;
 //import com.papa247.john.*;
 import com.papa247.john.Support.*;
 import com.papa247.john.UIComponents.ReviewController;
@@ -516,31 +517,33 @@ public class TestCode {
             if (failedCount>0)
                 System.out.println("[User] Failed tests: " + failedCount);
             
+            DataBases.removeUser(user);
+            
             return failedCount;
         }
     }
     
     public static class ListingTests {
-        private Address parent = new Address();
-        private Listing listing = new Listing();
+        public Address parent = new Address();
+        public Listing listing = new Listing();
         
-        private int id = DataBases.assignNewListingID();
-        private String apartmentNumber = "";
-        private double monthlyPrice = 100;
-        private String title = "Testing";
-        private String description = "Description";
-        private Lease lease;
+        public int id = DataBases.assignNewListingID();
+        public String apartmentNumber = "";
+        public double monthlyPrice = 100;
+        public String title = "Testing";
+        public String description = "Description";
+        public Lease lease;
         
-        private String leaseContents = "Lease agreement";
-        private String leaseTitle = "Lease title";
-        private int leaseRentLength = 12;
+        public String leaseContents = "Lease agreement";
+        public String leaseTitle = "Lease title";
+        public int leaseRentLength = 12;
         
-        private ListingType listingType = ListingType.APARTMENT;
+        public ListingType listingType = ListingType.APARTMENT;
         
-        private String[] photos = new String[0];
-        private Amminities[] amminities = new Amminities[0];
-        private Room[] rooms = new Room[0];
-        private Room[] bedrooms = new Room[0];
+        public String[] photos = new String[0];
+        public Amminities[] amminities = new Amminities[0];
+        public Room[] rooms = new Room[0];
+        public Room[] bedrooms = new Room[0];
         
         public ListingTests() {
             // Initialize the (listing) object for testing
@@ -744,6 +747,121 @@ public class TestCode {
         }
         
         
+        /**
+         * Lease Testing
+         * @return
+         */
+        public static class LeaseTests {
+            // We already know a lease can be loaded and saved (via JSON) from the Listing tests
+            public User sampleUser;
+            public ListingTests listingTests;
+            public Lease lease;
+            
+            public LeaseTests(ListingTests lT) {
+                listingTests = lT;
+                lease = lT.lease;
+                sampleUser = new User();
+                sampleUser.firstName = "Billy";
+                sampleUser.middleName = "";
+                sampleUser.lastName = "Thomas";
+                sampleUser.phoneNumber = "+15386661888";
+                sampleUser.emailAddress = "billyt@team.papa";
+                sampleUser.accountType = AccountType.STUDENT;
+                sampleUser.studentID = "W0080082";
+                sampleUser.username = "sampleuserobj";
+                sampleUser.setPassword("1234".toCharArray());
+            }
+            
+            public boolean addSigner() {
+                lease.addSigner(sampleUser);
+                if (ArrayUtils.contains(lease.signers, new Signer(sampleUser))) {
+                    System.out.println("[Lease: AddSigner] Test passed.");
+                    return true;
+                } else {
+                    System.out.println("[***Lease: AddSigner] Test failed.");
+                    return false;
+                }
+            }
+            
+            public boolean removeSigner() {
+                lease.signers = ArrayUtils.add(lease.signers, new Signer[lease.signers.length+1], new Signer(sampleUser));
+                lease.removeSigner(sampleUser);
+                if (!ArrayUtils.contains(lease.signers, new Signer(sampleUser))) {
+                    System.out.println("[Lease: RemoveSigner] Test passed.");
+                    return true;
+                } else {
+                    System.out.println("[***Lease: RemoveSigner] Test failed.");
+                    return false;
+                }
+            }
+            
+            public boolean getSigned() {
+                lease.signers = new Signer[1];                
+                Signer signer =  new Signer(sampleUser);
+                signer.sign();
+                lease.signers = ArrayUtils.add(lease.signers, new Signer[lease.signers.length + 1], signer);
+                if (lease.getSigned(true) && lease.getSigned()) {
+                    System.out.println("[Lease: GetSigned] Test passed.");
+                    return true;
+                } else {
+                    System.out.println("[***Lease: GetSigned] Test failed.");
+                    return false;
+                }
+            }
+            
+            public boolean sign() {
+                lease.signers = new Signer[1];
+                lease.sign(sampleUser);
+                if (!lease.getSigned()) {
+                    System.out.println("[***Lease: Signed] Test failed.");
+                    return false;
+                }
+                
+                lease.signers = new Signer[0];
+                Signer signer =  new Signer(sampleUser);
+                lease.signers = ArrayUtils.add(lease.signers, new Signer[1], signer);
+                lease.sign(sampleUser);
+                if (!lease.getSigned()) {
+                    System.out.println("[Lease: Signed] Test passed.");
+                    return true;
+                } else {
+                    System.out.println("[***Lease: Signed] Test failed.");
+                    return false;
+                }
+                
+            }
+            
+            public boolean tostring() {
+                if (lease.toString().equals(lease.title)) {
+                    System.out.println("[Lease: tostring] Test passed.");
+                    return true;
+                } else {
+                    System.out.println("[***Lease: tostring] Test failed.");
+                    return true;
+                }
+            }
+            
+            public int testAll() {
+                System.out.println("[Listing] Tests completed.");
+                int failedCount = 0;
+                if (!addSigner())
+                    failedCount++;
+                if (!removeSigner())
+                    failedCount++;
+                if (!getSigned())
+                    failedCount++;
+                if (!sign())
+                    failedCount++;
+                if (!tostring())
+                    failedCount++;
+                if (failedCount>0)
+                    System.out.println("[Listing] Failed tests: " + failedCount);
+                
+                return failedCount;
+            }
+        }
+        
+        
         public int testAll() {
             System.out.println("[Listing] Testing...");
             int failedCount = 0;
@@ -771,9 +889,16 @@ public class TestCode {
                 failedCount++;
             if (!getStreetAddress())
                 failedCount++;
-            System.out.println("[Listing] Tests completed.");
+            
+            
             if (failedCount>0)
                 System.out.println("[Listing] Failed tests: " + failedCount);
+            
+            
+            System.out.println("[Listing Lease] Testing...");
+            LeaseTests lT = new LeaseTests(this);
+            lT.testAll();
+                        
             
             return failedCount;
         }

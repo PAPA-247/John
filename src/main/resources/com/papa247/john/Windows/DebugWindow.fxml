@@ -42,7 +42,8 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                <children>
                   <Button layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#userTests" text="User Class" />
-                  <Button layoutX="14.0" layoutY="49.0" mnemonicParsing="false" onAction="#listingTests" text="Listing class" />
+                  <Button layoutX="129.0" layoutY="14.0" mnemonicParsing="false" onAction="#listingTests" text="Listing class" />
+                  <Button layoutX="130.0" layoutY="48.0" mnemonicParsing="false" onAction="#roomTests" text="Room Class" />
                </children></AnchorPane>
       </content>
     </Tab>
