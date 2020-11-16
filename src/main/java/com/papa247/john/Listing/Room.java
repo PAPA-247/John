@@ -108,14 +108,15 @@ public class Room {
     }
     
     public void reset() {
-        type = null;
-        size = 0;
-        flooring = null;
-        extensions = null;
-        appliances = null;
-        fixtures = null;
-        furniture = null;
-        windows = 0;
-        name = null;
+        type = RoomType.NONE;   // Type of room
+        size = 0.0;               // feet^3 of room
+        windows = 0;                 // Windows count
+        name = "";                // Room name (this allows us to refer to the room via the lease (typically "A", "B", etc))
+        
+        flooring = FloorType.NONE;         // Type of flooring in this room
+        extensions = new Extensions[0]; // Closets
+        appliances = new Appliances[0]; // ...
+        fixtures =  new Fixtures[0];      // Ceiling lights, fans, etc
+        furniture = new Furniture[0];    // Desk, chair, bed, etc
     }
 }
