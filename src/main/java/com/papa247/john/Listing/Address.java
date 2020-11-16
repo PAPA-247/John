@@ -170,9 +170,11 @@ public class Address {
         if (managers.length==0)
             return;
         managers = ArrayUtils.remove(managers, new User[managers.length-1], manager);
+        System.out.println("remove manager successful");
     }
     public void addManager(User manager) {
         managers = ArrayUtils.add(managers, new User[managers.length+1], manager);
+        System.out.println("added manager successful");
     }
     
     public boolean removeReviewOf(Review review) {
