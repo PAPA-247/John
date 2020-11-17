@@ -74,6 +74,21 @@
 		    <artifactId>ikonli-material-pack</artifactId>
 		    <version>11.5.0</version>
 		</dependency>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-api</artifactId>
+	        <version>5.4.2</version>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.junit.jupiter</groupId>
+	        <artifactId>junit-jupiter-engine</artifactId>
+	        <version>5.4.2</version>
+	    </dependency>
+	    <dependency>
+		    <groupId>org.testfx</groupId>
+		    <artifactId>testfx-core</artifactId>
+		    <version>4.0.16-alpha</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>
@@ -90,6 +105,11 @@
 				    </archive>
 				</configuration>
             </plugin>
+		    <plugin>
+		        <groupId>org.apache.maven.plugins</groupId>
+		        <artifactId>maven-surefire-plugin</artifactId>
+		        <version>2.22.1</version>
+		    </plugin>
             <plugin>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>

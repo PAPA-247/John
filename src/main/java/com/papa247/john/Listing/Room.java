@@ -123,6 +123,14 @@ public class Room {
     @Override
     public boolean equals(Object room) {
         Room r = (Room) room;
-        if ()
+        if (r == null)
+            return true;
+        if (r.name.equals(this.name)
+                && r.type == this.type
+                && r.size == this.size
+                && r.windows == this.windows)
+            return true;
+        
+        return false;
     }
 }

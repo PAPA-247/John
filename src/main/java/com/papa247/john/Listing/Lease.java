@@ -108,6 +108,10 @@ public class Lease {
         boolean locked = false; // Block new signers?
         
         for (Signer signer : signers) {
+            if (signer == null)
+                continue;
+            if (signer.user == null)
+                continue;
             if (signer.user.equals(user)) {
                 signer.sign();
                 found = true;
